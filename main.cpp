@@ -45,6 +45,9 @@ int main(int argc, char const *argv[]) {
         {
             std::cout << htmlBuffer << std::endl;
         }
+        else {
+            std::cout << "An error has occured, may be check the server in config.json" << std::endl;
+        }
         /* always cleanup */
         curl_easy_cleanup(curl);
     }
