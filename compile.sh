@@ -7,7 +7,7 @@ else
     slowcompile=""
 fi
 
-g++ -o MicaClient.out ./main.cpp $slowcompile -lcurl
+g++ ./main.cpp -o MicaClient.out ./internal/message.cpp ./internal/messagememory.cpp $slowcompile -lcurl
 if [[ $? == 0 ]]; then
     echo "$(tput setaf 2)$(tput bold)Compilation of MicaClient finished.$(tput sgr0)"
 fi

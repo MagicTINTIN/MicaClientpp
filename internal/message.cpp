@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <time.h>
+#include <algorithm>
 #include "message.h"
 
 /* TOOLS */
@@ -16,21 +17,33 @@ time_t getTimestamp(std::string t)
         return -1;
 }
 
+void deleteChars(std::string &s)
+{
+    auto it = std::find(s.begin(), s.end(), '\\');
+    while (it != s.end())
+    {
+        auto it2 = s.insert(it, '\\');
+
+        // skip over the slashes we just inserted
+        it = std::find(it2 + 2, s.end(), '\\');
+    }
+}
+
 /* MESSAGE CLASS*/
 
-Message::Message() : sender(""), content(""), dateTime(""), certifiedUser(0), rank(0), status(ONLINE), timestamp(-1)
+Message::Message() : sender(""), content(""), dateTime(""), timestamp(-1), certifiedUser(0), rank(0), status(ONLINE)
 {
 }
 
-Message::Message(std::string author, std::string message, std::string date, int certified, int rnk, messageStatus msgstatus = ONLINE) : sender(author), content(message),
+Message::Message(std::string author, std::string message, std::string date, int certified, int rnk, Message::messageStatus msgstatus) : sender(author), content(message),
                                                                                                                                         dateTime(date), timestamp(getTimestamp(date)),
                                                                                                                                         certifiedUser(certified), rank(rnk), status(msgstatus)
 {
 }
 
-Message::Message(std::string author, std::string message, std::string date, std::string certified, std::string rnk, messageStatus msgstatus = ONLINE) : sender(author), content(message),
-                                                                                                                                        dateTime(date), timestamp(getTimestamp(date)),
-                                                                                                                                        certifiedUser(std::stoi(certified)), rank(std::stoi(rnk)), status(msgstatus)
+Message::Message(std::string author, std::string message, std::string date, std::string certified, std::string rnk, Message::messageStatus msgstatus) : sender(author), content(message),
+                                                                                                                                                        dateTime(date), timestamp(getTimestamp(date)),
+                                                                                                                                                        certifiedUser(std::stoi(certified)), rank(std::stoi(rnk)), status(msgstatus)
 {
 }
 

@@ -4,6 +4,8 @@
 #include <string>
 #include <fstream>
 #include "includes/nlohmann/json.hpp"
+#include "internal/message.h"
+#include "internal/messagememory.h"
 
 using json = nlohmann::json;
 
@@ -30,8 +32,10 @@ int main(int argc, char const *argv[]) {
     catch (std::out_of_range& e)
     {
         std::cout << "JSON ERROR : " << e.what() << '\n';
+        return 1;
     }
-   
+    
+    MessageMemory mem;
 
     curl = curl_easy_init();
     if(curl) {
@@ -43,7 +47,11 @@ int main(int argc, char const *argv[]) {
         std::cout << "RES : " << res << std::endl;
         if(CURLE_OK == res)
         {
+            deleteChars(htmlBuffer);
             std::cout << htmlBuffer << std::endl;
+            json jsonMsgList = json::parse(htmlBuffer);
+            mem.updateMemory(jsonMsgList);
+            mem.print();
         }
         else {
             std::cout << "An error has occured, may be check the server in config.json" << std::endl;

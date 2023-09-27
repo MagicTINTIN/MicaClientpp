@@ -10,7 +10,7 @@ class MessageMemory
 {
 private:
     int nbMessages;
-    int lastOffline;
+    int firstOnline;
     std::vector<Message> memory;
 public:
     MessageMemory();
@@ -23,7 +23,11 @@ public:
     /**
      * Update messages from server in memory
     */
-    void updateMemory(json const &messages);
+    void updateMemory(nlohmann::json const &messages);
+    /**
+     * Print messages from memory
+    */
+    void print();
 };
 
 

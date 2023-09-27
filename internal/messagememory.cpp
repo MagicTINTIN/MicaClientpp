@@ -5,12 +5,11 @@
 #include "../includes/nlohmann/json.hpp"
 #include "message.h"
 #include "messagememory.h"
-
 using json = nlohmann::json;
 
 /* MESSAGE MEMORY CLASS */
 
-MessageMemory::MessageMemory() : nbMessages(0), lastOffline(-1)
+MessageMemory::MessageMemory() : nbMessages(0), firstOnline(0)
 {
 }
 
@@ -22,7 +21,7 @@ void MessageMemory::AddMessage(Message msg)
 void MessageMemory::updateMemory(json const &messages)
 {
     int nbJsonMsg(0), onlineMessagesFound(0);
-    int memMsgNb = lastOffline;
+    int memMsgNb = firstOnline;
 
     for (const auto &msg : messages.items())
     {
@@ -52,7 +51,7 @@ void MessageMemory::updateMemory(json const &messages)
         else
         {
             if (onlineMessagesFound == 0)
-                lastOffline = memMsgNb - 1;
+                firstOnline = memMsgNb;
             onlineMessagesFound++;
         }
     contin:;
@@ -62,7 +61,7 @@ void MessageMemory::updateMemory(json const &messages)
     {
         try
         {
-            tmpmsgjson = messages[onlineMessagesFound - 1];
+            tmpmsgjson = messages[onlineMessagesFound];
             AddMessage(Message(tmpmsgjson["sender"].get<std::string>(),
                                tmpmsgjson["content"].get<std::string>(),
                                tmpmsgjson["date_time"].get<std::string>(),
@@ -74,4 +73,14 @@ void MessageMemory::updateMemory(json const &messages)
             std::cout << "JSON MESSAGE READING ERROR : " << e.what() << '\n';
         }
     }
+}
+
+void MessageMemory::print()
+{
+    for (Message &msg : memory)
+    {
+        msg.print();
+        std::cout << std::endl;
+    }
+    
 }

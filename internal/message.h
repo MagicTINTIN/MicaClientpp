@@ -5,15 +5,16 @@
 #include <time.h>
 
 time_t getTimestamp(std::string t);
+void deleteChars(std::string &s);
 
 class Message
 {
 public:
-    enum messageStatus{ UNKNOWN=-1, ONLINE=2, DELETED=3, OFFLINE=4 };
+    enum messageStatus{ UNKNOWN=-1, ONLINE=0, OFFLINE=1, DELETED=2 };
 
     Message();
-    Message(std::string author, std::string message, std::string date, int certified, int rnk, messageStatus msgstatus=ONLINE);
-    Message(std::string author, std::string message, std::string date, std::string certified, std::string rnk, messageStatus msgstatus=ONLINE);
+    Message(std::string author, std::string message, std::string date, int certified, int rnk, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
+    Message(std::string author, std::string message, std::string date, std::string certified, std::string rnk, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
 
     /**
      * To print a message in terminal
