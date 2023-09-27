@@ -2,8 +2,10 @@
 #define MESSAGE_H_INCLUDED
 
 #include <string>
-#include <vector>
-#include "../includes/nlohmann/json.hpp"
+#include <time.h>
+
+time_t getTimestamp(std::string t);
+
 class Message
 {
 public:
@@ -25,6 +27,10 @@ public:
     */
     messageStatus getStatus();
     /**
+     * Returns timestamp of the message
+    */
+    time_t getMsgTimestamp();
+    /**
      * Returns if messages are equal
     */
     bool operator==(Message const &m);
@@ -38,29 +44,9 @@ private:
     std::string dateTime;
     int certifiedUser;
     int rank;
+    time_t timestamp;
     messageStatus status;
 };
-
-class MessageMemory
-{
-private:
-    int nbMessages;
-    int nbFirstServerMessage;
-    std::vector<Message> memory;
-public:
-    MessageMemory();
-    
-    /**
-     * Add message to the local memory
-    */
-    void AddMessage(Message msg, int jsonMaxHistoryLength = -1);
-
-    /**
-     * Set all messages from server in memory
-    */
-    void setAllMessages(json const &messages);
-};
-
 
 
 #endif // MESSAGE_H_INCLUDED

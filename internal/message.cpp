@@ -1,20 +1,28 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include <fstream>
 #include <vector>
-#include "../includes/nlohmann/json.hpp"
+#include <time.h>
 #include "message.h"
 
-using json = nlohmann::json;
+/* TOOLS */
+
+time_t getTimestamp(std::string t)
+{
+    struct tm tm;
+    if (strptime(t.c_str(), "%Y-%m-%d %H:%M:%S", &tm) != NULL)
+        return mktime(&tm);
+    else
+        return -1;
+}
 
 /* MESSAGE CLASS*/
 
-Message::Message() : sender(""), content(""), dateTime(""), certifiedUser(0), rank(0), status(ONLINE)
+Message::Message() : sender(""), content(""), dateTime(""), certifiedUser(0), rank(0), status(ONLINE), timestamp(-1)
 {
 }
 
-Message::Message(std::string author, std::string message, std::string date, int certified, int rnk, messageStatus msgstatus = ONLINE) : sender(author), content(message), dateTime(date), certifiedUser(certified), rank(rnk), status(msgstatus)
+Message::Message(std::string author, std::string message, std::string date, int certified, int rnk, messageStatus msgstatus = ONLINE) : sender(author), content(message), dateTime(date), certifiedUser(certified), rank(rnk), status(msgstatus), timestamp(getTimestamp(date))
 {
 }
 
@@ -33,6 +41,14 @@ Message::messageStatus Message::getStatus()
     return this->status;
 }
 
+time_t Message::getMsgTimestamp()
+{
+    if (this->timestamp == -1)
+        this->timestamp = getTimestamp(this->dateTime);
+
+    return this->timestamp;
+}
+
 bool Message::operator==(Message const &m)
 {
     return this->sender == m.sender &&
@@ -49,32 +65,4 @@ bool Message::operator!=(Message const &m)
            this->dateTime != m.dateTime ||
            this->certifiedUser != m.certifiedUser ||
            this->rank != m.rank;
-}
-
-/* MESSAGE MEMORY CLASS */
-
-MessageMemory::MessageMemory() : nbMessages(0), nbFirstServerMessage(0)
-{
-}
-
-void MessageMemory::AddMessage(Message msg, int jsonMaxHistoryLength = -1)
-{
-    int msgmem(nbMessages - 1);
-    int checkUntilMsgNb;
-    if (jsonMaxHistoryLength == -1)
-        checkUntilMsgNb = 0;
-    else
-        checkUntilMsgNb = nbMessages - jsonMaxHistoryLength - 1;
-
-    while (msgmem >= checkUntilMsgNb && memory[msgmem] != msg && memory[msgmem].getStatus() != Message::OFFLINE)
-    {
-        /* code */
-    }
-}
-
-void MessageMemory::setAllMessages(json const &messages)
-{
-    for (const auto &msg : messages.items())
-    {
-    }
 }
