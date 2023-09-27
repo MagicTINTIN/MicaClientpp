@@ -57,15 +57,16 @@ void MessageMemory::updateMemory(json const &messages)
     contin:;
     }
     json tmpmsgjson;
-    for (; onlineMessagesFound <= nbJsonMsg; onlineMessagesFound++)
+    for (; onlineMessagesFound < nbJsonMsg; onlineMessagesFound++)
     {
+        //std::cout << "Importing msg nb " << onlineMessagesFound << std::endl;
         try
         {
             tmpmsgjson = messages[onlineMessagesFound];
             AddMessage(Message(tmpmsgjson["sender"].get<std::string>(),
                                tmpmsgjson["content"].get<std::string>(),
                                tmpmsgjson["date_time"].get<std::string>(),
-                               tmpmsgjson["certified"].get<std::string>(),
+                               tmpmsgjson["id_certified_user"].get<std::string>(),
                                tmpmsgjson["rank"].get<std::string>()));
         }
         catch (std::out_of_range &e)

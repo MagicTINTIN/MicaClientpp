@@ -47,8 +47,8 @@ int main(int argc, char const *argv[]) {
         std::cout << "RES : " << res << std::endl;
         if(CURLE_OK == res)
         {
-            deleteChars(htmlBuffer);
-            std::cout << htmlBuffer << std::endl;
+            cleanMessageList(htmlBuffer);
+            //std::cout << htmlBuffer << std::endl;
             json jsonMsgList = json::parse(htmlBuffer);
             mem.updateMemory(jsonMsgList);
             mem.print();

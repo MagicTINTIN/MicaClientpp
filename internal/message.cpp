@@ -17,8 +17,18 @@ time_t getTimestamp(std::string t)
         return -1;
 }
 
-void deleteChars(std::string &s)
+void ReplaceStringInPlace(std::string &s, const std::string &search,
+                          const std::string &replace)
 {
+    size_t pos(0);
+    while ((pos = s.find(search, pos)) != std::string::npos)
+    {
+        s.replace(pos, search.length(), replace);
+        pos += replace.length();
+    }
+}
+
+void escapeBackslash(std::string &s) {
     auto it = std::find(s.begin(), s.end(), '\\');
     while (it != s.end())
     {
@@ -27,6 +37,12 @@ void deleteChars(std::string &s)
         // skip over the slashes we just inserted
         it = std::find(it2 + 2, s.end(), '\\');
     }
+}
+
+void cleanMessageList(std::string &s)
+{
+    escapeBackslash(s);
+    ReplaceStringInPlace(s, "\\\\n", "\\n");
 }
 
 /* MESSAGE CLASS*/

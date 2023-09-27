@@ -5,7 +5,7 @@
 #include <time.h>
 
 time_t getTimestamp(std::string t);
-void deleteChars(std::string &s);
+void cleanMessageList(std::string &s);
 
 class Message
 {

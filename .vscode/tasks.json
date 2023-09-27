@@ -12,12 +12,12 @@
                 "${workspaceFolder}/main.cpp",
                 //"${file}",
                 "-o",
-                "${workspaceFolder}/main",
+                "${workspaceFolder}/debug.out",
                 //"${fileDirname}/${fileBasenameNoExtension}",
                 "-lcurl"
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
