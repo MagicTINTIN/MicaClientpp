@@ -4,28 +4,26 @@
 #include <string>
 #include <vector>
 #include "../includes/nlohmann/json.hpp"
-
 class Message
 {
-private:
-    std::string sender;
-    std::string content;
-    std::string dateTime;
-    int certifiedUser;
-    int rank;
-    bool deleted;
 public:
+    enum messageStatus{ UNKNOWN=-1, ONLINE=2, DELETED=3, OFFLINE=4 };
+
     Message();
-    Message(std::string author, std::string message, std::string date, int certified, int rnk, bool del=false);
+    Message(std::string author, std::string message, std::string date, int certified, int rnk, messageStatus msgstatus=ONLINE);
 
     /**
      * To print a message in terminal
     */
     void print();
     /**
-     * Set a message as deleted from the server
+     * Set a message status
     */
-    void deletedFromServer();
+    void updateStatus(messageStatus const &newStatus);
+    /**
+     * Get a message status
+    */
+    messageStatus getStatus();
     /**
      * Returns if messages are equal
     */
@@ -34,6 +32,13 @@ public:
      * Returns if messages not are equal
     */
     bool operator!=(Message const &m);
+private:
+    std::string sender;
+    std::string content;
+    std::string dateTime;
+    int certifiedUser;
+    int rank;
+    messageStatus status;
 };
 
 class MessageMemory
@@ -53,7 +58,7 @@ public:
     /**
      * Set all messages from server in memory
     */
-    void setAllMessages(json messages);
+    void setAllMessages(json const &messages);
 };
 
 
