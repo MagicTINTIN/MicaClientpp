@@ -10,6 +10,7 @@
             "-lcurl",
             "${workspaceFolder}/internal/message.cpp",
             "${workspaceFolder}/internal/messagememory.cpp",
+            "${workspaceFolder}/internal/aes.c",
         ],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",

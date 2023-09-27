@@ -6,6 +6,7 @@
 #include "includes/nlohmann/json.hpp"
 #include "internal/message.h"
 #include "internal/messagememory.h"
+#include "internal/aes.h"
 
 using json = nlohmann::json;
 
@@ -16,7 +17,19 @@ static size_t getHtmlCallback(void *contents, size_t size, size_t nmemb, void *p
     return size * nmemb;
 }
 
-int main(int argc, char const *argv[]) {
+int main()
+{
+    unsigned char key[]="012345689abcdef";
+    unsigned char text[]="il etait une fois un chat noir qui s'ennuyait";
+    unsigned char output[150];
+    unsigned char output2[150];
+    AES(text,key,output);
+    printf("%s\n",output);
+    inv_AES(output,key,output2);
+    printf("%s\n",output2);
+}
+
+int main2(int argc, char const *argv[]) {
     CURL *curl;
     CURLcode res;
     std::string htmlBuffer;
