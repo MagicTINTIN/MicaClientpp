@@ -27,16 +27,20 @@ public:
     */
     void deletedFromServer();
     /**
-     * Compare messages
+     * Returns if messages are equal
     */
     bool operator==(Message const &m);
+    /**
+     * Returns if messages not are equal
+    */
+    bool operator!=(Message const &m);
 };
 
 class MessageMemory
 {
 private:
     int nbMessages;
-    int nbLastMessageFound;
+    int nbFirstServerMessage;
     std::vector<Message> memory;
 public:
     MessageMemory();
@@ -44,7 +48,7 @@ public:
     /**
      * Add message to the local memory
     */
-    void AddMessage(Message msg);
+    void AddMessage(Message msg, int jsonMaxHistoryLength = -1);
 
     /**
      * Set all messages from server in memory

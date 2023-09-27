@@ -29,14 +29,33 @@ bool Message::operator==(Message const &m) {
         && this->rank == m.rank;
 }
 
+bool Message::operator!=(Message const &m) {
+    return this->sender != m.sender 
+        || this->content != m.content
+        || this->dateTime != m.dateTime
+        || this->certifiedUser != m.certifiedUser
+        || this->rank != m.rank;
+}
+
 /* MESSAGE MEMORY CLASS */
 
-MessageMemory::MessageMemory() : nbMessages(0), nbLastMessageFound(0)
+MessageMemory::MessageMemory() : nbMessages(0), nbFirstServerMessage(0)
 {
 }
 
-void MessageMemory::AddMessage(Message msg) {
-
+void MessageMemory::AddMessage(Message msg, int jsonMaxHistoryLength = -1) {
+    int msgmem(nbMessages - 1);
+    int checkUntilMsgNb;
+    if (jsonMaxHistoryLength == -1)
+        checkUntilMsgNb = 0;
+    else
+        checkUntilMsgNb = nbMessages - jsonMaxHistoryLength - 1;
+    
+    while (msgmem >= checkUntilMsgNb && memory[msgmem] != msg)
+    {
+        /* code */
+    }
+    
 }
 
 void MessageMemory::setAllMessages(json messages) {
