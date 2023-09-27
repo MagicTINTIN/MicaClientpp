@@ -5,6 +5,21 @@
 #include <time.h>
 #include <algorithm>
 #include "message.h"
+#include <map>
+
+/* ESCAPE SEQUENCES */
+
+std::map<std::string, char> const escapeSequenceMap = {
+    {"&#039;", '\''},
+    {"&#92;", '\\'},
+    {"&quot;", '\"'},
+    {"&amp;", '&'},
+    {"&apos;", '\''},
+    {"&lt;", '<'},
+    {"&gt;", '>'},
+    {"&nbsp;", ' '}
+    // Add more escape sequences as needed
+};
 
 /* TOOLS */
 
@@ -17,8 +32,7 @@ time_t getTimestamp(std::string t)
         return -1;
 }
 
-void ReplaceStringInPlace(std::string &s, const std::string &search,
-                          const std::string &replace)
+void ReplaceStringInPlace(std::string &s, const std::string &search, const std::string &replace)
 {
     size_t pos(0);
     while ((pos = s.find(search, pos)) != std::string::npos)
@@ -28,7 +42,8 @@ void ReplaceStringInPlace(std::string &s, const std::string &search,
     }
 }
 
-void escapeBackslash(std::string &s) {
+void escapeBackslash(std::string &s)
+{
     auto it = std::find(s.begin(), s.end(), '\\');
     while (it != s.end())
     {
@@ -39,8 +54,35 @@ void escapeBackslash(std::string &s) {
     }
 }
 
+char getCharacterFromEscapeSequence(const std::string& escapeSequence)
+{
+    auto it = escapeSequenceMap.find(escapeSequence);
+    if (it != escapeSequenceMap.end()) {
+        return it->second;
+    } else {
+        // Return a default character (you can modify this as needed)
+        return '?'; // For example, return '?' for unknown escape sequences
+    }
+}
+
+void replaceEscapeSequences(std::string &s)
+{
+    size_t found = s.find("&");
+    while (found != std::string::npos) {
+        size_t end = s.find(";", found);
+        if (end != std::string::npos && end - found < 6) {
+            std::string escapeSequence = s.substr(found, end - found + 1);
+            char character = getCharacterFromEscapeSequence(escapeSequence);
+            s.replace(found, end - found + 1, 1, character);
+        }
+        found = s.find("&", found + 1);
+    }
+}
+
 void cleanMessageList(std::string &s)
 {
+    ReplaceStringInPlace(s, "§", " ");
+    replaceEscapeSequences(s);
     escapeBackslash(s);
     ReplaceStringInPlace(s, "\\\\n", "\\n");
 }
@@ -65,7 +107,7 @@ Message::Message(std::string author, std::string message, std::string date, std:
 
 void Message::print()
 {
-    std::cout << "[" << sender << "] " << content << std::endl;
+    std::cout << "[" << BOLDRED << sender << RESET << "] " << content << std::endl;
 }
 
 void Message::setStatus(messageStatus const &newStatus)
