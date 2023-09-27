@@ -22,7 +22,15 @@ Message::Message() : sender(""), content(""), dateTime(""), certifiedUser(0), ra
 {
 }
 
-Message::Message(std::string author, std::string message, std::string date, int certified, int rnk, messageStatus msgstatus = ONLINE) : sender(author), content(message), dateTime(date), certifiedUser(certified), rank(rnk), status(msgstatus), timestamp(getTimestamp(date))
+Message::Message(std::string author, std::string message, std::string date, int certified, int rnk, messageStatus msgstatus = ONLINE) : sender(author), content(message),
+                                                                                                                                        dateTime(date), timestamp(getTimestamp(date)),
+                                                                                                                                        certifiedUser(certified), rank(rnk), status(msgstatus)
+{
+}
+
+Message::Message(std::string author, std::string message, std::string date, std::string certified, std::string rnk, messageStatus msgstatus = ONLINE) : sender(author), content(message),
+                                                                                                                                        dateTime(date), timestamp(getTimestamp(date)),
+                                                                                                                                        certifiedUser(std::stoi(certified)), rank(std::stoi(rnk)), status(msgstatus)
 {
 }
 
@@ -31,7 +39,7 @@ void Message::print()
     std::cout << "[" << sender << "] " << content << std::endl;
 }
 
-void Message::updateStatus(messageStatus const &newStatus)
+void Message::setStatus(messageStatus const &newStatus)
 {
     this->status = newStatus;
 }

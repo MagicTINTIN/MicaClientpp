@@ -13,6 +13,7 @@ public:
 
     Message();
     Message(std::string author, std::string message, std::string date, int certified, int rnk, messageStatus msgstatus=ONLINE);
+    Message(std::string author, std::string message, std::string date, std::string certified, std::string rnk, messageStatus msgstatus=ONLINE);
 
     /**
      * To print a message in terminal
@@ -21,7 +22,7 @@ public:
     /**
      * Set a message status
     */
-    void updateStatus(messageStatus const &newStatus);
+    void setStatus(messageStatus const &newStatus);
     /**
      * Get a message status
     */
