@@ -16,6 +16,7 @@ MessageMemory::MessageMemory() : nbMessages(0), firstOnline(0)
 void MessageMemory::AddMessage(Message msg)
 {
     memory.push_back(msg);
+    nbMessages++;
 }
 
 void MessageMemory::updateMemory(json const &messages)
@@ -46,20 +47,22 @@ void MessageMemory::updateMemory(json const &messages)
             continue;
         if (memory[memMsgNb].getMsgTimestamp() < nextJsonMsgTime && onlineMessagesFound == 0)
             memory[memMsgNb].setStatus(Message::OFFLINE);
-        else if (memory[memMsgNb].getMsgTimestamp() < nextJsonMsgTime && onlineMessagesFound > 0)
+        else if ((memory[memMsgNb].getMsgTimestamp() < nextJsonMsgTime || onlineMessagesFound == nbJsonMsg) && onlineMessagesFound > 0)
             memory[memMsgNb].setStatus(Message::DELETED);
         else
         {
             if (onlineMessagesFound == 0)
                 firstOnline = memMsgNb;
             onlineMessagesFound++;
+            if (onlineMessagesFound < nbJsonMsg)
+                nextJsonMsgTime = getTimestamp(messages[onlineMessagesFound]["date_time"].get<std::string>());
         }
     contin:;
     }
     json tmpmsgjson;
     for (; onlineMessagesFound < nbJsonMsg; onlineMessagesFound++)
     {
-        //std::cout << "Importing msg nb " << onlineMessagesFound << std::endl;
+        // std::cout << "Importing msg nb " << onlineMessagesFound << std::endl;
         try
         {
             tmpmsgjson = messages[onlineMessagesFound];
@@ -83,5 +86,4 @@ void MessageMemory::print()
         msg.print();
         std::cout << std::endl;
     }
-    
 }

@@ -5,6 +5,7 @@
 #include <time.h>
 #include <algorithm>
 #include "message.h"
+#include "tools.h"
 #include <map>
 
 /* ESCAPE SEQUENCES */
@@ -107,41 +108,48 @@ Message::Message(std::string author, std::string message, std::string date, std:
 
 void Message::print()
 {
-    std::cout << "[" << BOLDRED << sender << RESET << "] " << content << std::endl;
+    if (status == ONLINE)
+        std::cout << "[" << BIRED << sender << RESET << "] " << content << std::endl;
+    else if (status == OFFLINE)
+        std::cout << "[" << BIRED << sender << RESET << "] " << BIBLACK << "(offline) " << IBLACK << content << RESET << std::endl;
+    else if (status == DELETED)
+        std::cout << "[" << BIRED << sender << RESET << "] " << RED << "(deleted) " << RED << content << RESET << std::endl;
+    else
+         std::cout << "[" << BIRED << sender << RESET << "] " << RED << "(unknown status) " << RED << content << RESET << std::endl;
 }
 
 void Message::setStatus(messageStatus const &newStatus)
 {
-    this->status = newStatus;
+    status = newStatus;
 }
 
 Message::messageStatus Message::getStatus()
 {
-    return this->status;
+    return status;
 }
 
 time_t Message::getMsgTimestamp()
 {
-    if (this->timestamp == -1)
-        this->timestamp = getTimestamp(this->dateTime);
+    if (timestamp == -1)
+        timestamp = getTimestamp(dateTime);
 
-    return this->timestamp;
+    return timestamp;
 }
 
 bool Message::operator==(Message const &m)
 {
-    return this->sender == m.sender &&
-           this->content == m.content &&
-           this->dateTime == m.dateTime &&
-           this->certifiedUser == m.certifiedUser &&
-           this->rank == m.rank;
+    return sender == m.sender &&
+           content == m.content &&
+           dateTime == m.dateTime &&
+           certifiedUser == m.certifiedUser &&
+           rank == m.rank;
 }
 
 bool Message::operator!=(Message const &m)
 {
-    return this->sender != m.sender ||
-           this->content != m.content ||
-           this->dateTime != m.dateTime ||
-           this->certifiedUser != m.certifiedUser ||
-           this->rank != m.rank;
+    return sender != m.sender ||
+           content != m.content ||
+           dateTime != m.dateTime ||
+           certifiedUser != m.certifiedUser ||
+           rank != m.rank;
 }

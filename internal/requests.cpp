@@ -27,12 +27,12 @@ int getServerUpdate(std::string const &geturl, MessageMemory &mem)
     curl = curl_easy_init();
     if (curl)
     {
-        std::cout << "getURL page : " << geturl << std::endl;
+        //std::cout << "getURL page : " << geturl << std::endl;
         curl_easy_setopt(curl, CURLOPT_URL, geturl.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getHtmlCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &htmlBuffer);
         res = curl_easy_perform(curl);
-        std::cout << "RES : " << res << std::endl;
+        //std::cout << "RES : " << res << std::endl;
         if (CURLE_OK == res)
         {
             cleanMessageList(htmlBuffer);
