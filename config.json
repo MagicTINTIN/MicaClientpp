@@ -1,3 +1,22 @@
 {
-    "server":"https://micasend.baptiste-reb.fr/"
+    "server":"https://micasend.baptiste-reb.fr/",
+    "username":"aSpecialUser",
+    "token":"",
+    "enableEncryption":true,
+    "defaultEncryptionSuffix":"DefaultPseudoEncryption",
+    "generalKey":"generalEncryptionKey",
+    "discussionGroupKeys": {
+        "a":{
+            "users": [ "MagicTest", "Michel" ],
+            "key":"thisIsAPrivateGroup"
+        }
+    },
+    "privateEncryptionKeys": {
+        "MagicTest":{
+            "1":"aPrivateKey"
+        }
+    },
+    "personnalPrivteKeys": {
+        "1":"myPrivateKey"
+    }
 }

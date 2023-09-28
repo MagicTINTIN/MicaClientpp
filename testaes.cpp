@@ -10,9 +10,9 @@
 
 int main(int argc, char const *argv[])
 {
-    unsigned char text[257] = "This is a text !";
+    unsigned char text[256] = "This is a text !";
     unsigned char key[17] = "thisIsTheKey";
-    unsigned char output[257];
+    unsigned char output[512 + 30];
 
     std::string action = "both";
 
