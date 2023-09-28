@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include <sstream>
+#include <iomanip>
 #include <iostream>
 #ifdef _WIN32
     #include <windows.h>
@@ -61,4 +63,22 @@ void showHelp()
 bool isEncryptedMessage(const std::string &str)
 {
     return str.find_first_not_of("0123456789abcdef") == std::string::npos;
+}
+
+std::string urlEncode(const std::string& input) {
+    std::ostringstream encoded;
+    encoded.fill('0');
+    encoded << std::hex;
+
+    for (char c : input) {
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+            encoded << c;
+        } else if (c == ' ') {
+            encoded << '+';
+        } else {
+            encoded << '%' << std::setw(2) << int(static_cast<unsigned char>(c));
+        }
+    }
+
+    return encoded.str();
 }

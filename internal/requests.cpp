@@ -63,7 +63,7 @@ int sendMessage(std::string const &posturl, std::string const &content, std::str
     CURL *curl;
     CURLcode res;
 
-    std::string url = posturl + "message=" + content + "&sender=" + sender + "&token=" + token;
+    std::string url = posturl + "message=" + urlEncode(content) + "&sender=" + urlEncode(sender) + "&token=" + urlEncode(token);
 
     curl = curl_easy_init();
     if (curl)

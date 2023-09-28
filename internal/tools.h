@@ -157,4 +157,6 @@ void showHelp();
 
 bool isEncryptedMessage(const std::string &str);
 
+std::string urlEncode(const std::string &input);
+
 int getWidth();
