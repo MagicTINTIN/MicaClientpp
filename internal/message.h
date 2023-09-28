@@ -45,6 +45,7 @@ public:
 
     Message();
     Message(std::string author, std::string message, std::string date, int certified, int rnk, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
+    Message(std::string author, std::string message, std::string date, int certified, int rnk, time_t ts, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
     Message(std::string author, std::string message, std::string date, std::string certified, std::string rnk, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
 
     /**

@@ -26,7 +26,10 @@ public:
      * Add message to the local memory
      */
     void AddMessage(Message msg);
-
+    /**
+     * Import messages from backup in memory
+     */
+    void importMemory(nlohmann::json const &backup);
     /**
      * Update messages from server in memory
      */

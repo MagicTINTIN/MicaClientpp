@@ -39,8 +39,12 @@ int main(int argc, char const *argv[])
 
     MessageMemory mem;
 
-    std::string input;
+    std::ifstream bf("backup.json");
+    json backupData = json::parse(bf);
 
+    mem.importMemory(backupData);
+
+    std::string input;
     while (true)
     {
         exitUpdateCode = getServerUpdate(geturl, mem, memsettings);

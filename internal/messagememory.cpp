@@ -41,6 +41,21 @@ void MessageMemory::AddMessage(Message msg)
     nbMessages++;
 }
 
+void MessageMemory::importMemory(nlohmann::json const &backup)
+{
+    for (auto &m : backup.items())
+    {
+        Message msg(m.value()["sender"].get<std::string>(),
+                    m.value()["content"].get<std::string>(),
+                    m.value()["dateTime"].get<std::string>(),
+                    m.value()["certifiedUser"].get<int>(),
+                    m.value()["rank"].get<int>(),
+                    m.value()["timestamp"].get<time_t>(),
+                    m.value()["status"].get<Message::messageStatus>());
+        AddMessage(msg);
+    }
+}
+
 void MessageMemory::updateMemory(json const &messages, memorySettings memsettings)
 {
     int nbJsonMsg(0), onlineMessagesFound(0);

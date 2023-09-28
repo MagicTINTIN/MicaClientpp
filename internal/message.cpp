@@ -124,6 +124,12 @@ Message::Message(std::string author, std::string message, std::string date, int 
 {
 }
 
+Message::Message(std::string author, std::string message, std::string date, int certified, int rnk, time_t ts, Message::messageStatus msgstatus) : sender(author), content(message),
+                                                                                                                                        dateTime(date), timestamp(ts),
+                                                                                                                                        certifiedUser(certified), rank(rnk), status(msgstatus)
+{
+}
+
 Message::Message(std::string author, std::string message, std::string date, std::string certified, std::string rnk, Message::messageStatus msgstatus) : sender(author), content(message),
                                                                                                                                                         dateTime(date), timestamp(getTimestamp(date)),
                                                                                                                                                         certifiedUser(std::stoi(certified)), rank(std::stoi(rnk)), status(msgstatus)
