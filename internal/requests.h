@@ -3,4 +3,4 @@
 #include "message.h"
 #include "messagememory.h"
 
-int getServerUpdate(std::string const &geturl, MessageMemory &mem);
+int getServerUpdate(std::string const &geturl, MessageMemory &mem, MessageMemory::memorySettings &memsettings);

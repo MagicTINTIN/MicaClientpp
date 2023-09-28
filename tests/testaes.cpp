@@ -2,9 +2,9 @@
 #include <curl/curl.h>
 #include <iostream>
 #include <string>
-#include "internal/message.h"
-#include "internal/messagememory.h"
-#include "internal/aes.h"
+#include "../internal/message.h"
+#include "../internal/messagememory.h"
+#include "../internal/aes.h"
 
 int main(int argc, char const *argv[])
 {

@@ -19,11 +19,17 @@ int main(int argc, char const *argv[])
     std::ifstream f("config.json");
     json data = json::parse(f);
     // std::cout << data << std::endl;
+
     std::string geturl, username;
+    Message::messageSettings msgsettings;
+    MessageMemory::memorySettings memsettings;
+
     try
     {
         geturl = data["server"].get<std::string>() + "msg.php?getmsg=json";
         username = data["username"].get<std::string>();
+        msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(), data["settings"]["displayOfflineMessages"].get<bool>());
+        memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>());
     }
     catch (std::out_of_range &e)
     {
@@ -37,11 +43,11 @@ int main(int argc, char const *argv[])
 
     while (true)
     {
-        exitUpdateCode = getServerUpdate(geturl, mem);
+        exitUpdateCode = getServerUpdate(geturl, mem, memsettings);
         if (exitUpdateCode == 0)
         {
-            //clearScreen();
-            mem.print();
+            clearScreen();
+            mem.print(msgsettings);
         }
         else
         {

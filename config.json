@@ -24,5 +24,11 @@
     },
     "personnalPrivteKeys": {
         "1":"myPrivateKey"
+    },
+
+    "settings": {
+        "backupMessages":true,
+        "displayDeletedMessages":true,
+        "displayOfflineMessages":true
     }
 }

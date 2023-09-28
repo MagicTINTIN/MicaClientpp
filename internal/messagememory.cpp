@@ -2,12 +2,34 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 #include "../includes/nlohmann/json.hpp"
 #include "message.h"
 #include "messagememory.h"
 using json = nlohmann::json;
 
+/* JSON TOOLS */
+json to_json(const Message::jsonMessage &m)
+{
+    return json{
+        {"sender", m.sender},
+        {"content", m.content},
+        {"dateTime", m.dateTime},
+        {"certifiedUser", m.certifiedUser},
+        {"rank", m.rank},
+        {"timestamp", m.timestamp},
+        {"status", m.status},
+    };
+}
+
 /* MESSAGE MEMORY CLASS */
+
+MessageMemory::memorySettings::memorySettings() : backup(true)
+{
+}
+MessageMemory::memorySettings::memorySettings(bool back) : backup(back)
+{
+}
 
 MessageMemory::MessageMemory() : nbMessages(0), firstOnline(0)
 {
@@ -19,7 +41,7 @@ void MessageMemory::AddMessage(Message msg)
     nbMessages++;
 }
 
-void MessageMemory::updateMemory(json const &messages)
+void MessageMemory::updateMemory(json const &messages, memorySettings memsettings)
 {
     int nbJsonMsg(0), onlineMessagesFound(0);
     int memMsgNb = firstOnline;
@@ -77,13 +99,24 @@ void MessageMemory::updateMemory(json const &messages)
             std::cout << "JSON MESSAGE READING ERROR : " << e.what() << '\n';
         }
     }
+    if (memsettings.backup)
+    {
+        json j;
+        for (Message &msg : memory)
+        {
+            Message::jsonMessage jsonMsg(msg);
+            j.push_back(to_json(jsonMsg));
+        }
+        std::ofstream o("backup.json");
+        o << std::setw(4) << j << std::endl;
+    }
 }
 
-void MessageMemory::print()
+void MessageMemory::print(Message::messageSettings const &msettings)
 {
     for (Message &msg : memory)
     {
-        msg.print();
+        msg.print(msettings);
         std::cout << std::endl;
     }
 }

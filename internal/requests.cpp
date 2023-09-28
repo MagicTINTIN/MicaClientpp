@@ -17,7 +17,7 @@ static size_t getHtmlCallback(void *contents, size_t size, size_t nmemb, void *p
     return size * nmemb;
 }
 
-int getServerUpdate(std::string const &geturl, MessageMemory &mem)
+int getServerUpdate(std::string const &geturl, MessageMemory &mem, MessageMemory::memorySettings &memsettings)
 {
     int exitcode(0);
     CURL *curl;
@@ -38,7 +38,7 @@ int getServerUpdate(std::string const &geturl, MessageMemory &mem)
             cleanMessageList(htmlBuffer);
             // std::cout << htmlBuffer << std::endl;
             json jsonMsgList = json::parse(htmlBuffer);
-            mem.updateMemory(jsonMsgList);
+            mem.updateMemory(jsonMsgList, memsettings);
         }
         else
         {

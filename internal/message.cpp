@@ -55,12 +55,15 @@ void escapeBackslash(std::string &s)
     }
 }
 
-char getCharacterFromEscapeSequence(const std::string& escapeSequence)
+char getCharacterFromEscapeSequence(const std::string &escapeSequence)
 {
     auto it = escapeSequenceMap.find(escapeSequence);
-    if (it != escapeSequenceMap.end()) {
+    if (it != escapeSequenceMap.end())
+    {
         return it->second;
-    } else {
+    }
+    else
+    {
         // Return a default character (you can modify this as needed)
         return '?'; // For example, return '?' for unknown escape sequences
     }
@@ -69,9 +72,11 @@ char getCharacterFromEscapeSequence(const std::string& escapeSequence)
 void replaceEscapeSequences(std::string &s)
 {
     size_t found = s.find("&");
-    while (found != std::string::npos) {
+    while (found != std::string::npos)
+    {
         size_t end = s.find(";", found);
-        if (end != std::string::npos && end - found < 6) {
+        if (end != std::string::npos && end - found < 6)
+        {
             std::string escapeSequence = s.substr(found, end - found + 1);
             char character = getCharacterFromEscapeSequence(escapeSequence);
             s.replace(found, end - found + 1, 1, character);
@@ -89,6 +94,25 @@ void cleanMessageList(std::string &s)
 }
 
 /* MESSAGE CLASS*/
+Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true)
+{
+}
+
+Message::messageSettings::messageSettings(bool ddel, bool doff) : deletedmsg(ddel), offlinemsg(doff)
+{
+}
+
+Message::jsonMessage::jsonMessage() : sender(""), content(""), dateTime(""), timestamp(-1), certifiedUser(0), rank(0), status(ONLINE)
+{
+}
+
+Message::jsonMessage::jsonMessage(Message message) : sender(message.sender), content(message.content), dateTime(message.dateTime), timestamp(message.timestamp), certifiedUser(message.certifiedUser), rank(message.rank), status(message.status)
+{
+}
+
+Message::jsonMessage::jsonMessage(std::string a, std::string c, std::string d, int cu, int r, time_t t, Message::messageStatus s) : sender(a), content(c), dateTime(d), timestamp(t), certifiedUser(cu), rank(r), status(s)
+{
+}
 
 Message::Message() : sender(""), content(""), dateTime(""), timestamp(-1), certifiedUser(0), rank(0), status(ONLINE)
 {
@@ -106,16 +130,16 @@ Message::Message(std::string author, std::string message, std::string date, std:
 {
 }
 
-void Message::print()
+void Message::print(messageSettings const &msettings)
 {
     if (status == ONLINE)
         std::cout << "[" << BIRED << sender << RESET << "] " << content << std::endl;
-    else if (status == OFFLINE)
+    else if (status == OFFLINE && msettings.offlinemsg)
         std::cout << "[" << BIRED << sender << RESET << "] " << BIBLACK << "(offline) " << IBLACK << content << RESET << std::endl;
-    else if (status == DELETED)
+    else if (status == DELETED && msettings.deletedmsg)
         std::cout << "[" << BIRED << sender << RESET << "] " << RED << "(deleted) " << RED << content << RESET << std::endl;
     else
-         std::cout << "[" << BIRED << sender << RESET << "] " << RED << "(unknown status) " << RED << content << RESET << std::endl;
+        std::cout << "[" << BIRED << sender << RESET << "] " << RED << "(unknown status) " << RED << content << RESET << std::endl;
 }
 
 void Message::setStatus(messageStatus const &newStatus)
