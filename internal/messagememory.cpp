@@ -18,6 +18,7 @@ json to_json(const Message::jsonMessage &m)
         {"certifiedUser", m.certifiedUser},
         {"rank", m.rank},
         {"timestamp", m.timestamp},
+        {"decrypted", m.decrypted},
         {"status", m.status},
     };
 }
@@ -51,6 +52,7 @@ void MessageMemory::importMemory(nlohmann::json const &backup)
                     m.value()["certifiedUser"].get<int>(),
                     m.value()["rank"].get<int>(),
                     m.value()["timestamp"].get<time_t>(),
+                    m.value()["decrypted"].get<std::string>(),
                     m.value()["status"].get<Message::messageStatus>());
         AddMessage(msg);
     }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <curl/curl.h>
 #include <iostream>
+#include <vector>
 #include <string>
 #include <fstream>
 #include "includes/nlohmann/json.hpp"
@@ -14,24 +15,30 @@ using json = nlohmann::json;
 
 int main(int argc, char const *argv[])
 {
+    unsigned char decryptedText[490] = "";
+    unsigned char key[40] = "";
+    unsigned char encryptedText[980] = "";
     int exitUpdateCode(0), exitSendCode(0);
 
     std::ifstream f("config.json");
     json data = json::parse(f);
     // std::cout << data << std::endl;
 
-    std::string serverurl, geturl, posturl, username, token;
+    std::string serverurl, geturl, posturl, username, token, genkey;
+    bool encryptenabled;
     Message::messageSettings msgsettings;
     MessageMemory::memorySettings memsettings;
 
     try
     {
+        genkey = data["generalKey"].get<std::string>();
+        encryptenabled = data["enableEncryption"].get<bool>();
         serverurl = data["server"].get<std::string>();
         geturl = serverurl + "msg.php?getmsg=json";
         posturl = serverurl + "/msg.php?";
         username = data["username"].get<std::string>();
         token = data["token"].get<std::string>();
-        msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(), data["settings"]["displayOfflineMessages"].get<bool>());
+        msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(), data["settings"]["displayOfflineMessages"].get<bool>(), genkey);
         memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>());
     }
     catch (std::out_of_range &e)
@@ -42,10 +49,20 @@ int main(int argc, char const *argv[])
 
     MessageMemory mem;
 
-    std::ifstream bf("backup.json");
-    json backupData = json::parse(bf);
+    if (memsettings.backup)
+    {
 
-    mem.importMemory(backupData);
+        std::ifstream bf("backup.json");
+        if (!bf.is_open())
+        {
+            std::cout << "No backup found" << std::endl;
+        }
+        else
+        {
+            json backupData = json::parse(bf);
+            mem.importMemory(backupData);
+        }
+    }
 
     std::string input;
     while (true)
@@ -84,7 +101,14 @@ int main(int argc, char const *argv[])
         }
         else
         {
-            exitSendCode = sendMessage(posturl, input, username, token);
+            if (encryptenabled)
+            {
+                std::copy(input.cbegin(), input.cend(), decryptedText);
+                std::copy(genkey.cbegin(), genkey.cend(), key);
+                AES(decryptedText, key, encryptedText);
+            }
+            std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
+            exitSendCode = sendMessage(posturl, "护" + encryptedInput, username, token);
             if (exitUpdateCode != 0)
             {
                 std::cout << "SEND ERROR " << exitUpdateCode << std::endl;

@@ -27,7 +27,7 @@
     },
 
     "settings": {
-        "backupMessages":true,
+        "backupMessages":false,
         "displayDeletedMessages":true,
         "displayOfflineMessages":true
     }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <vector>
 #include <iostream>
 #ifdef _WIN32
     #include <windows.h>
@@ -55,4 +56,9 @@ void showHelp()
               << std::endl
               << "Press [ENTER] to go back to chat" << std::endl;
     std::cin.get();
+}
+
+bool isEncryptedMessage(const std::string &str)
+{
+    return str.find_first_not_of("0123456789abcdef") == std::string::npos;
 }

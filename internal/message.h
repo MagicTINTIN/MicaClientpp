@@ -25,8 +25,9 @@ public:
     {
         bool deletedmsg;
         bool offlinemsg;
+        std::string generalkey;
         messageSettings();
-        messageSettings(bool ddel, bool doff);
+        messageSettings(bool ddel, bool doff, std::string gkey);
     };
 
     struct jsonMessage
@@ -37,6 +38,7 @@ public:
         int certifiedUser;
         int rank;
         time_t timestamp;
+        std::string decrypted;
         messageStatus status;
         jsonMessage();
         jsonMessage(Message message);
@@ -45,7 +47,7 @@ public:
 
     Message();
     Message(std::string author, std::string message, std::string date, int certified, int rnk, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
-    Message(std::string author, std::string message, std::string date, int certified, int rnk, time_t ts, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
+    Message(std::string author, std::string message, std::string date, int certified, int rnk, time_t ts, std::string dc, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
     Message(std::string author, std::string message, std::string date, std::string certified, std::string rnk, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
 
     /**
@@ -76,6 +78,7 @@ public:
 private:
     std::string sender;
     std::string content;
+    std::string decrypted;
     std::string dateTime;
     int certifiedUser;
     int rank;

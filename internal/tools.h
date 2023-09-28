@@ -155,4 +155,6 @@ void createLine(char c, int size);
 
 void showHelp();
 
+bool isEncryptedMessage(const std::string &str);
+
 int getWidth();
