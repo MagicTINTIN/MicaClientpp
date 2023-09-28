@@ -8,6 +8,7 @@
 #include "internal/messagememory.h"
 #include "internal/aes.h"
 #include "internal/requests.h"
+#include "internal/tools.h"
 
 using json = nlohmann::json;
 
@@ -30,6 +31,7 @@ int main(int argc, char const *argv[]) {
     
     MessageMemory mem;
     exitUpdateCode = getServerUpdate(geturl, mem);
+    clearScreen();
     if (exitUpdateCode == 0)
         mem.print();
     else {

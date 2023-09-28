@@ -38,6 +38,7 @@
             "${workspaceFolder}/internal/messagememory.cpp",
             "${workspaceFolder}/internal/aes.c",
             "${workspaceFolder}/internal/requests.cpp",
+            "${workspaceFolder}/internal/tools.cpp",
         ],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
