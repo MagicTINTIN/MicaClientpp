@@ -56,3 +56,35 @@ int getServerUpdate(std::string const &geturl, MessageMemory &mem, MessageMemory
     curl_easy_cleanup(curl);
     return exitcode;
 }
+
+int sendMessage(std::string const &posturl, std::string const &content, std::string const &sender, std::string const &token)
+{
+    int exitcode(0);
+    CURL *curl;
+    CURLcode res;
+
+    std::string url = posturl + "message=" + content + "&sender=" + sender + "&token=" + token;
+
+    curl = curl_easy_init();
+    if (curl)
+    {
+        //std::cout << "getURL page : " << geturl << std::endl;
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        res = curl_easy_perform(curl);
+        //std::cout << "RES : " << res << std::endl;
+        if (CURLE_OK != res)
+        {
+            std::cout << "An error has occured, may be check the server in config.json" << std::endl;
+            exitcode = 3;
+        }
+    }
+    else
+    {
+        std::cout << "ERROR: Curl is not working..." << std::endl;
+        exitcode = 9;
+    }
+
+    /* always cleanup */
+    curl_easy_cleanup(curl);
+    return exitcode;
+}

@@ -106,5 +106,23 @@
         "sender": "MagicTINTIN",
         "status": 2,
         "timestamp": 1695901366
+    },
+    {
+        "certifiedUser": 0,
+        "content": "yo",
+        "dateTime": "2023-09-28 15:02:58",
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 0,
+        "timestamp": 1695902578
+    },
+    {
+        "certifiedUser": 2,
+        "content": "Salut",
+        "dateTime": "2023-09-28 15:03:51",
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1695902631
     }
 ]

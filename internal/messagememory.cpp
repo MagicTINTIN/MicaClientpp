@@ -132,6 +132,5 @@ void MessageMemory::print(Message::messageSettings const &msettings)
     for (Message &msg : memory)
     {
         msg.print(msettings);
-        std::cout << std::endl;
     }
 }

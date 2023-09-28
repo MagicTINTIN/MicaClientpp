@@ -125,8 +125,8 @@ Message::Message(std::string author, std::string message, std::string date, int 
 }
 
 Message::Message(std::string author, std::string message, std::string date, int certified, int rnk, time_t ts, Message::messageStatus msgstatus) : sender(author), content(message),
-                                                                                                                                        dateTime(date), timestamp(ts),
-                                                                                                                                        certifiedUser(certified), rank(rnk), status(msgstatus)
+                                                                                                                                                   dateTime(date), timestamp(ts),
+                                                                                                                                                   certifiedUser(certified), rank(rnk), status(msgstatus)
 {
 }
 
@@ -139,13 +139,17 @@ Message::Message(std::string author, std::string message, std::string date, std:
 void Message::print(messageSettings const &msettings)
 {
     if (status == ONLINE)
-        std::cout << "[" << BIRED << sender << RESET << "] " << content << std::endl;
+        std::cout << "[" << BIRED << sender << RESET << "] " << content << std::endl
+                  << std::endl;
     else if (status == OFFLINE && msettings.offlinemsg)
-        std::cout << "[" << BIRED << sender << RESET << "] " << BIBLACK << "(offline) " << IBLACK << content << RESET << std::endl;
+        std::cout << "[" << BIRED << sender << RESET << "] " << BIBLACK << "(offline) " << IBLACK << content << RESET << std::endl
+                  << std::endl;
     else if (status == DELETED && msettings.deletedmsg)
-        std::cout << "[" << BIRED << sender << RESET << "] " << RED << "(deleted) " << RED << content << RESET << std::endl;
-    else
-        std::cout << "[" << BIRED << sender << RESET << "] " << RED << "(unknown status) " << RED << content << RESET << std::endl;
+        std::cout << "[" << BIRED << sender << RESET << "] " << RED << "(deleted) " << RED << content << RESET << std::endl
+                  << std::endl;
+    else if (status != OFFLINE && status != DELETED)
+        std::cout << "[" << BIRED << sender << RESET << "] " << RED << "(unknown status) " << RED << content << RESET << std::endl
+                  << std::endl;
 }
 
 void Message::setStatus(messageStatus const &newStatus)

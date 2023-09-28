@@ -14,20 +14,23 @@ using json = nlohmann::json;
 
 int main(int argc, char const *argv[])
 {
-    int exitUpdateCode(0);
+    int exitUpdateCode(0), exitSendCode(0);
 
     std::ifstream f("config.json");
     json data = json::parse(f);
     // std::cout << data << std::endl;
 
-    std::string geturl, username;
+    std::string serverurl, geturl, posturl, username, token;
     Message::messageSettings msgsettings;
     MessageMemory::memorySettings memsettings;
 
     try
     {
-        geturl = data["server"].get<std::string>() + "msg.php?getmsg=json";
+        serverurl = data["server"].get<std::string>();
+        geturl = serverurl + "msg.php?getmsg=json";
+        posturl = serverurl + "/msg.php?";
         username = data["username"].get<std::string>();
+        token = data["token"].get<std::string>();
         msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(), data["settings"]["displayOfflineMessages"].get<bool>());
         memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>());
     }
@@ -67,7 +70,12 @@ int main(int argc, char const *argv[])
         }
         else
         {
-            // send message to server
+            exitSendCode = sendMessage(posturl, input, username, token);
+            if (exitUpdateCode != 0)
+            {
+                std::cout << "SEND ERROR " << exitUpdateCode << std::endl;
+                return exitUpdateCode;
+            }
         }
     }
 
