@@ -37,6 +37,7 @@
                 "${workspaceFolder}/internal/message.cpp",
                 "${workspaceFolder}/internal/messagememory.cpp",
                 "${workspaceFolder}/internal/aes.c",
+                "${workspaceFolder}/internal/requests.cpp",
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",

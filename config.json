@@ -1,10 +1,16 @@
 {
+    "version":0,
+    "subversion":3,
+
     "server":"https://micasend.baptiste-reb.fr/",
     "username":"aSpecialUser",
     "token":"",
+
     "enableEncryption":true,
+
     "defaultEncryptionSuffix":"DefaultPseudoEncryption",
     "generalKey":"generalEncryptionKey",
+    
     "discussionGroupKeys": {
         "a":{
             "users": [ "MagicTest", "Michel" ],

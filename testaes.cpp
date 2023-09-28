@@ -2,8 +2,6 @@
 #include <curl/curl.h>
 #include <iostream>
 #include <string>
-#include <fstream>
-#include "includes/nlohmann/json.hpp"
 #include "internal/message.h"
 #include "internal/messagememory.h"
 #include "internal/aes.h"
