@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "C/C++: g++ build and debug active file",
+        "name": "[MAIN] C/C++: g++ build and debug main file",
         "type": "cppdbg",
         "request": "launch",
         "program": "${workspaceFolder}/debug.out",
@@ -25,7 +25,33 @@
             "ignoreFailures": true
           }
         ],
-        "preLaunchTask": "C/C++: g++ build active file",
+        "preLaunchTask": "[MAIN] C/C++: g++ build main file",
+      },
+      {
+        "name": "[ACTIVE] C/C++: g++ build and debug active file",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/${fileBasenameNoExtension}Debug.out",
+        "args": [
+            "-lcurl",
+            "${workspaceFolder}/internal/message.cpp",
+            "${workspaceFolder}/internal/messagememory.cpp",
+            "${workspaceFolder}/internal/aes.c",
+        ],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "[ACTIVE] C/C++: g++ build acitve file",
       }
     ]
   }
