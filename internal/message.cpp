@@ -111,7 +111,7 @@ Message::jsonMessage::jsonMessage(Message message) : sender(message.sender), con
 {
 }
 
-Message::jsonMessage::jsonMessage(std::string a, std::string c, std::string d, int cu, int r, time_t t, Message::messageStatus s) : sender(a), content(c), dateTime(d), timestamp(t), certifiedUser(cu), rank(r), status(s)
+Message::jsonMessage::jsonMessage(std::string a, std::string c, std::string d, int cu, int r, time_t t, std::string dc, Message::messageStatus s) : sender(a), content(c), dateTime(d), timestamp(t), certifiedUser(cu), rank(r), decrypted(dc), status(s)
 {
 }
 

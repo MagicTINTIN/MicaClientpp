@@ -42,7 +42,7 @@ public:
         messageStatus status;
         jsonMessage();
         jsonMessage(Message message);
-        jsonMessage(std::string a, std::string c, std::string d, int cu, int r, time_t t, messageStatus s);
+        jsonMessage(std::string a, std::string c, std::string d, int cu, int r, time_t t, std::string dc, messageStatus s);
     };
 
     Message();
