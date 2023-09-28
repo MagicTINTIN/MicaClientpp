@@ -64,9 +64,23 @@ int main(int argc, char const *argv[])
         std::cout << username << " > ";
         std::getline(std::cin, input);
 
-        if (input == "/exit")
+        if (input.rfind("/exit", 0) == 0)
         {
             break; // Exit program if /exit
+        }
+        else if (input.rfind("/help", 0) == 0)
+        {
+            showHelp();
+        }
+        else if (input.rfind("/u ", 0) == 0)
+        {
+            ReplaceStringInPlace(input, "/u ", "");
+            exitSendCode = sendMessage(posturl, input, username, token);
+            if (exitUpdateCode != 0)
+            {
+                std::cout << "SEND UNSAFE ERROR " << exitUpdateCode << std::endl;
+                return exitUpdateCode;
+            }
         }
         else
         {

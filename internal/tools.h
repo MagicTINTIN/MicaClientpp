@@ -1,5 +1,6 @@
 #pragma once
 
+#if defined(__APPLE__) || defined(__linux__)
 //the following are UBUNTU/LINUX, and MacOS ONLY terminal color codes.
 #define RESET       "\033[0m"
 // Regular Colors
@@ -33,14 +34,14 @@
 #define UWHITE      "\033[4;37m"      // White
 
 // Background
-#define On_BLACK    "\033[40m"    // Black
-#define On_RED      "\033[41m"    // Red
-#define On_GREEN    "\033[42m"    // Green
-#define On_YELLOW   "\033[43m"    // Yellow
-#define On_BLUE     "\033[44m"    // Blue
-#define On_PURPLE   "\033[45m"    // Purple
-#define On_CYAN     "\033[46m"    // Cyan
-#define On_WHITE    "\033[47m"    // White
+#define ON_BLACK    "\033[40m"    // Black
+#define ON_RED      "\033[41m"    // Red
+#define ON_GREEN    "\033[42m"    // Green
+#define ON_YELLOW   "\033[43m"    // Yellow
+#define ON_BLUE     "\033[44m"    // Blue
+#define ON_PURPLE   "\033[45m"    // Purple
+#define ON_CYAN     "\033[46m"    // Cyan
+#define ON_WHITE    "\033[47m"    // White
 
 // High Intensity
 #define IBLACK      "\033[0;90m"      // Black
@@ -63,16 +64,95 @@
 #define BIWHITE     "\033[1;97m"      // White
 
 // High Intensity backgrounds
-#define On_IBLACK   "\033[0;100m"     // Black
-#define On_IRED     "\033[0;101m"     // Red
-#define On_IGREEN   "\033[0;102m"     // Green
-#define On_IYELLOW  "\033[0;103m"     // Yellow
-#define On_IBLUE    "\033[0;104m"     // Blue
-#define On_IPURPLE  "\033[0;105m"     // Purple
-#define On_ICYAN    "\033[0;106m"     // Cyan
-#define On_IWHITE   "\033[0;107m"     // White
+#define ON_IBLACK   "\033[0;100m"     // Black
+#define ON_IRED     "\033[0;101m"     // Red
+#define ON_IGREEN   "\033[0;102m"     // Green
+#define ON_IYELLOW  "\033[0;103m"     // Yellow
+#define ON_IBLUE    "\033[0;104m"     // Blue
+#define ON_IPURPLE  "\033[0;105m"     // Purple
+#define ON_ICYAN    "\033[0;106m"     // Cyan
+#define ON_IWHITE   "\033[0;107m"     // White
+
+#else
+#define RESET       ""
+// Regular Colors
+#define BLACK       ""
+#define RED         ""
+#define GREEN       ""
+#define YELLOW      ""
+#define BLUE        ""
+#define PURPLE      ""
+#define CYAN        ""
+#define WHITE       ""
+
+// Bold
+#define BBLACK      ""
+#define BRED        ""
+#define BGREEN      ""
+#define BYELLOW     ""
+#define BBLUE       ""
+#define BPURPLE     ""
+#define BCYAN       ""
+#define BWHITE      ""
+
+// Underline
+#define UBLACK      ""
+#define URED        ""
+#define UGREEN      ""
+#define UYELLOW     ""
+#define UBLUE       ""
+#define UPURPLE     ""
+#define UCYAN       ""
+#define UWHITE      ""
+
+// Background
+#define ON_BLACK    ""
+#define ON_RED      ""
+#define ON_GREEN    ""
+#define ON_YELLOW   ""
+#define ON_BLUE     ""
+#define ON_PURPLE   ""
+#define ON_CYAN     ""
+#define ON_WHITE    ""
+
+// High Intensity
+#define IBLACK      ""
+#define IRED        ""
+#define IGREEN      ""
+#define IYELLOW     ""
+#define IBLUE       ""
+#define IPURPLE     ""
+#define ICYAN       ""
+#define IWHITE      ""
+
+// Bold High Intensity
+#define BIBLACK     ""
+#define BIRED       ""
+#define BIGREEN     ""
+#define BIYELLOW    ""
+#define BIBLUE      ""
+#define BIPURPLE    ""
+#define BICYAN      ""
+#define BIWHITE     ""
+
+// High Intensity backgrounds
+#define ON_IBLACK   ""
+#define ON_IRED     ""
+#define ON_IGREEN   ""
+#define ON_IYELLOW  ""
+#define ON_IBLUE    ""
+#define ON_IPURPLE  ""
+#define ON_ICYAN    ""
+#define ON_IWHITE   ""
+#endif
 
 /**
  * Clear the screen if system supports it
 */
 void clearScreen();
+
+void createLine(char c, int size);
+
+void showHelp();
+
+int getWidth();

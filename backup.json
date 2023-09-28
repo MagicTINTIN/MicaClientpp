@@ -124,5 +124,14 @@
         "sender": "MagicTINTIN",
         "status": 0,
         "timestamp": 1695902631
+    },
+    {
+        "certifiedUser": 0,
+        "content": "Message",
+        "dateTime": "2023-09-28 19:47:00",
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 0,
+        "timestamp": 1695919620
     }
 ]
