@@ -51,7 +51,7 @@
         "id": 244,
         "rank": 15,
         "sender": "MagicTINTIN",
-        "status": 0,
+        "status": 1,
         "timestamp": 1695932261
     },
     {
@@ -62,7 +62,7 @@
         "id": 245,
         "rank": 0,
         "sender": "UnAutreGens",
-        "status": 0,
+        "status": 1,
         "timestamp": 1695932373
     },
     {
@@ -73,7 +73,7 @@
         "id": 246,
         "rank": 15,
         "sender": "MagicTINTIN",
-        "status": 0,
+        "status": 1,
         "timestamp": 1695973018
     },
     {
@@ -260,18 +260,62 @@
         "id": 263,
         "rank": 15,
         "sender": "MagicTINTIN",
-        "status": 0,
+        "status": 2,
         "timestamp": 1696002530
     },
     {
         "certifiedUser": 2,
         "content": "护7825f419dc05fd8e8a7e959fdfcf487da185797d588a91c86be6675951424bcffd345c402dd3ff6603c84437dee61e3831154500b79f12cc70e899f8433b657d",
         "dateTime": "2023-09-29 18:49:19",
-        "decrypted": "",
+        "decrypted": "oh... i need to send a message to make it looks deleted",
         "id": 264,
         "rank": 15,
         "sender": "MagicTINTIN",
         "status": 0,
         "timestamp": 1696002559
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护3fc38578f266778aa079f89b1689cd497742b5b0e2aba72e21b3d1e8701201b3",
+        "dateTime": "2023-09-29 18:52:16",
+        "decrypted": "Oh bonjour @MagicTINTIN",
+        "id": 265,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696002736
+    },
+    {
+        "certifiedUser": 2,
+        "content": "test",
+        "dateTime": "2023-09-29 18:55:18",
+        "decrypted": "",
+        "id": 266,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1696002918
+    },
+    {
+        "certifiedUser": 2,
+        "content": "护2961b4e98bc7d2adb2393d6fbb03949c3126e80c73e593ff7e82be554697713c",
+        "dateTime": "2023-09-29 18:56:20",
+        "decrypted": "might be deleted some day",
+        "id": 267,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1696002980
+    },
+    {
+        "certifiedUser": 2,
+        "content": "new",
+        "dateTime": "2023-09-29 19:01:40",
+        "decrypted": "",
+        "id": 268,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1696003300
     }
 ]

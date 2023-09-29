@@ -10,7 +10,6 @@ using json = nlohmann::json;
 
 /* JSON TOOLS */
 
-
 /* MESSAGE MEMORY CLASS */
 
 MessageMemory::memorySettings::memorySettings() : backup(true)
@@ -67,15 +66,19 @@ void MessageMemory::updateMemory(json const &messages, memorySettings memsetting
         return;
     }
 
-    time_t nextJsonMsgTime = getTimestamp(messages[0]["date_time"].get<std::string>());
+    int nextOnlineID(stoi(messages[onlineMessagesFound]["id"].get<std::string>()));
+    while (memMsgNb > 0 && memory[memMsgNb].getID() > nextOnlineID)
+    {
+        memMsgNb--;
+        memory[memMsgNb].setStatus(Message::ONLINE);
+    }
     for (; memMsgNb < nbMessages; memMsgNb++)
     {
-        // if message in memory is older than the oldest on the server
         if (memory[memMsgNb].getStatus() != Message::ONLINE)
             continue;
-        if (memory[memMsgNb].getMsgTimestamp() < nextJsonMsgTime && onlineMessagesFound == 0)
+        if (memory[memMsgNb].getID() < nextOnlineID && onlineMessagesFound == 0)
             memory[memMsgNb].setStatus(Message::OFFLINE);
-        else if ((memory[memMsgNb].getMsgTimestamp() < nextJsonMsgTime || onlineMessagesFound == nbJsonMsg) && onlineMessagesFound > 0)
+        else if ((memory[memMsgNb].getID() < nextOnlineID || onlineMessagesFound == nbJsonMsg) && onlineMessagesFound > 0)
             memory[memMsgNb].setStatus(Message::DELETED);
         else
         {
@@ -83,7 +86,9 @@ void MessageMemory::updateMemory(json const &messages, memorySettings memsetting
                 firstOnline = memMsgNb;
             onlineMessagesFound++;
             if (onlineMessagesFound < nbJsonMsg)
-                nextJsonMsgTime = getTimestamp(messages[onlineMessagesFound]["date_time"].get<std::string>());
+            {
+                nextOnlineID = stoi(messages[onlineMessagesFound]["id"].get<std::string>());
+            }
         }
     contin:;
     }

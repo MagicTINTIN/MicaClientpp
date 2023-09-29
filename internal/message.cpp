@@ -180,12 +180,19 @@ Message::messageStatus Message::getStatus()
     return status;
 }
 
+
 time_t Message::getMsgTimestamp()
 {
     if (timestamp == -1)
         timestamp = getTimestamp(dateTime);
 
     return timestamp;
+}
+
+
+int Message::getID()
+{
+    return id;
 }
 
 bool Message::operator==(Message const &m)

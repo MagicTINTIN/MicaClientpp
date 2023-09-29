@@ -70,6 +70,10 @@ public:
      */
     messageStatus getStatus();
     /**
+     * Get a message ID
+     */
+    int getID();
+    /**
      * Returns timestamp of the message
      */
     time_t getMsgTimestamp();

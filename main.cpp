@@ -10,6 +10,7 @@
 #include "internal/aes.h"
 #include "internal/requests.h"
 #include "internal/tools.h"
+#include "internal/colors.h"
 
 using json = nlohmann::json;
 
@@ -26,7 +27,7 @@ int main(int argc, char const *argv[])
 
     std::ifstream f(cfgPath);
     json data = json::parse(f);
-    //std::cout << data << std::endl;
+    // std::cout << data << std::endl;
 
     std::string serverurl, username, token, genkey;
     bool encryptenabled;
@@ -95,10 +96,15 @@ int main(int argc, char const *argv[])
         }
         else if (moderatormode && (input.rfind("/d", 0) == 0 || input.rfind("/delmsg", 0) == 0))
         {
-            if (input.rfind("/d", 0) == 0)
+            if (input.rfind("/d ", 0) == 0)
                 ReplaceStringInPlace(input, "/d ", "");
-            else
+            else if (input.rfind("/delmsg ", 0) == 0)
                 ReplaceStringInPlace(input, "/delmsg ", "");
+            else 
+            {
+                std::cout << RED_NORMAL_COLOR << "/d and /delmsg take the id as argument !" << std::endl;
+                std::cin.get();
+            }
             exitSendCode = delMessage(serverurl, input, username, token);
 
             if (exitUpdateCode != 0)
@@ -134,8 +140,7 @@ int main(int argc, char const *argv[])
             }
             else
                 exitSendCode = sendMessage(serverurl, input, username, token);
-            
-            
+
             if (exitUpdateCode != 0)
             {
                 std::cout << "SEND ERROR " << exitUpdateCode << std::endl;
