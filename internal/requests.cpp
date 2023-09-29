@@ -36,7 +36,7 @@ int getServerUpdate(std::string const &geturl, MessageMemory &mem, MessageMemory
         if (CURLE_OK == res)
         {
             cleanMessageList(htmlBuffer);
-            // std::cout << htmlBuffer << std::endl;
+            std::cout << htmlBuffer << std::endl;
             json jsonMsgList = json::parse(htmlBuffer);
             mem.updateMemory(jsonMsgList, memsettings);
         }

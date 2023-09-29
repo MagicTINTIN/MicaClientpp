@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
 
     std::ifstream f("config.json");
     json data = json::parse(f);
-    // std::cout << data << std::endl;
+    //std::cout << data << std::endl;
 
     std::string serverurl, geturl, posturl, username, token, genkey;
     bool encryptenabled;
@@ -35,7 +35,7 @@ int main(int argc, char const *argv[])
         posturl = serverurl + "/msg.php?";
         username = data["username"].get<std::string>();
         token = data["token"].get<std::string>();
-        msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(), data["settings"]["displayOfflineMessages"].get<bool>(), genkey);
+        msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(), data["settings"]["displayOfflineMessages"].get<bool>(), genkey, data["settings"]["showMessageDateTime"].get<bool>());
         memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>());
     }
     catch (std::out_of_range &e)

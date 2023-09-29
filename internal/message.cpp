@@ -95,11 +95,11 @@ void cleanMessageList(std::string &s)
 }
 
 /* MESSAGE CLASS*/
-Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey("----------------")
+Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey("----------------"), datetimemsg(true)
 {
 }
 
-Message::messageSettings::messageSettings(bool ddel, bool doff, std::string gkey) : deletedmsg(ddel), offlinemsg(doff), generalkey(gkey)
+Message::messageSettings::messageSettings(bool ddel, bool doff, std::string gkey, bool dt) : deletedmsg(ddel), offlinemsg(doff), generalkey(gkey), datetimemsg(dt)
 {
 }
 
@@ -140,6 +140,20 @@ Message::Message(std::string author, std::string message, std::string date, std:
 void Message::print(messageSettings const &msettings)
 {
     std::string text;
+
+    if (msettings.datetimemsg)
+        std::cout << dateTime << " ";
+    if (rank >= 15)
+        std::cout << WHITE << ON_RED << "A" << RESET;
+    else if (rank >= 12)
+        std::cout << WHITE << ON_BLUE << "M" << RESET;
+    else if (rank >= 11)
+        std::cout << WHITE << ON_YELLOW << "B" << RESET;
+    else if (rank >= 1)
+        std::cout << WHITE << ON_GREEN << "V" << RESET;
+    else
+        std::cout << " " << RESET;
+    
     if (content.rfind("护", 0) == 0)
     {
         if (decrypted == "")
@@ -148,7 +162,7 @@ void Message::print(messageSettings const &msettings)
             ReplaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
-                std::cout << ON_GREEN << BIWHITE << "S" << RESET;
+                std::cout << ON_GREEN << WHITE << "S" << RESET;
                 unsigned char tdecryptedText[980] = "";
                 unsigned char tkey[40] = "";
                 unsigned char tencryptedText[980] = "";
@@ -160,8 +174,11 @@ void Message::print(messageSettings const &msettings)
                 cleanMessageList(decryptedContent);
                 text = decrypted;
             }
-            else
+            else 
+            {
+                std::cout << " " << RESET;
                 text = content;
+            }
         }
         else
         {
@@ -170,7 +187,10 @@ void Message::print(messageSettings const &msettings)
         }
     }
     else
+    {
         text = content;
+        std::cout << " " << RESET;
+    }
     if (status == ONLINE)
         std::cout << "[" << BIRED << sender << RESET << "] " << text << std::endl
                   << std::endl;
