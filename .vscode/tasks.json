@@ -7,6 +7,7 @@
             "args": [
                 "${workspaceFolder}/internal/message.cpp",
                 "${workspaceFolder}/internal/messagememory.cpp",
+                "${workspaceFolder}/internal/display.cpp",
                 "${workspaceFolder}/internal/aes.c",
                 "${workspaceFolder}/internal/requests.cpp",
                 "${workspaceFolder}/internal/tools.cpp",
@@ -38,6 +39,7 @@
             "args": [
                 "${workspaceFolder}/internal/message.cpp",
                 "${workspaceFolder}/internal/messagememory.cpp",
+                "${workspaceFolder}/internal/display.cpp",
                 "${workspaceFolder}/internal/aes.c",
                 "${workspaceFolder}/internal/requests.cpp",
                 "${workspaceFolder}/internal/tools.cpp",

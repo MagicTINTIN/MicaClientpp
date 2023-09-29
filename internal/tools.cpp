@@ -13,8 +13,8 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #endif
-#include "tools.h"
 #include "colors.h"
+#include "tools.h"
 
 /* ESCAPE SEQUENCES */
 
@@ -76,80 +76,6 @@ bool arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moder
     return true;
 }
 
-void clearScreen()
-{
-#ifdef _WIN32
-    // Windows
-    system("cls");
-#elif __linux__
-    // Linux
-    system("clear");
-#else
-    // Other or unknown OS
-    printf("____________________________________\n");
-    printf("Unsupported operating system.\n");
-#endif
-}
-
-int getWidth()
-{
-    int width(30);
-#ifdef _WIN32
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    return csbi.srWindow.Right - csbi.srWindow.Left + 1;
-#elif defined(__linux__)
-    struct winsize w;
-    ioctl(0, TIOCGWINSZ, &w);
-    width = w.ws_col;
-#endif
-    return width;
-}
-
-void oldCreateLine(char c, int size = getWidth())
-{
-    std::cout << std::string(size, c) << std::endl;
-}
-
-std::string createLineString(char c, int size = getWidth())
-{
-    return std::string(size, c);
-}
-
-void createLine()
-{
-    std::cout << WHITE_NORMAL_BACKGROUND WHITE_NORMAL_COLOR << createLineString('_') << std::endl
-              << NORMAL;
-}
-
-void showHelp(bool moderator)
-{
-    clearScreen();
-    createLine();
-    std::cout << BOLD UNDERLINED << "Here is the list of commands" << std::endl
-              << std::endl
-              << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/h" << NORMAL << " or " << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/help" << NORMAL << " - To show this message" << std::endl
-              << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/p x Message" << NORMAL << " - To send a private message to the group x (only people that will have a 'x' section in discussionGroupKeys in config.json with the corect Key will be able to decrypt the message)" << std::endl
-              << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/u Message..." << NORMAL << " - To send an unsafe message (no encryption)" << std::endl
-              << std::endl;
-
-    if (moderator)
-    {
-        createLine();
-        std::cout << BOLD UNDERLINED << "Here is the list of MODERATORS commands" << std::endl
-                  << std::endl
-                  << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/delmsg x" << NORMAL << " or " << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/d x" << NORMAL << " - To delete the message with the id x" << std::endl
-                  << std::endl;
-    }
-    std::cout << std::endl
-              << "Press " << REVERSED BLINK << "[ENTER]" << NORMAL << " to go back to chat" << std::endl;
-    std::cin.get();
-}
-
-bool isEncryptedMessage(const std::string &str)
-{
-    return str.find_first_not_of("0123456789abcdef") == std::string::npos;
-}
 
 std::string urlEncode(const std::string &input)
 {
@@ -175,6 +101,38 @@ std::string urlEncode(const std::string &input)
 
     return encoded.str();
 }
+
+
+bool isEncryptedMessage(const std::string &str)
+{
+    return str.find_first_not_of("0123456789abcdef") == std::string::npos;
+}
+
+int getWidth()
+{
+    int width(30);
+#ifdef _WIN32
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    return csbi.srWindow.Right - csbi.srWindow.Left + 1;
+#elif defined(__linux__)
+    struct winsize w;
+    ioctl(0, TIOCGWINSZ, &w);
+    width = w.ws_col;
+#endif
+    return width;
+}
+
+void oldCreateLine(char c, int size = getWidth())
+{
+    std::cout << std::string(size, c) << std::endl;
+}
+
+std::string createLineString(char c, int size)
+{
+    return std::string(size, c);
+}
+
 
 time_t getTimestamp(std::string t)
 {

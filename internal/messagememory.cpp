@@ -131,3 +131,20 @@ void MessageMemory::print(Message::messageSettings const &msettings, bool const 
         msg.print(msettings, showids);
     }
 }
+
+Message MessageMemory::getMessageByID(int id) {
+    int i(nbMessages - 1);
+    Message msg(memory[i]);
+    bool found(msg.getID() == id);
+    while (i > 0 && !found)
+    {
+        i--;
+        msg = memory[i];
+        if (msg.getID() != id)
+            found = true;
+    }
+    if (found)
+        return msg;
+    else
+        return Message();
+}

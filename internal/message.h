@@ -62,6 +62,14 @@ public:
      */
     void print(messageSettings const &msettings, bool const &showids = false);
     /**
+     * Replied message
+     */
+    void printReply(messageSettings const &msettings);
+    /**
+     * Set a message author
+     */
+    std::string getAuthor();
+    /**
      * Set a message status
      */
     void setStatus(messageStatus const &newStatus);

@@ -27,6 +27,10 @@ public:
      */
     void AddMessage(Message msg);
     /**
+     * get message from local memory by ID
+     */
+    Message getMessageByID(int id);
+    /**
      * Import messages from backup in memory
      */
     void importMemory(nlohmann::json const &backup);

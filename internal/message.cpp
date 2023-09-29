@@ -170,6 +170,46 @@ void Message::print(messageSettings const &msettings, bool const &showids)
                   << std::endl;
 }
 
+void Message::printReply(messageSettings const &msettings)
+{
+    std::string text;
+    
+    // DECRYPTION MESSAGE
+
+    if (content.rfind("护", 0) == 0)
+    {
+        if (decrypted == "")
+        {
+            std::string copyContent = content;
+            ReplaceStringInPlace(copyContent, "护", "");
+            if (isEncryptedMessage(copyContent))
+            {
+                unsigned char tdecryptedText[980] = "";
+                unsigned char tkey[40] = "";
+                unsigned char tencryptedText[980] = "";
+                std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
+                std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
+                inv_AES(tencryptedText, tkey, tdecryptedText);
+                std::string decryptedContent(reinterpret_cast<char *>(tdecryptedText));
+                decrypted = decryptedContent;
+                cleanMessageList(decryptedContent);
+                text = decrypted;
+            }
+            else
+                text = content;
+        }
+        else
+            text = decrypted;
+    }
+    else
+        text = content;
+
+    if (status == ONLINE)
+        std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR  << "]" << text << NORMAL << std::endl
+                  << std::endl;
+    
+}
+
 void Message::setStatus(messageStatus const &newStatus)
 {
     status = newStatus;
@@ -178,6 +218,11 @@ void Message::setStatus(messageStatus const &newStatus)
 Message::messageStatus Message::getStatus()
 {
     return status;
+}
+
+std::string Message::getAuthor()
+{
+    return sender;
 }
 
 

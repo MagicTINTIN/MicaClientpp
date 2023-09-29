@@ -10,6 +10,7 @@
 #include "internal/aes.h"
 #include "internal/requests.h"
 #include "internal/tools.h"
+#include "internal/display.h"
 #include "internal/colors.h"
 
 using json = nlohmann::json;
@@ -100,13 +101,36 @@ int main(int argc, char const *argv[])
                 ReplaceStringInPlace(input, "/d ", "");
             else if (input.rfind("/delmsg ", 0) == 0)
                 ReplaceStringInPlace(input, "/delmsg ", "");
-            else 
+            else
             {
                 std::cout << RED_NORMAL_COLOR << "/d and /delmsg take the id as argument !" << std::endl;
                 std::cin.get();
             }
             exitSendCode = delMessage(serverurl, input, username, token);
 
+            if (exitUpdateCode != 0)
+            {
+                std::cout << "SEND UNSAFE ERROR " << exitUpdateCode << std::endl;
+                return exitUpdateCode;
+            }
+        }
+        else if (input.rfind("/r", 0) == 0)
+        {
+            std::string idtoreply("");
+            if (input.rfind("/r ", 0) == 0) {
+                ReplaceStringInPlace(input, "/r ", "");
+                idtoreply = input;
+            }
+            else
+            {
+                clearScreen();
+                // mem.print(msgsettings, true);
+                std::cout << "Type the [ID] of the message you want to answer: ";
+                std::getline(std::cin, input);
+                idtoreply = input;
+            }
+            // showReplying(mem, stoi(idtoreply), msgsettings);
+            exitSendCode = sendMessage(serverurl, input, username, token);
             if (exitUpdateCode != 0)
             {
                 std::cout << "SEND UNSAFE ERROR " << exitUpdateCode << std::endl;

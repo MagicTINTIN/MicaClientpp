@@ -15,6 +15,10 @@ First, set settings like username, token... in `config.json`.<br>
 Then, you can run `./MicaClient`, and now you should see the chat.<br>
 <br>
 To send a message: just type it, and press Enter !<br>
+## Reply to a message
+To reply to a message type `/r x` *(with x the message ID to reply)*.<br>
+If you don't know it, only type `/r`<br>
+Then, press [ENTER], and you will be able to write and send your answer !
 ## Secure/Unsecure mode
 By defalut, encryption message is active (you can see that messages are encrypted when there is a **S** on green background), but if you want to send a message in unsecure mode (message will be sent without encryption), you can type `/u Unsecure message`.
 You can also disable it in config.json, but it is not recommanded.<br>
@@ -51,3 +55,18 @@ To send a message in a private group, just type `/p groupname Message only encry
 You can start MicaClient++ with arguments !
 - `-m, --moderator` enables **moderator view** to get messages ID (no you won't have rights to delete messages :p)
 - `--cfg path/to/a/config/file.json` to load other config (usefull when you have several accounts)
+
+## Settings
+In config.json you have a section named "settings" :
+```json
+"settings": {
+    // to memorise old messages that are not available on the server anymore
+    "backupMessages":true, 
+    // to show date and hour (french time zone) at which the message has been posted
+    "showMessageDateTime":true,
+    // to show messages that have been deleted by moderator (from cache/backup)
+    "displayDeletedMessages":true,
+    // to show messages that are not available on the server anymore (from cache/backup)
+    "displayOfflineMessages":true
+}
+```
