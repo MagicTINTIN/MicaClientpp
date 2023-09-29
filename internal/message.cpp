@@ -148,7 +148,7 @@ void Message::print(messageSettings const &msettings, bool const &showids)
 
     // MESSAGE CONTENT
     std::string mention("@" + msettings.pseudo + " ");
-    std::string coloredMention(CYAN_NORMAL_BACKGROUND BOLD WHITE_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND " ");
+    std::string coloredMention(CYAN_DESAT_BACKGROUND BOLD BLACK_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND " ");
     if (text.find(mention) != std::string::npos)
     {
         ReplaceStringInPlace(text, mention, coloredMention);

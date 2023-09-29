@@ -16,8 +16,14 @@ using json = nlohmann::json;
 int main(int argc, char const *argv[])
 {
     int exitUpdateCode(0), exitSendCode(0);
+    std::vector<std::string> args(argv, argv + argc);
 
-    std::ifstream f("config.json");
+    std::string cfgPath("config.json");
+
+    if (!arguments(args, cfgPath))
+        return 100;
+        
+    std::ifstream f(cfgPath);
     json data = json::parse(f);
     //std::cout << data << std::endl;
 

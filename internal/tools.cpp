@@ -8,10 +8,10 @@
 #include <map>
 #include <iostream>
 #ifdef _WIN32
-    #include <windows.h>
+#include <windows.h>
 #elif defined(__linux__)
-    #include <unistd.h>
-    #include <sys/ioctl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
 #endif
 #include "tools.h"
 #include "colors.h"
@@ -30,6 +30,26 @@ std::map<std::string, char> const escapeSequenceMap = {
     // Add more escape sequences as needed
 };
 
+bool arguments(std::vector<std::string> &args, std::string &cfgPath)
+{
+    for (size_t i = 0; i < args.size(); ++i)
+    {
+        if (args[i] == "--cfg")
+        {
+            if (i + 1 < args.size())
+            {
+                cfgPath = args[i + 1];
+                std::cout << "Loading external config file ("<< cfgPath << ")..." << std::endl;
+            }
+            else
+            {
+                std::cout << RED_NORMAL_COLOR BOLD << "--cfg needs to be followed by a path to a config file" << NORMAL << std::endl;
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
 void clearScreen()
 {
@@ -61,21 +81,33 @@ int getWidth()
     return width;
 }
 
-void createLine(char c, int size = getWidth())
+void oldCreateLine(char c, int size = getWidth())
 {
     std::cout << std::string(size, c) << std::endl;
+}
+
+std::string createLineString(char c, int size = getWidth())
+{
+    return std::string(size, c);
+}
+
+void createLine()
+{
+    std::cout << WHITE_NORMAL_BACKGROUND WHITE_NORMAL_COLOR << createLineString('_') << std::endl
+              << NORMAL;
 }
 
 void showHelp()
 {
     clearScreen();
-    createLine('#');
-    std::cout << "Here is the list of commands" << std::endl
+    createLine();
+    std::cout << BOLD UNDERLINED << "Here is the list of commands" << std::endl
+              << std::endl
               << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/h" << NORMAL << " or " << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/help" << NORMAL << " - To show this message" << std::endl
               << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/p x Message" << NORMAL << " - To send a private message to the group x (only people that will have a 'x' section in discussionGroupKeys in config.json with the corect Key will be able to decrypt the message)" << std::endl
               << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/u Message..." << NORMAL << " - To send an unsafe message (no encryption)" << std::endl
               << std::endl
-              << "Press [ENTER] to go back to chat" << std::endl;
+              << "Press " << REVERSED BLINK << "[ENTER]" << NORMAL << " to go back to chat" << std::endl;
     std::cin.get();
 }
 
@@ -84,17 +116,24 @@ bool isEncryptedMessage(const std::string &str)
     return str.find_first_not_of("0123456789abcdef") == std::string::npos;
 }
 
-std::string urlEncode(const std::string& input) {
+std::string urlEncode(const std::string &input)
+{
     std::ostringstream encoded;
     encoded.fill('0');
     encoded << std::hex;
 
-    for (char c : input) {
-        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+    for (char c : input)
+    {
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~')
+        {
             encoded << c;
-        } else if (c == ' ') {
+        }
+        else if (c == ' ')
+        {
             encoded << '+';
-        } else {
+        }
+        else
+        {
             encoded << '%' << std::setw(2) << int(static_cast<unsigned char>(c));
         }
     }
