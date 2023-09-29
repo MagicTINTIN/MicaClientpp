@@ -4,6 +4,7 @@
 #include <vector>
 #include <time.h>
 #include <algorithm>
+#include <regex>
 #include "message.h"
 #include "tools.h"
 #include "colors.h"
@@ -147,21 +148,26 @@ void Message::print(messageSettings const &msettings, bool const &showids)
         std::cout << " " << NORMAL << "[" << BOLD << WHITE_NORMAL_COLOR << sender << NORMAL << "] ";
 
     // MESSAGE CONTENT
-    std::string mention("@" + msettings.pseudo + " ");
-    std::string coloredMention(CYAN_DESAT_BACKGROUND BOLD BLACK_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND " ");
-    if (text.find(mention) != std::string::npos)
+    std::string mention("@" + msettings.pseudo);
+    std::string coloredMention(CYAN_DESAT_BACKGROUND BOLD BLACK_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND);
+    std::string escapedPseudo = escapeRegex(mention);
+    // C++ REGEX SUCKS !!!std::string regexp_string(R"(?<!@)"); //R"(?<!@)@\\b" + escapedPseudo + "\\s*\\b"
+    std::regex pattern("@\\b" + escapedPseudo + "\\s*\\b");
+
+
+    if (std::regex_search(text, pattern))
     {
-        ReplaceStringInPlace(text, mention, coloredMention);
         std::cout << BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND;
+        text = std::regex_replace(text, pattern, coloredMention);
     }
     if (status == ONLINE)
         std::cout << text << NORMAL << std::endl
                   << std::endl;
     else if (status == OFFLINE && msettings.offlinemsg)
-        std::cout << BOLD BLACK_DESAT_COLOR << "(offline) " << THIN << text << NORMAL << std::endl
+        std::cout << BOLD BLACK_DESAT_COLOR << "(offline) " << NORMAL BLACK_DESAT_COLOR THIN << text << NORMAL << std::endl
                   << std::endl;
     else if (status == DELETED && msettings.deletedmsg)
-        std::cout << BOLD RED_DESAT_COLOR << "(deleted) " << THIN << text << NORMAL << std::endl
+        std::cout << BOLD RED_DESAT_COLOR << "(deleted) " << NORMAL RED_DESAT_COLOR THIN << text << NORMAL << std::endl
                   << std::endl;
     else if (status != OFFLINE && status != DELETED)
         std::cout << BLACK_DESAT_COLOR << "(unknown status) " << THIN << text << NORMAL << std::endl

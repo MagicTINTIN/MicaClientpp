@@ -4,6 +4,7 @@
 #include <string>
 #include <algorithm>
 #include <sstream>
+#include <regex>
 #include <iomanip>
 #include <map>
 #include <iostream>
@@ -17,6 +18,11 @@
 #include "colors.h"
 
 /* ESCAPE SEQUENCES */
+
+std::string escapeRegex(const std::string& input) {
+    static const std::regex metacharacters{ R"([-[\]{}()*+?.,\^$|#\s])" };
+    return std::regex_replace(input, metacharacters, R"(\$&)");
+}
 
 std::map<std::string, char> const escapeSequenceMap = {
     {"&#039;", '\''},
