@@ -37,7 +37,7 @@ public:
     /**
      * Print messages from memory
      */
-    void print(Message::messageSettings const &msettings);
+    void print(Message::messageSettings const &msettings, bool const &showids = false);
 };
 
 #endif // MESSAGEMEMORY_H_INCLUDED

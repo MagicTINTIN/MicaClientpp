@@ -9,19 +9,7 @@
 using json = nlohmann::json;
 
 /* JSON TOOLS */
-json to_json(const Message::jsonMessage &m)
-{
-    return json{
-        {"sender", m.sender},
-        {"content", m.content},
-        {"dateTime", m.dateTime},
-        {"certifiedUser", m.certifiedUser},
-        {"rank", m.rank},
-        {"timestamp", m.timestamp},
-        {"decrypted", m.decrypted},
-        {"status", m.status},
-    };
-}
+
 
 /* MESSAGE MEMORY CLASS */
 
@@ -46,7 +34,8 @@ void MessageMemory::importMemory(nlohmann::json const &backup)
 {
     for (auto &m : backup.items())
     {
-        Message msg(m.value()["sender"].get<std::string>(),
+        Message msg(m.value()["id"].get<int>(),
+                    m.value()["sender"].get<std::string>(),
                     m.value()["content"].get<std::string>(),
                     m.value()["dateTime"].get<std::string>(),
                     m.value()["certifiedUser"].get<int>(),
@@ -105,7 +94,8 @@ void MessageMemory::updateMemory(json const &messages, memorySettings memsetting
         try
         {
             tmpmsgjson = messages[onlineMessagesFound];
-            AddMessage(Message(tmpmsgjson["sender"].get<std::string>(),
+            AddMessage(Message(tmpmsgjson["id"].get<std::string>(),
+                               tmpmsgjson["sender"].get<std::string>(),
                                tmpmsgjson["content"].get<std::string>(),
                                tmpmsgjson["date_time"].get<std::string>(),
                                tmpmsgjson["id_certified_user"].get<std::string>(),
@@ -122,17 +112,17 @@ void MessageMemory::updateMemory(json const &messages, memorySettings memsetting
         for (Message &msg : memory)
         {
             Message::jsonMessage jsonMsg(msg);
-            j.push_back(to_json(jsonMsg));
+            j.push_back(jsonMsg.toJson());
         }
         std::ofstream o("backup.json");
         o << std::setw(4) << j << std::endl;
     }
 }
 
-void MessageMemory::print(Message::messageSettings const &msettings)
+void MessageMemory::print(Message::messageSettings const &msettings, bool const &showids)
 {
     for (Message &msg : memory)
     {
-        msg.print(msettings);
+        msg.print(msettings, showids);
     }
 }
