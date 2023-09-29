@@ -46,3 +46,7 @@ To send a message in a private group, just type `/p groupname Message only encry
 ## Command list
 - `/help` to print a message containing all the commands available.<br>
 - `/exit` to exit MicaClient++
+
+## Arguments
+You can start MicaClient++ with arguments !
+- `--cfg path/to/a/config/file.json` to load other config (usefull when you have several accounts)

@@ -4,7 +4,6 @@
 #include <string>
 #include <algorithm>
 #include <sstream>
-#include <regex>
 #include <iomanip>
 #include <map>
 #include <iostream>
@@ -19,9 +18,24 @@
 
 /* ESCAPE SEQUENCES */
 
-std::string escapeRegex(const std::string& input) {
-    static const std::regex metacharacters{ R"([-[\]{}()*+?.,\^$|#\s])" };
-    return std::regex_replace(input, metacharacters, R"(\$&)");
+bool regexWishBoundaries(std::string& text, const std::string& word, const std::string& replacement) {
+    std::string::size_type pos = text.find(word);
+    bool found = false;
+
+    while (pos != std::string::npos) {
+        // Check if the match ends with a word boundary
+        if ((pos + word.length() == text.length() || !isalnum(text[pos + word.length()])) &&
+            (pos == 0 || ( !isalnum(text[pos - 1] && text[pos - 1] != '@')))) {
+            // Replace the occurrence with the specified replacement
+            text.replace(pos, word.length(), replacement);
+            found = true;
+        }
+
+        // Search for the next occurrence
+        pos = text.find(word, pos + replacement.length() - 1);
+    }
+
+    return found;
 }
 
 std::map<std::string, char> const escapeSequenceMap = {

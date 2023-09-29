@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-std::string escapeRegex(const std::string &input);
+bool regexWishBoundaries(std::string &text, const std::string &word, const std::string &replacement);
 bool arguments(std::vector<std::string> &args, std::string &cfgPath);
 void clearScreen();
 void createLine();

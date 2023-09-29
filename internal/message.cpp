@@ -4,7 +4,6 @@
 #include <vector>
 #include <time.h>
 #include <algorithm>
-#include <regex>
 #include "message.h"
 #include "tools.h"
 #include "colors.h"
@@ -49,6 +48,7 @@ Message::jsonMessage::jsonMessage(int i, std::string a, std::string c, std::stri
 json Message::jsonMessage::toJson()
 {
     return json{
+        {"id", id},
         {"sender", sender},
         {"content", content},
         {"dateTime", dateTime},
@@ -150,15 +150,9 @@ void Message::print(messageSettings const &msettings, bool const &showids)
     // MESSAGE CONTENT
     std::string mention("@" + msettings.pseudo);
     std::string coloredMention(CYAN_DESAT_BACKGROUND BOLD BLACK_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND);
-    std::string escapedPseudo = escapeRegex(mention);
-    // C++ REGEX SUCKS !!!std::string regexp_string(R"(?<!@)"); //R"(?<!@)@\\b" + escapedPseudo + "\\s*\\b"
-    std::regex pattern("@\\b" + escapedPseudo + "\\s*\\b");
-
-
-    if (std::regex_search(text, pattern))
+    if (regexWishBoundaries(text, mention, coloredMention))
     {
         std::cout << BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND;
-        text = std::regex_replace(text, pattern, coloredMention);
     }
     if (status == ONLINE)
         std::cout << text << NORMAL << std::endl
