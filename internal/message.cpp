@@ -6,87 +6,13 @@
 #include <algorithm>
 #include "message.h"
 #include "tools.h"
+#include "colors.h"
 #include "aes.h"
-#include <map>
 #include "../includes/nlohmann/json.hpp"
 using json = nlohmann::json;
 
-/* ESCAPE SEQUENCES */
-
-std::map<std::string, char> const escapeSequenceMap = {
-    {"&#039;", '\''},
-    {"&#92;", '\\'},
-    {"&quot;", '\"'},
-    {"&amp;", '&'},
-    {"&apos;", '\''},
-    {"&lt;", '<'},
-    {"&gt;", '>'},
-    {"&nbsp;", ' '}
-    // Add more escape sequences as needed
-};
-
 /* TOOLS */
 
-time_t getTimestamp(std::string t)
-{
-    struct tm tm;
-    if (strptime(t.c_str(), "%Y-%m-%d %H:%M:%S", &tm) != NULL)
-        return mktime(&tm);
-    else
-        return -1;
-}
-
-void ReplaceStringInPlace(std::string &s, const std::string &search, const std::string &replace)
-{
-    size_t pos(0);
-    while ((pos = s.find(search, pos)) != std::string::npos)
-    {
-        s.replace(pos, search.length(), replace);
-        pos += replace.length();
-    }
-}
-
-void escapeBackslash(std::string &s)
-{
-    auto it = std::find(s.begin(), s.end(), '\\');
-    while (it != s.end())
-    {
-        auto it2 = s.insert(it, '\\');
-
-        // skip over the slashes we just inserted
-        it = std::find(it2 + 2, s.end(), '\\');
-    }
-}
-
-char getCharacterFromEscapeSequence(const std::string &escapeSequence)
-{
-    auto it = escapeSequenceMap.find(escapeSequence);
-    if (it != escapeSequenceMap.end())
-    {
-        return it->second;
-    }
-    else
-    {
-        // Return a default character (you can modify this as needed)
-        return '?'; // For example, return '?' for unknown escape sequences
-    }
-}
-
-void replaceEscapeSequences(std::string &s)
-{
-    size_t found = s.find("&");
-    while (found != std::string::npos)
-    {
-        size_t end = s.find(";", found);
-        if (end != std::string::npos && end - found < 6)
-        {
-            std::string escapeSequence = s.substr(found, end - found + 1);
-            char character = getCharacterFromEscapeSequence(escapeSequence);
-            s.replace(found, end - found + 1, 1, character);
-        }
-        found = s.find("&", found + 1);
-    }
-}
 
 void cleanMessageList(std::string &s)
 {
@@ -94,6 +20,7 @@ void cleanMessageList(std::string &s)
     replaceEscapeSequences(s);
     escapeBackslash(s);
     ReplaceStringInPlace(s, "\\\\n", "\\n");
+    ReplaceStringInPlace(s, "\\\\\"", "\\\"");
 }
 
 /* MESSAGE SETTINGS */
@@ -162,7 +89,9 @@ void Message::print(messageSettings const &msettings, bool const &showids)
     // SHOW IDS ?
 
     if (showids)
-        std::cout << BIYELLOW << "[" << id << "] -> " << RESET;
+        std::cout << BOLD << "[" << id << "] -> " << NORMAL;
+    else if (msettings.datetimemsg)
+        std::cout << dateTime << " ";
 
     // DECRYPTION MESSAGE
 
@@ -174,7 +103,7 @@ void Message::print(messageSettings const &msettings, bool const &showids)
             ReplaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
-                std::cout << ON_GREEN << WHITE << "S" << RESET;
+                std::cout << GREEN_NORMAL_BACKGROUND << BOLD << WHITE_NORMAL_COLOR << "S" << NORMAL;
                 unsigned char tdecryptedText[980] = "";
                 unsigned char tkey[40] = "";
                 unsigned char tencryptedText[980] = "";
@@ -188,56 +117,54 @@ void Message::print(messageSettings const &msettings, bool const &showids)
             }
             else
             {
-                std::cout << " " << RESET;
+                std::cout << " " << NORMAL;
                 text = content;
             }
         }
         else
         {
-            std::cout << ON_GREEN << BIWHITE << "S" << RESET;
+            std::cout << GREEN_NORMAL_BACKGROUND << BOLD << WHITE_NORMAL_COLOR << "S" << NORMAL;
             text = decrypted;
         }
     }
     else
     {
         text = content;
-        std::cout << " " << RESET;
+        std::cout << " " << NORMAL;
     }
 
     // USER RANK AND NAME
 
-    if (msettings.datetimemsg)
-        std::cout << dateTime << " ";
     if (rank >= 15)
-        std::cout << WHITE << ON_RED << "A" << RESET << "[" << BIRED << sender << RESET << "] ";
+        std::cout << WHITE_NORMAL_COLOR << RED_NORMAL_BACKGROUND << "A" << NORMAL << "[" << BOLD << RED_NORMAL_COLOR << sender << NORMAL << "] ";
     else if (rank >= 12)
-        std::cout << WHITE << ON_BLUE << "M" << RESET << "[" << BIBLUE << sender << RESET << "] ";
+        std::cout << WHITE_NORMAL_COLOR << BLUE_NORMAL_BACKGROUND << "M" << NORMAL << "[" << BOLD << BLUE_NORMAL_COLOR << sender << NORMAL << "] ";
     else if (rank >= 11)
-        std::cout << WHITE << ON_CYAN << "B" << RESET << "[" << BICYAN << sender << RESET << "] ";
+        std::cout << WHITE_NORMAL_COLOR << CYAN_NORMAL_BACKGROUND << "B" << NORMAL << "[" << BOLD << CYAN_NORMAL_COLOR << sender << NORMAL << "] ";
     else if (rank >= 1)
-        std::cout << WHITE << ON_GREEN << "V" << RESET << "[" << BIGREEN << sender << RESET << "] ";
+        std::cout << WHITE_NORMAL_COLOR << GREEN_NORMAL_BACKGROUND << "V" << NORMAL << "[" << BOLD << GREEN_NORMAL_COLOR << sender << NORMAL << "] ";
     else
-        std::cout << " " << RESET << "[" << BIWHITE << sender << RESET << "] ";
+        std::cout << " " << NORMAL << "[" << BOLD << WHITE_NORMAL_COLOR << sender << NORMAL << "] ";
 
     // MESSAGE CONTENT
     std::string mention("@" + msettings.pseudo + " ");
-    std::string coloredMention(ON_CYAN BWHITE "@" + msettings.pseudo + RESET ON_IYELLOW " ");
+    std::string coloredMention(CYAN_NORMAL_BACKGROUND BOLD WHITE_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND " ");
     if (text.find(mention) != std::string::npos)
     {
         ReplaceStringInPlace(text, mention, coloredMention);
-        std::cout << ON_IYELLOW;
+        std::cout << BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND;
     }
     if (status == ONLINE)
-        std::cout << text << std::endl
+        std::cout << text << NORMAL << std::endl
                   << std::endl;
     else if (status == OFFLINE && msettings.offlinemsg)
-        std::cout << BIBLACK << "(offline) " << IBLACK << text << RESET << std::endl
+        std::cout << BOLD BLACK_DESAT_COLOR << "(offline) " << THIN << text << NORMAL << std::endl
                   << std::endl;
     else if (status == DELETED && msettings.deletedmsg)
-        std::cout << RED << "(deleted) " << RED << text << RESET << std::endl
+        std::cout << BOLD RED_DESAT_COLOR << "(deleted) " << THIN << text << NORMAL << std::endl
                   << std::endl;
     else if (status != OFFLINE && status != DELETED)
-        std::cout << RED << "(unknown status) " << RED << text << RESET << std::endl
+        std::cout << BLACK_DESAT_COLOR << "(unknown status) " << THIN << text << NORMAL << std::endl
                   << std::endl;
 }
 

@@ -7,11 +7,6 @@
 #include "../includes/nlohmann/json.hpp"
 using json = nlohmann::json;
 
-time_t getTimestamp(std::string t);
-void ReplaceStringInPlace(std::string &s, const std::string &search, const std::string &replace);
-void escapeBackslash(std::string &s);
-char getCharacterFromEscapeSequence(const std::string &escapeSequence);
-void replaceEscapeSequences(std::string &s);
 void cleanMessageList(std::string &s);
 class Message
 {
@@ -31,7 +26,7 @@ public:
         std::string generalkey;
         std::string pseudo;
         messageSettings();
-        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd );
+        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd);
     };
 
     struct jsonMessage
@@ -48,6 +43,9 @@ public:
         jsonMessage();
         jsonMessage(Message message);
         jsonMessage(int i, std::string a, std::string c, std::string d, int cu, int r, time_t t, std::string dc, messageStatus s);
+        /**
+         * To convert a jsonMessage struct to a json object
+         */
         json toJson();
     };
 
@@ -58,10 +56,6 @@ public:
     // used when parsing server json
     Message(std::string i, std::string author, std::string message, std::string date, std::string certified, std::string rnk, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
 
-    /**
-     * To convert a jsonMessage struct to a json object
-     */
-    json Message::toJson(const jsonMessage &m);
     /**
      * To print a message in terminal
      */
