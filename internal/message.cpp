@@ -175,7 +175,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, Messa
     // MESSAGE CONTENT
     std::string mention("@" + msettings.pseudo);
     std::string coloredMention(CYAN_DESAT_BACKGROUND BOLD BLACK_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND);
-    if (regexWishBoundaries(text, mention, coloredMention))
+    if (regexWishBoundaries(text, mention, coloredMention) || (repliedTo.getID() != -1 && repliedTo.getAuthor() == msettings.pseudo))
     {
         std::cout << BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND;
     }
