@@ -18,6 +18,15 @@ public:
         OFFLINE = 1,
         DELETED = 2
     };
+
+    struct isreplymessage
+    {
+        bool isreply;
+        std::string messagecontent;
+        int idreply;
+        isreplymessage();
+        isreplymessage(bool is, std::string c, int id);
+    };
     struct messageSettings
     {
         bool deletedmsg;
@@ -60,7 +69,7 @@ public:
     /**
      * To print a message in terminal
      */
-    void print(messageSettings const &msettings, bool const &showids = false);
+    void print(messageSettings const &msettings, bool const &showids, Message repliedTo = Message(), bool const &isReply = false, std::string replyContent = "");
     /**
      * Replied message
      */
@@ -69,6 +78,10 @@ public:
      * Set a message author
      */
     std::string getAuthor();
+    /**
+     * Set a message content
+     */
+    std::string getContent();
     /**
      * Set a message status
      */
@@ -93,6 +106,10 @@ public:
      * Returns if messages not are equal
      */
     bool operator!=(Message const &m);
+    /**
+     * Returns data to know if it is a reply
+    */
+    isreplymessage isRelpyContent();
 
 private:
     int id;

@@ -8,11 +8,23 @@
 #include "tools.h"
 #include "colors.h"
 #include "aes.h"
+
 #include "../includes/nlohmann/json.hpp"
 using json = nlohmann::json;
 
-/* TOOLS */
+std::vector<int> split(const std::string &s, char delim)
+{
+    std::vector<int> elems;
+    std::stringstream ss(s);
+    std::string number;
+    while (std::getline(ss, number, delim))
+    {
+        elems.push_back(std::stoi(number));
+    }
+    return elems;
+}
 
+/* TOOLS */
 
 void cleanMessageList(std::string &s)
 {
@@ -84,9 +96,21 @@ Message::Message(std::string i, std::string author, std::string message, std::st
 {
 }
 
-void Message::print(messageSettings const &msettings, bool const &showids)
+void Message::print(messageSettings const &msettings, bool const &showids, Message repliedTo, bool const &isReply, std::string replyContent)
 {
     std::string text;
+    std::string copyContent = content;
+    // IS REPLY ?
+
+    if (isReply)
+    {
+        if (repliedTo.getID() == -1)
+            std::cout << "> " << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "Uknown message" << NORMAL << std::endl;
+        else
+            repliedTo.printReply(msettings);
+        copyContent = replyContent;
+    }
+
     // SHOW IDS ?
 
     if (msettings.modmsg && !showids)
@@ -98,11 +122,10 @@ void Message::print(messageSettings const &msettings, bool const &showids)
 
     // DECRYPTION MESSAGE
 
-    if (content.rfind("护", 0) == 0)
+    if (copyContent.rfind("护", 0) == 0)
     {
         if (decrypted == "")
         {
-            std::string copyContent = content;
             ReplaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
@@ -173,14 +196,18 @@ void Message::print(messageSettings const &msettings, bool const &showids)
 void Message::printReply(messageSettings const &msettings)
 {
     std::string text;
-    
+    std::string copyContent = content;
     // DECRYPTION MESSAGE
-
-    if (content.rfind("护", 0) == 0)
+    isreplymessage irm = isRelpyContent();
+    if (irm.isreply)
+    {
+        copyContent = irm.messagecontent;
+    }
+    
+    if (copyContent.rfind("护", 0) == 0)
     {
         if (decrypted == "")
         {
-            std::string copyContent = content;
             ReplaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
@@ -205,8 +232,7 @@ void Message::printReply(messageSettings const &msettings)
         text = content;
 
     if (status == ONLINE)
-        std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR  << "]" << text << NORMAL << std::endl;
-    
+        std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "]" << text << NORMAL << std::endl;
 }
 
 void Message::setStatus(messageStatus const &newStatus)
@@ -224,6 +250,10 @@ std::string Message::getAuthor()
     return sender;
 }
 
+std::string Message::getContent()
+{
+    return content;
+}
 
 time_t Message::getMsgTimestamp()
 {
@@ -232,7 +262,6 @@ time_t Message::getMsgTimestamp()
 
     return timestamp;
 }
-
 
 int Message::getID()
 {
@@ -257,4 +286,30 @@ bool Message::operator!=(Message const &m)
            dateTime != m.dateTime ||
            certifiedUser != m.certifiedUser ||
            rank != m.rank;
+}
+
+/* REPLY CLASS */
+Message::isreplymessage::isreplymessage() : isreply(false), messagecontent(""), idreply(-1)
+{
+}
+Message::isreplymessage::isreplymessage(bool is, std::string c, int id) : isreply(is), messagecontent(c), idreply(id)
+{
+}
+
+Message::isreplymessage Message::isRelpyContent()
+{
+    std::string copyContent = content;
+    if (content.rfind("答", 0) == 0)
+    {
+        ReplaceStringInPlace(copyContent, "答", "");
+        if (copyContent.find("护") != std::string::npos)
+        {
+            std::vector<std::string> msgParts = split(copyContent, "护");
+            return isreplymessage(true, "护" + msgParts[1], stoi(msgParts[0]));
+        }
+        else
+            return isreplymessage(false, content, -1);
+    }
+    else
+        return isreplymessage(false, content, -1);
 }

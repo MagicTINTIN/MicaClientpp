@@ -16,5 +16,6 @@ void ReplaceStringInPlace(std::string &s, const std::string &search, const std::
 void escapeBackslash(std::string &s);
 char getCharacterFromEscapeSequence(const std::string &escapeSequence);
 void replaceEscapeSequences(std::string &s);
+std::vector<std::string> split(std::string s, std::string delimiter);
 
 #endif //TOOLS_H_INCLUDED

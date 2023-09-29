@@ -128,11 +128,17 @@ void MessageMemory::print(Message::messageSettings const &msettings, bool const 
 {
     for (Message &msg : memory)
     {
-        msg.print(msettings, showids);
+        Message::isreplymessage irm = msg.isRelpyContent();
+
+        if (irm.isreply)
+            msg.print(msettings, showids, getMessageByID(irm.idreply), true, irm.messagecontent);
+        else
+            msg.print(msettings, showids);
     }
 }
 
-Message MessageMemory::getMessageByID(int id) {
+Message MessageMemory::getMessageByID(int id)
+{
     int i(nbMessages - 1);
     Message msg(memory[i]);
     bool found(msg.getID() == id);

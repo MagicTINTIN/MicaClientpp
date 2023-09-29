@@ -105,6 +105,7 @@ int main(int argc, char const *argv[])
             {
                 std::cout << RED_NORMAL_COLOR << "/d and /delmsg take the id as argument !" << std::endl;
                 std::cin.get();
+                continue;
             }
             exitSendCode = delMessage(serverurl, input, username, token);
 
@@ -132,9 +133,14 @@ int main(int argc, char const *argv[])
             }
 
             clearScreen();
-            mem.print(msgsettings, true);
-            
-            showReplying(mem, stoi(idtoreply), msgsettings);
+            mem.print(msgsettings);
+
+            if (showReplying(mem, stoi(idtoreply), msgsettings) > 0)
+            {
+                std::cout << RED_NORMAL_COLOR << "Impossible to find this message" << std::endl;
+                std::cin.get();
+                continue;
+            }
             std::getline(std::cin, input);
             if (input.length() > 0)
             {
