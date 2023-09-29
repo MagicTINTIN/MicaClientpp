@@ -19,15 +19,16 @@ int main(int argc, char const *argv[])
     std::vector<std::string> args(argv, argv + argc);
 
     std::string cfgPath("config.json");
+    bool moderatormode(false);
 
-    if (!arguments(args, cfgPath))
+    if (!arguments(args, cfgPath, moderatormode))
         return 100;
-        
+
     std::ifstream f(cfgPath);
     json data = json::parse(f);
     //std::cout << data << std::endl;
 
-    std::string serverurl, geturl, posturl, username, token, genkey;
+    std::string serverurl, username, token, genkey;
     bool encryptenabled;
     Message::messageSettings msgsettings;
     MessageMemory::memorySettings memsettings;
@@ -37,11 +38,9 @@ int main(int argc, char const *argv[])
         genkey = data["generalKey"].get<std::string>();
         encryptenabled = data["enableEncryption"].get<bool>();
         serverurl = data["server"].get<std::string>();
-        geturl = serverurl + "msg.php?getmsg=json";
-        posturl = serverurl + "/msg.php?";
         username = data["username"].get<std::string>();
         token = data["token"].get<std::string>();
-        msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(), data["settings"]["displayOfflineMessages"].get<bool>(), genkey, data["settings"]["showMessageDateTime"].get<bool>(), username);
+        msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(), data["settings"]["displayOfflineMessages"].get<bool>(), genkey, data["settings"]["showMessageDateTime"].get<bool>(), username, moderatormode);
         memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>());
     }
     catch (std::out_of_range &e)
@@ -70,7 +69,7 @@ int main(int argc, char const *argv[])
     std::string input;
     while (true)
     {
-        exitUpdateCode = getServerUpdate(geturl, mem, memsettings);
+        exitUpdateCode = getServerUpdate(serverurl, mem, memsettings);
         if (exitUpdateCode == 0)
         {
             clearScreen();
@@ -90,14 +89,28 @@ int main(int argc, char const *argv[])
         {
             break; // Exit program if /exit
         }
-        else if (input.rfind("/help", 0) == 0)
+        else if (input.rfind("/help", 0) == 0 || input.rfind("/h", 0) == 0)
         {
-            showHelp();
+            showHelp(moderatormode);
+        }
+        else if (moderatormode && (input.rfind("/d", 0) == 0 || input.rfind("/delmsg", 0) == 0))
+        {
+            if (input.rfind("/d", 0) == 0)
+                ReplaceStringInPlace(input, "/d ", "");
+            else
+                ReplaceStringInPlace(input, "/delmsg ", "");
+            exitSendCode = delMessage(serverurl, input, username, token);
+
+            if (exitUpdateCode != 0)
+            {
+                std::cout << "SEND UNSAFE ERROR " << exitUpdateCode << std::endl;
+                return exitUpdateCode;
+            }
         }
         else if (input.rfind("/u ", 0) == 0)
         {
             ReplaceStringInPlace(input, "/u ", "");
-            exitSendCode = sendMessage(posturl, input, username, token);
+            exitSendCode = sendMessage(serverurl, input, username, token);
             if (exitUpdateCode != 0)
             {
                 std::cout << "SEND UNSAFE ERROR " << exitUpdateCode << std::endl;
@@ -117,10 +130,10 @@ int main(int argc, char const *argv[])
                 AES(decryptedText, key, encryptedText);
 
                 std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
-                exitSendCode = sendMessage(posturl, "护" + encryptedInput, username, token);
+                exitSendCode = sendMessage(serverurl, "护" + encryptedInput, username, token);
             }
             else
-                exitSendCode = sendMessage(posturl, input, username, token);
+                exitSendCode = sendMessage(serverurl, input, username, token);
             
             
             if (exitUpdateCode != 0)

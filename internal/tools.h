@@ -2,10 +2,10 @@
 #include <vector>
 #include <string>
 bool regexWishBoundaries(std::string &text, const std::string &word, const std::string &replacement);
-bool arguments(std::vector<std::string> &args, std::string &cfgPath);
+bool arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator);
 void clearScreen();
 void createLine();
-void showHelp();
+void showHelp(bool moderator = false);
 bool isEncryptedMessage(const std::string &str);
 std::string urlEncode(const std::string &input);
 int getWidth();

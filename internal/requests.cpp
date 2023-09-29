@@ -17,17 +17,18 @@ static size_t getHtmlCallback(void *contents, size_t size, size_t nmemb, void *p
     return size * nmemb;
 }
 
-int getServerUpdate(std::string const &geturl, MessageMemory &mem, MessageMemory::memorySettings &memsettings)
+int getServerUpdate(std::string const &serverurl, MessageMemory &mem, MessageMemory::memorySettings &memsettings)
 {
     int exitcode(0);
     CURL *curl;
     CURLcode res;
     std::string htmlBuffer;
+    std::string geturl = serverurl + "msg.php?getmsg=json";
 
     curl = curl_easy_init();
     if (curl)
     {
-        //std::cout << "getURL page : " << geturl << std::endl;
+        //std::cout << "getURL page : " << serverurl << std::endl;
         curl_easy_setopt(curl, CURLOPT_URL, geturl.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getHtmlCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &htmlBuffer);
@@ -57,25 +58,54 @@ int getServerUpdate(std::string const &geturl, MessageMemory &mem, MessageMemory
     return exitcode;
 }
 
-int sendMessage(std::string const &posturl, std::string const &content, std::string const &sender, std::string const &token)
+int sendMessage(std::string const &serverurl, std::string const &content, std::string const &sender, std::string const &token)
 {
     int exitcode(0);
     CURL *curl;
     CURLcode res;
 
-    std::string url = posturl + "message=" + urlEncode(content) + "&sender=" + urlEncode(sender) + "&token=" + urlEncode(token);
+    std::string url = serverurl + "msg.php?message=" + urlEncode(content) + "&sender=" + urlEncode(sender) + "&token=" + urlEncode(token);
 
     curl = curl_easy_init();
     if (curl)
     {
-        //std::cout << "getURL page : " << geturl << std::endl;
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         res = curl_easy_perform(curl);
-        //std::cout << "RES : " << res << std::endl;
         if (CURLE_OK != res)
         {
             std::cout << "An error has occured, may be check the server in config.json" << std::endl;
             exitcode = 3;
+        }
+    }
+    else
+    {
+        std::cout << "ERROR: Curl is not working..." << std::endl;
+        exitcode = 9;
+    }
+
+    /* always cleanup */
+    curl_easy_cleanup(curl);
+    return exitcode;
+}
+
+int delMessage(std::string const &serverurl, std::string const &msgid, std::string const &sender, std::string const &token)
+{
+    int exitcode(0);
+    CURL *curl;
+    CURLcode res;
+
+    // delmsg.php?del=$msg\&adminpseudo=$user\&admintoken=$token
+    std::string url = serverurl + "delmsg.php?del=" + urlEncode(msgid) + "&adminpseudo=" + urlEncode(sender) + "&admintoken=" + urlEncode(token);
+
+    curl = curl_easy_init();
+    if (curl)
+    {
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        res = curl_easy_perform(curl);
+        if (CURLE_OK != res)
+        {
+            std::cout << "An error has occured, may be check the server in config.json" << std::endl;
+            exitcode = 4;
         }
     }
     else

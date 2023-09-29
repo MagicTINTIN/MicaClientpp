@@ -49,4 +49,5 @@ To send a message in a private group, just type `/p groupname Message only encry
 
 ## Arguments
 You can start MicaClient++ with arguments !
+- `-m, --moderator` enables **moderator view** to get messages ID (no you won't have rights to delete messages :p)
 - `--cfg path/to/a/config/file.json` to load other config (usefull when you have several accounts)

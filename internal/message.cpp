@@ -24,11 +24,11 @@ void cleanMessageList(std::string &s)
 }
 
 /* MESSAGE SETTINGS */
-Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey("----------------"), datetimemsg(true), pseudo("NOBODY")
+Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey("----------------"), datetimemsg(true), pseudo("NOBODY"), modmsg(false)
 {
 }
 
-Message::messageSettings::messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd) : deletedmsg(ddel), offlinemsg(doff), generalkey(gkey), datetimemsg(dt), pseudo(psd)
+Message::messageSettings::messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod) : deletedmsg(ddel), offlinemsg(doff), generalkey(gkey), datetimemsg(dt), pseudo(psd), modmsg(mod)
 {
 }
 
@@ -89,8 +89,10 @@ void Message::print(messageSettings const &msettings, bool const &showids)
     std::string text;
     // SHOW IDS ?
 
+    if (msettings.modmsg && !showids)
+        std::cout << THIN << "[" << id << "] " << NORMAL;
     if (showids)
-        std::cout << BOLD << "[" << id << "] -> " << NORMAL;
+        std::cout << BOLD BLINK YELLOW_NORMAL_COLOR << "[" << id << "] -> " << NORMAL;
     else if (msettings.datetimemsg)
         std::cout << dateTime << " ";
 

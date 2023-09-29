@@ -18,14 +18,17 @@
 
 /* ESCAPE SEQUENCES */
 
-bool regexWishBoundaries(std::string& text, const std::string& word, const std::string& replacement) {
+bool regexWishBoundaries(std::string &text, const std::string &word, const std::string &replacement)
+{
     std::string::size_type pos = text.find(word);
     bool found = false;
 
-    while (pos != std::string::npos) {
+    while (pos != std::string::npos)
+    {
         // Check if the match ends with a word boundary
         if ((pos + word.length() == text.length() || !isalnum(text[pos + word.length()])) &&
-            (pos == 0 || ( !isalnum(text[pos - 1] && text[pos - 1] != '@')))) {
+            (pos == 0 || (!isalnum(text[pos - 1] && text[pos - 1] != '@'))))
+        {
             // Replace the occurrence with the specified replacement
             text.replace(pos, word.length(), replacement);
             found = true;
@@ -50,16 +53,18 @@ std::map<std::string, char> const escapeSequenceMap = {
     // Add more escape sequences as needed
 };
 
-bool arguments(std::vector<std::string> &args, std::string &cfgPath)
+bool arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator)
 {
     for (size_t i = 0; i < args.size(); ++i)
     {
-        if (args[i] == "--cfg")
+        if (args[i] == "--moderator" || args[i] == "-m")
+            moderator = true;
+        else if (args[i] == "--cfg")
         {
             if (i + 1 < args.size())
             {
                 cfgPath = args[i + 1];
-                std::cout << "Loading external config file ("<< cfgPath << ")..." << std::endl;
+                std::cout << "Loading external config file (" << cfgPath << ")..." << std::endl;
             }
             else
             {
@@ -117,7 +122,7 @@ void createLine()
               << NORMAL;
 }
 
-void showHelp()
+void showHelp(bool moderator)
 {
     clearScreen();
     createLine();
@@ -126,7 +131,17 @@ void showHelp()
               << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/h" << NORMAL << " or " << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/help" << NORMAL << " - To show this message" << std::endl
               << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/p x Message" << NORMAL << " - To send a private message to the group x (only people that will have a 'x' section in discussionGroupKeys in config.json with the corect Key will be able to decrypt the message)" << std::endl
               << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/u Message..." << NORMAL << " - To send an unsafe message (no encryption)" << std::endl
-              << std::endl
+              << std::endl;
+
+    if (moderator)
+    {
+        createLine();
+        std::cout << BOLD UNDERLINED << "Here is the list of MODERATORS commands" << std::endl
+                  << std::endl
+                  << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/delmsg x" << NORMAL << " or " << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/d x" << NORMAL << " - To delete the message with the id x" << std::endl
+                  << std::endl;
+    }
+    std::cout << std::endl
               << "Press " << REVERSED BLINK << "[ENTER]" << NORMAL << " to go back to chat" << std::endl;
     std::cin.get();
 }

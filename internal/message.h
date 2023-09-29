@@ -23,10 +23,11 @@ public:
         bool deletedmsg;
         bool offlinemsg;
         bool datetimemsg;
+        bool modmsg;
         std::string generalkey;
         std::string pseudo;
         messageSettings();
-        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd);
+        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod);
     };
 
     struct jsonMessage
