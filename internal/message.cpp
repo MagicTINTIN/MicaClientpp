@@ -205,8 +205,7 @@ void Message::printReply(messageSettings const &msettings)
         text = content;
 
     if (status == ONLINE)
-        std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR  << "]" << text << NORMAL << std::endl
-                  << std::endl;
+        std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR  << "]" << text << NORMAL << std::endl;
     
 }
 

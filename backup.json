@@ -471,5 +471,16 @@
         "sender": "MagicTINTIN",
         "status": 2,
         "timestamp": 1696013020
+    },
+    {
+        "certifiedUser": 0,
+        "content": "296",
+        "dateTime": "2023-09-29 23:44:08",
+        "decrypted": "",
+        "id": 302,
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 2,
+        "timestamp": 1696020248
     }
 ]

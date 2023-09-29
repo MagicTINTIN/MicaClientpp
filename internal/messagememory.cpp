@@ -140,7 +140,7 @@ Message MessageMemory::getMessageByID(int id) {
     {
         i--;
         msg = memory[i];
-        if (msg.getID() != id)
+        if (msg.getID() == id)
             found = true;
     }
     if (found)

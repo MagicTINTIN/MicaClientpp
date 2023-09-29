@@ -117,24 +117,42 @@ int main(int argc, char const *argv[])
         else if (input.rfind("/r", 0) == 0)
         {
             std::string idtoreply("");
-            if (input.rfind("/r ", 0) == 0) {
+            if (input.rfind("/r ", 0) == 0)
+            {
                 ReplaceStringInPlace(input, "/r ", "");
                 idtoreply = input;
             }
             else
             {
                 clearScreen();
-                // mem.print(msgsettings, true);
+                mem.print(msgsettings, true);
                 std::cout << "Type the [ID] of the message you want to answer: ";
                 std::getline(std::cin, input);
                 idtoreply = input;
             }
-            // showReplying(mem, stoi(idtoreply), msgsettings);
-            exitSendCode = sendMessage(serverurl, input, username, token);
-            if (exitUpdateCode != 0)
+
+            clearScreen();
+            mem.print(msgsettings, true);
+            
+            showReplying(mem, stoi(idtoreply), msgsettings);
+            std::getline(std::cin, input);
+            if (input.length() > 0)
             {
-                std::cout << "SEND UNSAFE ERROR " << exitUpdateCode << std::endl;
-                return exitUpdateCode;
+                unsigned char decryptedText[490] = "";
+                unsigned char key[40] = "";
+                unsigned char encryptedText[980] = "";
+
+                std::copy(input.cbegin(), input.cend(), decryptedText);
+                std::copy(genkey.cbegin(), genkey.cend(), key);
+                AES(decryptedText, key, encryptedText);
+
+                std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
+                exitSendCode = sendMessage(serverurl, "答" + idtoreply + "护" + encryptedInput, username, token);
+                if (exitUpdateCode != 0)
+                {
+                    std::cout << "SEND REPLY ERROR " << exitUpdateCode << std::endl;
+                    return exitUpdateCode;
+                }
             }
         }
         else if (input.rfind("/u ", 0) == 0)
