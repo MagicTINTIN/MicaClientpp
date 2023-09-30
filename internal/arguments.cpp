@@ -128,8 +128,15 @@ int uSendArg(std::string &input, std::string const &serverurl, std::string &user
 }
 
 /* PRIVATE GROUP MESSAGE SEND */
+
 int pSendArg(MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
 {
+    if (!msgsettings.securemsg)
+    {
+        std::cout << RED_NORMAL_COLOR << "You can't use this feature without Encryption enabled" << std::endl;
+        std::cin.get();
+        return 2;
+    }
     std::string privategroupname("");
     if (input.rfind("/p ", 0) == 0)
     {
@@ -209,4 +216,81 @@ int sendArg(Message::messageSettings &msgsettings, std::string &input, std::stri
         return -exitSendCode;
     }
     return 3;
+}
+
+/* GROUP VISION COMMAND */
+
+int groupArg(std::string &input, Message::messageSettings &msettings, json &config)
+{
+    if (!msettings.securemsg)
+    {
+        std::cout << RED_NORMAL_COLOR << "You can't use this feature without Encryption enabled" << std::endl;
+        std::cin.get();
+        return 2;
+    }
+    
+    std::string privategroupname("");
+
+    if (input.rfind("/g ", 0) == 0)
+    {
+        ReplaceStringInPlace(input, "/g ", "");
+        privategroupname = input;
+    }
+    else
+    {
+        msettings.channel = "";
+        return 0;
+    }
+
+    privategroup privateg = findPrivateGroup(config, privategroupname);
+    if (!privateg.found)
+    {
+        std::cout << RED_NORMAL_COLOR << "Impossible to find this group" << std::endl;
+        std::cin.get();
+        return 2;
+    }
+    msettings.channel = privategroupname;
+    return 0;
+}
+
+/* PRIVATE GROUP CHANNEL MESSAGE SEND */
+
+int pChannelSendArg(MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
+{
+    if (!msgsettings.securemsg)
+    {
+        std::cout << RED_NORMAL_COLOR << "You can't use this feature without Encryption enabled" << std::endl;
+        std::cin.get();
+        return 2;
+    }
+    std::string privategroupname(msgsettings.channel);
+
+    privategroup privateg = findPrivateGroup(config, privategroupname);
+    if (!privateg.found)
+    {
+        std::cout << RED_NORMAL_COLOR << "Impossible to find this group" << std::endl;
+        std::cin.get();
+        return 2;
+    }
+
+    if (input.length() > 0)
+    {
+        unsigned char decryptedText[490] = "";
+        unsigned char key[40] = "";
+        unsigned char encryptedText[980] = "";
+
+        std::copy(input.cbegin(), input.cend(), decryptedText);
+        std::copy(privateg.key.cbegin(), privateg.key.cend(), key);
+        AES(decryptedText, key, encryptedText);
+
+        std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
+        exitSendCode = sendMessage(serverurl, "团" + privategroupname + "护" + encryptedInput, username, token);
+        if (exitSendCode != 0)
+        {
+            std::cout << "SEND PRIVATE GROUP ERROR " << exitSendCode << std::endl;
+            return -exitSendCode;
+        }
+        return 3;
+    }
+    return 0;
 }

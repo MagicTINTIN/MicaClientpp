@@ -92,11 +92,11 @@ int getArguments(MessageMemory &mem,
 {
     if (input.length() == 0)
         return 0;
-    else if (input.rfind("/exit", 0) == 0)
+    else if (input.rfind("/q", 0) == 0 || input.rfind("/exit", 0) == 0)
     {
         return -1;
     }
-    else if (input.rfind("/help", 0) == 0 || input.rfind("/h", 0) == 0)
+    else if (input.rfind("/h", 0) == 0)
     {
         showHelp(moderatormode);
     }
@@ -116,9 +116,16 @@ int getArguments(MessageMemory &mem,
     {
         return pSendArg(mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
     }
+    else if (input.rfind("/g", 0) == 0)
+    {
+        return groupArg(input, msgsettings, config);
+    }
     else
     {
-        return sendArg(msgsettings, input, serverurl, username, token, exitSendCode);
+        if (msgsettings.channel != "")
+            return pChannelSendArg(mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
+        else
+            return sendArg(msgsettings, input, serverurl, username, token, exitSendCode);
     }
     return 0;
 }

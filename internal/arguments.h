@@ -13,4 +13,8 @@ int pSendArg(MessageMemory &mem, json &config, std::string &input, std::string c
 
 int sendArg(Message::messageSettings &msgsettings, std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode);
 
+int groupArg(std::string &input, Message::messageSettings &msettings, json &config);
+
+int pChannelSendArg(MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode);
+
 #endif // ARGUMENTS_H_INCLUDED

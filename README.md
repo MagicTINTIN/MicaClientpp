@@ -47,22 +47,48 @@ In this example the group is named "a" and its associated key is "thisIsAPrivate
 As you might not have the same key, you will see encrypted message from users that are not in your group.<br>
 > - So to be sure private message are coming from the right group you must **add** the users that belong to your group.
 > - To receive messages from everyone in this group, add "*" in "users"<br>
-
-
+<br>
 Then, just communicate the name and the key of the group you created to your members, and ask them to complete the "users" section too.<br>
+<br>
+To filter message by group type `/g groupname`, and to go back to general `/g`.<br>
+Be careful, if you are in a group channel and you send a message, it will be only send to the group.
+<br>
+
 ### Send a message in private group
-To send a message in a private group, just type `/p groupname Message only encrypted for group members`
+To send a message in a private group, just type `/p groupname` or `/p` and then type the group name.
+Then just type your message and press [ENTER].
+If you reply to a message of a group, it will automatically reply in the group.
 
 ## Command list
-- `/help` to print a message containing all the commands available.<br>
-- `/exit` to exit MicaClient++
-
+- `/help, /h` to print a message containing all the commands available.<br>
+- `/exit, /q` to exit MicaClient++
+- `/u` to send a message in unsafe mode.
+- `/r, /ru` to reply to a message (ru for unsafe mode)
+- `/p` to send a message in a group
+- `/g` to change group vision (channel)
+<br>
 ## Arguments
 You can start MicaClient++ with arguments !
 - `-m, --moderator` enables **moderator view** to get messages ID (no you won't have rights to delete messages :p)
 - `--cfg path/to/a/config/file.json` to load other config (usefull when you have several accounts)
 
-## Settings
+## config.json and Settings
+There are many more settings available in config.json
+```json
+// to only see messages sent by verified users
+"blockUnVerifiedUsers":false,
+// to block specific users
+"blockedUsers": [ "blockedPseudo", "blockedPseudo2" ],
+```
+You can also block users in discussion groups (for instance in public groups where someone try to chat in your group with a wrong key)
+```json
+"public":{
+    "users": [ "*" ],
+    "blocked": [ "blockedPseudoInPublicGroup" ],
+    "key":"thisIsaPublicGroup"
+}
+```
+
 In config.json you have a section named "settings" :
 ```json
 "settings": {
@@ -78,7 +104,6 @@ In config.json you have a section named "settings" :
 ```
 ---
 # Futures features : 
-- /g *(optional: group name)* only print message from a group, if no group given print all
 - Themes : MicaClient++, Original (copy of micasend official client)  
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)

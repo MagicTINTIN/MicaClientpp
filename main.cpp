@@ -47,7 +47,8 @@ int main(int argc, char const *argv[])
                                                genkey, data["settings"]["showMessageDateTime"].get<bool>(),
                                                username, moderatormode, encryptenabled,
                                                data["blockUnVerifiedUsers"].get<bool>(),
-                                               data["blockedUsers"]);
+                                               data["blockedUsers"],
+                                               "");
         memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>());
     }
     catch (std::out_of_range &e)
@@ -88,6 +89,8 @@ int main(int argc, char const *argv[])
             std::cout << "UPDATE ERROR " << exitUpdateCode << std::endl;
             return exitUpdateCode;
         }
+        if (msgsettings.channel != "")
+            std::cout << PURPLE_NORMAL_COLOR "(" BOLD << msgsettings.channel << NORMAL PURPLE_NORMAL_COLOR ") " NORMAL;
         std::cout << username << " > ";
         std::getline(std::cin, input);
 

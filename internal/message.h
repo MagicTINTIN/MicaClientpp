@@ -49,8 +49,9 @@ public:
         std::vector<std::string> blockedUsers;
         std::string generalkey;
         std::string pseudo;
+        std::string channel;
         messageSettings();
-        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec, bool buu, json blu);
+        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch);
     };
 
     struct jsonMessage
