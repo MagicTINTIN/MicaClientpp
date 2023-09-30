@@ -79,6 +79,6 @@ In config.json you have a section named "settings" :
 ---
 # Futures features : 
 - /g *(optional: group name)* only print message from a group, if no group given print all
-- reply in groups
 - Themes : MicaClient++, Original (copy of micasend official client)  
-- block users
+- add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
+- add /adduser for admins (with /showuser /upuser)

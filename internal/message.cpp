@@ -36,12 +36,16 @@ void cleanMessageList(std::string &s)
 }
 
 /* MESSAGE SETTINGS */
-Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey(KEYNOTFOUND), datetimemsg(true), pseudo("NOBODY"), modmsg(false), securemsg(true)
+Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey(KEYNOTFOUND), datetimemsg(true), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false)
 {
 }
 
-Message::messageSettings::messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec) : deletedmsg(ddel), offlinemsg(doff), generalkey(gkey), datetimemsg(dt), pseudo(psd), modmsg(mod), securemsg(sec)
+Message::messageSettings::messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec, bool buu, json blu) : deletedmsg(ddel), offlinemsg(doff), generalkey(gkey), datetimemsg(dt), pseudo(psd), modmsg(mod), securemsg(sec), blockUnverified(buu)
 {
+    for (auto &u : blu.items())
+    {
+        blockedUsers.push_back(u.value().get<std::string>());
+    }
 }
 
 /* JSON MESSAGE */
@@ -101,7 +105,9 @@ void Message::print(messageSettings const &msettings, bool const &showids, isgro
 
     if ((igm.isgroup && !igm.visible) ||
         (status == DELETED && !msettings.deletedmsg) ||
-        (status == OFFLINE && !msettings.offlinemsg))
+        (status == OFFLINE && !msettings.offlinemsg) ||
+        (msettings.blockUnverified && rank < 1) ||
+        (std::find(msettings.blockedUsers.begin(), msettings.blockedUsers.end(), sender) != msettings.blockedUsers.end()))
         return;
     std::string text;
     std::string copyContent = content;

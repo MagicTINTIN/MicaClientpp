@@ -45,10 +45,12 @@ public:
         bool datetimemsg;
         bool modmsg;
         bool securemsg;
+        bool blockUnverified;
+        std::vector<std::string> blockedUsers;
         std::string generalkey;
         std::string pseudo;
         messageSettings();
-        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec);
+        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec, bool buu, json blu);
     };
 
     struct jsonMessage

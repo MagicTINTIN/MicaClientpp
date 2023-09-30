@@ -178,7 +178,6 @@ std::string jsonBackslash(std::string s)
     return s;
 }
 
-
 char getCharacterFromEscapeSequence(const std::string &escapeSequence)
 {
     auto it = escapeSequenceMap.find(escapeSequence);
@@ -237,10 +236,13 @@ privategroup findPrivateGroup(json config, std::string name, bool isUserIn, std:
 {
     std::string key;
     std::vector<std::string> users;
-    bool foundUser(pseudo == config["username"].get<std::string>());
+    bool foundUser(pseudo == config["username"].get<std::string>()), foundBlocked(false);
     try
     {
-        if (config["discussionGroupKeys"].contains(name) && config["discussionGroupKeys"][name].contains("key") && config["discussionGroupKeys"][name].contains("users"))
+        if (config["discussionGroupKeys"].contains(name) &&
+            config["discussionGroupKeys"][name].contains("key") &&
+            config["discussionGroupKeys"][name].contains("users") &&
+            config["discussionGroupKeys"][name].contains("blocked"))
         {
             key = config["discussionGroupKeys"][name]["key"].get<std::string>();
             for (auto &u : config["discussionGroupKeys"][name]["users"].items())
@@ -248,6 +250,11 @@ privategroup findPrivateGroup(json config, std::string name, bool isUserIn, std:
                 std::string tmppseudo = u.value().get<std::string>();
                 foundUser = (foundUser || tmppseudo == pseudo || tmppseudo == "*");
                 users.push_back(tmppseudo);
+            }
+            for (auto &u : config["discussionGroupKeys"][name]["blocked"].items())
+            {
+                std::string tmppseudo = u.value().get<std::string>();
+                foundBlocked = (foundBlocked || tmppseudo == pseudo);
             }
         }
         else
@@ -257,45 +264,54 @@ privategroup findPrivateGroup(json config, std::string name, bool isUserIn, std:
     {
         return privategroup();
     }
-    return privategroup(true, name, key, users, (!isUserIn || foundUser));
+    return privategroup(true, name, key, users, (!isUserIn || (foundUser && !foundBlocked)));
 }
 
-std::string escapeBourrinJson(const std::string& input) {
+std::string escapeBourrinJson(const std::string &input)
+{
     std::string soclean;
-    for (unsigned char c : input) {
-        if ((c >= 0x20 && c <= 0x7E) || (c >= 0xA0 && c <= 0x4FF)) {
+    for (unsigned char c : input)
+    {
+        if ((c >= 0x20 && c <= 0x7E) || (c >= 0xA0 && c <= 0x4FF))
+        {
             soclean += c;
         }
     }
     return soclean;
 }
 
-std::string escapeJson(const std::string& input) {
+std::string escapeJson(const std::string &input)
+{
     std::string escaped;
-    for (unsigned char c : input) {
-        switch (c) {
-            case '\n':
-                escaped += "\\n";
-                break;
-            case '\r':
-                escaped += "\\r";
-                break;
-            case '\t':
-                escaped += "\\t";
-                break;
-            // case '\\':
-            //     escaped += "\\\\";
-            //     break;
-            default:
-                if (c >= 0 && c <= 0x1F) {
-                    // Escape other control characters as Unicode escape sequences
-                    char buf[7];
-                    snprintf(buf, sizeof(buf), "\\u%04X", static_cast<unsigned char>(c));
-                    escaped += buf;
-                } else {
-                    escaped += c;
-                }
-                break;
+    for (unsigned char c : input)
+    {
+        switch (c)
+        {
+        case '\n':
+            escaped += "\\n";
+            break;
+        case '\r':
+            escaped += "\\r";
+            break;
+        case '\t':
+            escaped += "\\t";
+            break;
+        // case '\\':
+        //     escaped += "\\\\";
+        //     break;
+        default:
+            if (c >= 0 && c <= 0x1F)
+            {
+                // Escape other control characters as Unicode escape sequences
+                char buf[7];
+                snprintf(buf, sizeof(buf), "\\u%04X", static_cast<unsigned char>(c));
+                escaped += buf;
+            }
+            else
+            {
+                escaped += c;
+            }
+            break;
         }
     }
     return escapeBourrinJson(escaped);
