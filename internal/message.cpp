@@ -96,7 +96,7 @@ Message::Message(std::string i, std::string author, std::string message, std::st
 {
 }
 
-void Message::print(messageSettings const &msettings, bool const &showids, Message repliedTo, bool const &isReply, std::string replyContent)
+void Message::print(messageSettings const &msettings, bool const &showids, int idReplied, Message repliedTo, bool const &isReply, std::string replyContent)
 {
     std::string text;
     std::string copyContent = content;
@@ -105,7 +105,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, Messa
     if (isReply)
     {
         if (repliedTo.getID() == -1)
-            std::cout << "> " << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "Uknown message" << NORMAL << std::endl;
+            std::cout << "> " << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "Uknown message n°" << idReplied << NORMAL << std::endl;
         else
             repliedTo.printReply(msettings);
         copyContent = replyContent;
@@ -144,7 +144,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, Messa
             else
             {
                 std::cout << " " << NORMAL;
-                text = content;
+                text = copyContent;
             }
         }
         else
@@ -223,7 +223,7 @@ void Message::printReply(messageSettings const &msettings)
                 text = decrypted;
             }
             else
-                text = content;
+                text = copyContent;
         }
         else
             text = decrypted;
@@ -231,8 +231,7 @@ void Message::printReply(messageSettings const &msettings)
     else
         text = content;
 
-    if (status == ONLINE)
-        std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "]" << text << NORMAL << std::endl;
+    std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "]" << text << NORMAL << std::endl;
 }
 
 void Message::setStatus(messageStatus const &newStatus)

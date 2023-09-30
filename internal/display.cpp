@@ -40,23 +40,31 @@ void showHelp(bool moderator)
 {
     clearScreen();
     createLine();
-    std::cout << BOLD UNDERLINED << "Here is the list of commands" << std::endl
+    std::cout << BOLD UNDERLINED << "Here is the list of commands" NORMAL << std::endl
               << std::endl
-              << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/h" << NORMAL << " or " << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/help" << NORMAL << " - To show this message" << std::endl
-              << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/p x Message" << NORMAL << " - To send a private message to the group x (only people that will have a 'x' section in discussionGroupKeys in config.json with the corect Key will be able to decrypt the message)" << std::endl
-              << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/u Message..." << NORMAL << " - To send an unsafe message (no encryption)" << std::endl
+              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/h" NORMAL " or " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/help" NORMAL " - To show this message" << std::endl
+              << std::endl
+              << "To reply to a message type " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/r x" NORMAL ITALIC " (with x the message ID to reply)." NORMAL << std::endl
+              << "If you don't know it, only type " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/r" NORMAL ", then choose the ID of the message you want to reply" << std::endl
+              << "Then, press [ENTER], and you will be able to write and send your answer ! " << std::endl
+              << THIN "You can use " BLACK_NORMAL_BACKGROUND "/ru x" NORMAL THIN " or " BLACK_NORMAL_BACKGROUND "/ru" NORMAL THIN " to relpy in unsafe mode" << std::endl
+              << std::endl
+              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/p x Message" NORMAL " - To send a private message to the group x (only people that will have a 'x' section in discussionGroupKeys in config.json with the corect Key will be able to decrypt the message)" << std::endl
+              << std::endl
+              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/u Message..." NORMAL " - To send an unsafe message (no encryption)" << std::endl
+
               << std::endl;
 
     if (moderator)
     {
         createLine();
-        std::cout << BOLD UNDERLINED << "Here is the list of MODERATORS commands" << std::endl
+        std::cout << BOLD UNDERLINED "Here is the list of MODERATORS commands" NORMAL << std::endl
                   << std::endl
-                  << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/delmsg x" << NORMAL << " or " << WHITE_NORMAL_COLOR << BLACK_NORMAL_BACKGROUND << "/d x" << NORMAL << " - To delete the message with the id x" << std::endl
+                  << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/delmsg x" NORMAL " or " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/d x" NORMAL " - To delete the message with the id x" << std::endl
                   << std::endl;
     }
     std::cout << std::endl
-              << "Press " << REVERSED BLINK << "[ENTER]" << NORMAL << " to go back to chat" << std::endl;
+              << "Press " REVERSED BLINK "[ENTER]" NORMAL " to go back to chat" << std::endl;
     std::cin.get();
 }
 

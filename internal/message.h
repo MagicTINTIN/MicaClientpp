@@ -69,7 +69,7 @@ public:
     /**
      * To print a message in terminal
      */
-    void print(messageSettings const &msettings, bool const &showids, Message repliedTo = Message(), bool const &isReply = false, std::string replyContent = "");
+    void print(messageSettings const &msettings, bool const &showids, int idReplied = -1, Message repliedTo = Message(), bool const &isReply = false, std::string replyContent = "");
     /**
      * Replied message
      */

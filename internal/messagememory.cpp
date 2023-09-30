@@ -131,7 +131,7 @@ void MessageMemory::print(Message::messageSettings const &msettings, bool const 
         Message::isreplymessage irm = msg.isRelpyContent();
 
         if (irm.isreply)
-            msg.print(msettings, showids, getMessageByID(irm.idreply), true, irm.messagecontent);
+            msg.print(msettings, showids, irm.idreply, getMessageByID(irm.idreply), true, irm.messagecontent);
         else
             msg.print(msettings, showids);
     }

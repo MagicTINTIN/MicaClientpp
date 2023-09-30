@@ -17,11 +17,16 @@ Then, you can run `./MicaClient`, and now you should see the chat.<br>
 To send a message: just type it, and press Enter !<br>
 ## Reply to a message
 To reply to a message type `/r x` *(with x the message ID to reply)*.<br>
-If you don't know it, only type `/r`<br>
+If you don't know it, only type `/r`, then choose the ID of the message you want to reply<br>
 Then, press [ENTER], and you will be able to write and send your answer !
+
 ## Secure/Unsecure mode
 By defalut, encryption message is active (you can see that messages are encrypted when there is a **S** on green background), but if you want to send a message in unsecure mode (message will be sent without encryption), you can type `/u Unsecure message`.
+<br>
+To reply in unsafe mode, type `/ru x` or `/ru`<br>
+<br>
 You can also disable it in config.json, but it is not recommanded.<br>
+
 ## Private groups
 You can create private groups that will only be readable by some users.
 ### Create a group
