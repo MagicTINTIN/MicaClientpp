@@ -165,6 +165,20 @@ void escapeBackslash(std::string &s)
     }
 }
 
+std::string jsonBackslash(std::string s)
+{
+    auto it = std::find(s.begin(), s.end(), '\\');
+    while (it != s.end())
+    {
+        auto it2 = s.insert(it, '\\');
+
+        // skip over the slashes we just inserted
+        it = std::find(it2 + 2, s.end(), '\\');
+    }
+    return s;
+}
+
+
 char getCharacterFromEscapeSequence(const std::string &escapeSequence)
 {
     auto it = escapeSequenceMap.find(escapeSequence);
@@ -244,4 +258,45 @@ privategroup findPrivateGroup(json config, std::string name, bool isUserIn, std:
         return privategroup();
     }
     return privategroup(true, name, key, users, (!isUserIn || foundUser));
+}
+
+std::string escapeBourrinJson(const std::string& input) {
+    std::string soclean;
+    for (char c : input) {
+        if (c >= 0x20 && c <= 0x7E) {
+            soclean += c;
+        }
+    }
+    return soclean;
+}
+
+std::string escapeJson(const std::string& input) {
+    std::string escaped;
+    for (char c : input) {
+        switch (c) {
+            case '\n':
+                escaped += "\\n";
+                break;
+            case '\r':
+                escaped += "\\r";
+                break;
+            case '\t':
+                escaped += "\\t";
+                break;
+            // case '\\':
+            //     escaped += "\\\\";
+            //     break;
+            default:
+                if (c >= 0 && c <= 0x1F) {
+                    // Escape other control characters as Unicode escape sequences
+                    char buf[7];
+                    snprintf(buf, sizeof(buf), "\\u%04X", static_cast<unsigned char>(c));
+                    escaped += buf;
+                } else {
+                    escaped += c;
+                }
+                break;
+        }
+    }
+    return escapeBourrinJson(escaped);
 }

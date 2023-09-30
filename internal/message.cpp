@@ -149,7 +149,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, isgro
                     std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
                 inv_AES(tencryptedText, tkey, tdecryptedText);
                 std::string decryptedContent(reinterpret_cast<char *>(tdecryptedText));
-                decrypted = decryptedContent;
+                decrypted = escapeJson(decryptedContent);
                 cleanMessageList(decryptedContent);
                 text = decrypted;
             }
@@ -241,7 +241,7 @@ void Message::printReply(messageSettings const &msettings, isgroupmessage const 
                     std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
                 inv_AES(tencryptedText, tkey, tdecryptedText);
                 std::string decryptedContent(reinterpret_cast<char *>(tdecryptedText));
-                decrypted = decryptedContent;
+                decrypted = escapeJson(decryptedContent);
                 cleanMessageList(decryptedContent);
                 text = decrypted;
             }
