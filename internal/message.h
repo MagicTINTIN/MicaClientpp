@@ -27,6 +27,17 @@ public:
         isreplymessage();
         isreplymessage(bool is, std::string c, int id);
     };
+
+    struct isgroupmessage
+    {
+        bool isgroup;
+        std::string messagecontent;
+        std::string groupname;
+        std::string key;
+        bool visible;
+        isgroupmessage();
+        isgroupmessage(bool is, std::string c, std::string n, bool v, std::string k);
+    };
     struct messageSettings
     {
         bool deletedmsg;
@@ -70,11 +81,11 @@ public:
     /**
      * To print a message in terminal
      */
-    void print(messageSettings const &msettings, bool const &showids, int idReplied = -1, Message repliedTo = Message(), bool const &isReply = false, std::string replyContent = "");
+    void print(messageSettings const &msettings, bool const &showids, isgroupmessage const &igm = isgroupmessage(), int idReplied = -1, Message repliedTo = Message(), bool const &isReply = false, std::string replyContent = "");
     /**
      * Replied message
      */
-    void printReply(messageSettings const &msettings);
+    void printReply(messageSettings const &msettings, isgroupmessage const &igm = isgroupmessage());
     /**
      * Set a message author
      */
@@ -110,7 +121,11 @@ public:
     /**
      * Returns data to know if it is a reply
     */
-    isreplymessage isRelpyContent();
+    isreplymessage isRelpyContent(bool fromGroup = false, std::string groupContent = "");
+    /**
+     * Returns data to know if it is a group message
+    */
+    isgroupmessage isGroupContent(json config);
 
 private:
     int id;

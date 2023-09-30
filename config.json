@@ -1,6 +1,6 @@
 {
     "version":0,
-    "subversion":4,
+    "subversion":6,
 
     "server":"https://micasend.baptiste-reb.fr/",
     "username":"aSpecialUser",
@@ -11,10 +11,19 @@
     "defaultEncryptionSuffix":"DefaultPseudoEncryption",
     "generalKey":"generalEncryptionKey",
     
+    "blockUnVerifiedUsers":false,
+    "blockedUsers": [],
+
     "discussionGroupKeys": {
         "a":{
-            "users": [ "MagicTest", "Michel" ],
-            "key":"thisIsAPrivateGroup"
+            "users": [ "MagicTest", "Michel", "MagicTINTIN"],
+            "blocked": [],
+            "key":"notthesamegroup"
+        },
+        "public":{
+            "users": [ "*" ],
+            "blocked": [],
+            "key":"thisIsaPublicGroup"
         }
     },
     "privateEncryptionKeys": {
@@ -27,7 +36,7 @@
     },
 
     "settings": {
-        "backupMessages":false,
+        "backupMessages":true,
         "showMessageDateTime":false,
         "displayDeletedMessages":true,
         "displayOfflineMessages":true

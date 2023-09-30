@@ -36,7 +36,7 @@ int deleteArg(std::string &input, std::string const &serverurl, std::string &use
 
 /* REPLY ARGUMENTS FONCTION */
 
-int replyArg(MessageMemory &mem, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
+int replyArg(json config, MessageMemory &mem, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
 {
     std::string idtoreply("");
     bool safemode(msgsettings.securemsg);
@@ -56,7 +56,7 @@ int replyArg(MessageMemory &mem, std::string &input, std::string const &serverur
         if (input.rfind("/ru", 0) == 0)
             safemode = false;
         clearScreen();
-        mem.print(msgsettings, true);
+        mem.print(config, msgsettings, true);
         std::cout << "Type the [ID] of the message you want to answer: ";
         std::getline(std::cin, input);
         idtoreply = input;
@@ -69,7 +69,7 @@ int replyArg(MessageMemory &mem, std::string &input, std::string const &serverur
     }
 
     clearScreen();
-    mem.print(msgsettings);
+    mem.print(config, msgsettings);
 
     if (showReplying(mem, stoi(idtoreply), msgsettings) > 0)
     {
@@ -150,8 +150,8 @@ int pSendArg(MessageMemory &mem, json &config, std::string &input, std::string c
     }
 
     clearScreen();
-    mem.print(msgsettings);
-    std::cout << username << THIN " -> " NORMAL PURPLE_NORMAL_COLOR "(" << privategroupname << NORMAL ") > ";
+    mem.print(config, msgsettings);
+    std::cout << username << THIN " -> " NORMAL PURPLE_NORMAL_COLOR "(" << privategroupname << ")" NORMAL " > ";
     std::getline(std::cin, input);
     if (input.length() > 0)
     {

@@ -212,24 +212,29 @@ std::vector<std::string> split(std::string s, std::string delimiter)
     return res;
 }
 
-privategroup::privategroup() : found(false), name(""), key("")
+privategroup::privategroup() : found(false), name(""), key(KEYNOTFOUND), isin(false)
 {
 }
-privategroup::privategroup(bool f, std::string n, std::string k, std::vector<std::string> v) : found(f), name(n), key(k)
+privategroup::privategroup(bool f, std::string n, std::string k, std::vector<std::string> v, bool i) : found(f), name(n), key(k), isin(i)
 {
 }
 
-privategroup findPrivateGroup(json config, std::string name)
+privategroup findPrivateGroup(json config, std::string name, bool isUserIn, std::string pseudo)
 {
     std::string key;
     std::vector<std::string> users;
+    bool foundUser(pseudo == config["username"].get<std::string>());
     try
     {
         if (config["discussionGroupKeys"].contains(name) && config["discussionGroupKeys"][name].contains("key") && config["discussionGroupKeys"][name].contains("users"))
         {
             key = config["discussionGroupKeys"][name]["key"].get<std::string>();
             for (auto &u : config["discussionGroupKeys"][name]["users"].items())
-                users.push_back(u.value().get<std::string>());
+            {
+                std::string tmppseudo = u.value().get<std::string>();
+                foundUser = (foundUser || tmppseudo == pseudo || tmppseudo == "*");
+                users.push_back(tmppseudo);
+            }
         }
         else
             return privategroup();
@@ -238,5 +243,5 @@ privategroup findPrivateGroup(json config, std::string name)
     {
         return privategroup();
     }
-    return privategroup(true, name, key, users);
+    return privategroup(true, name, key, users, (!isUserIn || foundUser));
 }

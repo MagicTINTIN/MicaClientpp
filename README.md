@@ -26,6 +26,7 @@ By defalut, encryption message is active (you can see that messages are encrypte
 To reply in unsafe mode, type `/ru x` or `/ru`<br>
 <br>
 You can also disable it in config.json, but it is not recommanded.<br>
+If you disable "enableEncryption" you won't be able to read Secured messages nor using private groups.<br>
 
 ## Private groups
 You can create private groups that will only be readable by some users.
@@ -76,7 +77,8 @@ In config.json you have a section named "settings" :
 }
 ```
 ---
-Futures features : 
+# Futures features : 
 - /g *(optional: group name)* only print message from a group, if no group given print all
 - reply in groups
 - Themes : MicaClient++, Original (copy of micasend official client)  
+- block users

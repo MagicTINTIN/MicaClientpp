@@ -102,7 +102,7 @@ int getArguments(MessageMemory &mem,
     }
     else if (input.rfind("/r", 0) == 0)
     {
-        return replyArg(mem, input, serverurl, msgsettings, username, token, exitSendCode);
+        return replyArg(config, mem, input, serverurl, msgsettings, username, token, exitSendCode);
     }
     else if (input.rfind("/u ", 0) == 0)
     {

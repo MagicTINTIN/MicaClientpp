@@ -124,16 +124,21 @@ void MessageMemory::updateMemory(json const &messages, memorySettings memsetting
     }
 }
 
-void MessageMemory::print(Message::messageSettings const &msettings, bool const &showids)
+void MessageMemory::print(json config, Message::messageSettings const &msettings, bool const &showids)
 {
     for (Message &msg : memory)
     {
-        Message::isreplymessage irm = msg.isRelpyContent();
+        Message::isgroupmessage igm = msg.isGroupContent(config);
+        Message::isreplymessage irm;
+        if (igm.isgroup)
+            irm = msg.isRelpyContent(true, igm.messagecontent);
+        else
+            irm = msg.isRelpyContent();
 
         if (irm.isreply)
-            msg.print(msettings, showids, irm.idreply, getMessageByID(irm.idreply), true, irm.messagecontent);
+            msg.print(msettings, showids, igm, irm.idreply, getMessageByID(irm.idreply), true, irm.messagecontent);
         else
-            msg.print(msettings, showids);
+            msg.print(msettings, showids, igm);
     }
 }
 

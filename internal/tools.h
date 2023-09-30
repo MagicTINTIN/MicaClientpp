@@ -20,15 +20,16 @@ char getCharacterFromEscapeSequence(const std::string &escapeSequence);
 void replaceEscapeSequences(std::string &s);
 std::vector<std::string> split(std::string s, std::string delimiter);
 
-
+std::string const KEYNOTFOUND("-------------------------");
 struct privategroup {
     bool found;
     std::string name;
     std::string key;
+    bool isin;
     privategroup();
-    privategroup(bool f, std::string n, std::string k, std::vector<std::string> v);
+    privategroup(bool f, std::string n, std::string k, std::vector<std::string> v, bool is);
 };
 
-privategroup findPrivateGroup(json config, std::string name);
+privategroup findPrivateGroup(json config, std::string name, bool isUserIn = false, std::string pseudo = "");
 
 #endif //TOOLS_H_INCLUDED

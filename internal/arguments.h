@@ -5,7 +5,7 @@
 
 int deleteArg(std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode);
 
-int replyArg(MessageMemory &mem, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode);
+int replyArg(json config, MessageMemory &mem, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode);
 
 int uSendArg(std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode);
 

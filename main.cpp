@@ -76,7 +76,7 @@ int main(int argc, char const *argv[])
         if (exitUpdateCode == 0)
         {
             clearScreen();
-            mem.print(msgsettings);
+            mem.print(data, msgsettings);
         }
         else
         {

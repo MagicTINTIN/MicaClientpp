@@ -36,7 +36,7 @@ void cleanMessageList(std::string &s)
 }
 
 /* MESSAGE SETTINGS */
-Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey("----------------"), datetimemsg(true), pseudo("NOBODY"), modmsg(false), securemsg(true)
+Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey(KEYNOTFOUND), datetimemsg(true), pseudo("NOBODY"), modmsg(false), securemsg(true)
 {
 }
 
@@ -96,13 +96,19 @@ Message::Message(std::string i, std::string author, std::string message, std::st
 {
 }
 
-void Message::print(messageSettings const &msettings, bool const &showids, int idReplied, Message repliedTo, bool const &isReply, std::string replyContent)
+void Message::print(messageSettings const &msettings, bool const &showids, isgroupmessage const &igm, int idReplied, Message repliedTo, bool const &isReply, std::string replyContent)
 {
 
-    if ((status == DELETED && !msettings.deletedmsg) || (status == OFFLINE && !msettings.offlinemsg))
+    if ((igm.isgroup && !igm.visible) ||
+        (status == DELETED && !msettings.deletedmsg) ||
+        (status == OFFLINE && !msettings.offlinemsg))
         return;
     std::string text;
     std::string copyContent = content;
+
+    if (igm.isgroup)
+        copyContent = igm.messagecontent;
+
     // IS REPLY ?
 
     if (isReply)
@@ -125,7 +131,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, int i
 
     // DECRYPTION MESSAGE
 
-    if (copyContent.rfind("护", 0) == 0)
+    if (copyContent.rfind("护", 0) == 0 && msettings.securemsg)
     {
         if (decrypted == "")
         {
@@ -137,7 +143,10 @@ void Message::print(messageSettings const &msettings, bool const &showids, int i
                 unsigned char tkey[40] = "";
                 unsigned char tencryptedText[980] = "";
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
-                std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
+                if (igm.isgroup)
+                    std::copy(igm.key.cbegin(), igm.key.cend(), tkey);
+                else
+                    std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
                 inv_AES(tencryptedText, tkey, tdecryptedText);
                 std::string decryptedContent(reinterpret_cast<char *>(tdecryptedText));
                 decrypted = decryptedContent;
@@ -163,17 +172,23 @@ void Message::print(messageSettings const &msettings, bool const &showids, int i
     }
 
     // USER RANK AND NAME
-    
+
     if (rank >= 15)
-        std::cout << WHITE_NORMAL_COLOR << RED_NORMAL_BACKGROUND << "A" << NORMAL << "[" << BOLD << RED_NORMAL_COLOR << sender << NORMAL << "] ";
+        std::cout << WHITE_NORMAL_COLOR RED_NORMAL_BACKGROUND "A" NORMAL "[" BOLD RED_NORMAL_COLOR << sender << NORMAL "] ";
     else if (rank >= 12)
-        std::cout << WHITE_NORMAL_COLOR << BLUE_NORMAL_BACKGROUND << "M" << NORMAL << "[" << BOLD << BLUE_NORMAL_COLOR << sender << NORMAL << "] ";
+        std::cout << WHITE_NORMAL_COLOR BLUE_NORMAL_BACKGROUND "M" NORMAL "[" BOLD BLUE_NORMAL_COLOR << sender << NORMAL "] ";
     else if (rank >= 11)
-        std::cout << WHITE_NORMAL_COLOR << CYAN_NORMAL_BACKGROUND << "B" << NORMAL << "[" << BOLD << CYAN_NORMAL_COLOR << sender << NORMAL << "] ";
+        std::cout << WHITE_NORMAL_COLOR CYAN_NORMAL_BACKGROUND "B" NORMAL "[" BOLD CYAN_NORMAL_COLOR << sender << NORMAL "] ";
     else if (rank >= 1)
-        std::cout << WHITE_NORMAL_COLOR << GREEN_NORMAL_BACKGROUND << "V" << NORMAL << "[" << BOLD << GREEN_NORMAL_COLOR << sender << NORMAL << "] ";
+        std::cout << WHITE_NORMAL_COLOR GREEN_NORMAL_BACKGROUND "V" NORMAL "[" BOLD GREEN_NORMAL_COLOR << sender << NORMAL "] ";
     else
-        std::cout << " " << NORMAL << "[" << BOLD << WHITE_NORMAL_COLOR << sender << NORMAL << "] ";
+        std::cout << " " NORMAL "[" BOLD WHITE_NORMAL_COLOR << sender << NORMAL "] ";
+
+    // IS GROUP MESSAGE
+    if (igm.isgroup && msettings.securemsg) // && != group
+    {
+        std::cout << PURPLE_NORMAL_COLOR << "(" << BOLD << igm.groupname << NORMAL PURPLE_NORMAL_COLOR ") " NORMAL;
+    }
 
     // MESSAGE CONTENT
     std::string mention("@" + msettings.pseudo);
@@ -198,7 +213,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, int i
                   << std::endl;
 }
 
-void Message::printReply(messageSettings const &msettings)
+void Message::printReply(messageSettings const &msettings, isgroupmessage const &igm)
 {
     std::string text;
     std::string copyContent = content;
@@ -208,7 +223,7 @@ void Message::printReply(messageSettings const &msettings)
     {
         copyContent = irm.messagecontent;
     }
-    
+
     if (copyContent.rfind("护", 0) == 0)
     {
         if (decrypted == "")
@@ -220,7 +235,10 @@ void Message::printReply(messageSettings const &msettings)
                 unsigned char tkey[40] = "";
                 unsigned char tencryptedText[980] = "";
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
-                std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
+                if (igm.isgroup)
+                    std::copy(igm.key.cbegin(), igm.key.cend(), tkey);
+                else
+                    std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
                 inv_AES(tencryptedText, tkey, tdecryptedText);
                 std::string decryptedContent(reinterpret_cast<char *>(tdecryptedText));
                 decrypted = decryptedContent;
@@ -292,7 +310,42 @@ bool Message::operator!=(Message const &m)
            rank != m.rank;
 }
 
+/* GROUP CLASS */
+
+Message::isgroupmessage::isgroupmessage() : isgroup(false), messagecontent(""), groupname(""), visible(false), key(KEYNOTFOUND)
+{
+}
+Message::isgroupmessage::isgroupmessage(bool is, std::string c, std::string n, bool v, std::string k) : isgroup(is), messagecontent(c), groupname(n), visible(v), key(k)
+{
+}
+
+Message::isgroupmessage Message::isGroupContent(json config)
+{
+    std::string copyContent = content;
+
+    if (copyContent.rfind("团", 0) == 0)
+    {
+        ReplaceStringInPlace(copyContent, "团", "");
+        if (copyContent.find("答") != std::string::npos)
+        {
+            std::vector<std::string> msgParts = split(copyContent, "答");
+            privategroup pg = findPrivateGroup(config, msgParts[0], true, getAuthor());
+            return isgroupmessage(true, "答" + msgParts[1], msgParts[0], pg.isin, pg.key);
+        }
+        else if (copyContent.find("护") != std::string::npos)
+        {
+            std::vector<std::string> msgParts = split(copyContent, "护");
+            privategroup pg = findPrivateGroup(config, msgParts[0], true, getAuthor());
+            return isgroupmessage(true, "护" + msgParts[1], msgParts[0], pg.isin, pg.key);
+        }
+        else
+            return isgroupmessage(false, content, "", false, KEYNOTFOUND);
+    }
+    else
+        return isgroupmessage(false, content, "", false, KEYNOTFOUND);
+}
 /* REPLY CLASS */
+
 Message::isreplymessage::isreplymessage() : isreply(false), messagecontent(""), idreply(-1)
 {
 }
@@ -300,9 +353,13 @@ Message::isreplymessage::isreplymessage(bool is, std::string c, int id) : isrepl
 {
 }
 
-Message::isreplymessage Message::isRelpyContent()
+Message::isreplymessage Message::isRelpyContent(bool fromGroup, std::string groupContent)
 {
-    std::string copyContent = content;
+    std::string copyContent;
+    if (fromGroup)
+        copyContent = groupContent;
+    else
+        copyContent = content;
     if (content.rfind("答", 0) == 0)
     {
         ReplaceStringInPlace(copyContent, "答", "");
