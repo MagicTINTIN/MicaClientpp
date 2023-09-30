@@ -116,7 +116,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, isgro
         if (repliedTo.getID() == -1)
             std::cout << "> " << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "Uknown message n°" << idReplied << NORMAL << std::endl;
         else
-            repliedTo.printReply(msettings);
+            repliedTo.printReply(msettings, igm);
         copyContent = replyContent;
     }
 
@@ -218,7 +218,10 @@ void Message::printReply(messageSettings const &msettings, isgroupmessage const 
     std::string text;
     std::string copyContent = content;
     // DECRYPTION MESSAGE
-    isreplymessage irm = isRelpyContent();
+
+    if (igm.isgroup)
+        copyContent = igm.messagecontent;
+    isreplymessage irm = isRelpyContent(igm.isgroup, copyContent);
     if (irm.isreply)
     {
         copyContent = irm.messagecontent;
@@ -360,7 +363,7 @@ Message::isreplymessage Message::isRelpyContent(bool fromGroup, std::string grou
         copyContent = groupContent;
     else
         copyContent = content;
-    if (content.rfind("答", 0) == 0)
+    if (copyContent.rfind("答", 0) == 0)
     {
         ReplaceStringInPlace(copyContent, "答", "");
         if (copyContent.find("护") != std::string::npos)
@@ -369,8 +372,8 @@ Message::isreplymessage Message::isRelpyContent(bool fromGroup, std::string grou
             return isreplymessage(true, "护" + msgParts[1], stoi(msgParts[0]));
         }
         else
-            return isreplymessage(false, content, -1);
+            return isreplymessage(false, copyContent, -1);
     }
     else
-        return isreplymessage(false, content, -1);
+        return isreplymessage(false, copyContent, -1);
 }

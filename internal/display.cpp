@@ -70,13 +70,17 @@ void showHelp(bool moderator)
     std::cin.get();
 }
 
-int showReplying(MessageMemory &mem, int id, Message::messageSettings &msgs)
+int showReplying(json config, MessageMemory &mem, int id, Message::messageSettings &msgs, Message::isgroupmessage &igm)
 {
     Message msg(mem.getMessageByID(id));
     if (msg.getID() < 0)
         return 1;
-    msg.printReply(msgs);
-    std::cout << THIN "Replying to " << msg.getAuthor() << NORMAL " | " << msgs.pseudo << " > ";
+    igm = msg.isGroupContent(config);
+    msg.printReply(msgs, igm);
+    if (igm.visible)
+        std::cout << THIN "Replying to " << msg.getAuthor() << NORMAL " | " << msgs.pseudo << THIN " -> " NORMAL PURPLE_NORMAL_COLOR "(" << igm.groupname << ")" NORMAL " > ";
+    else
+        std::cout << THIN "Replying to " << msg.getAuthor() << NORMAL " | " << msgs.pseudo << " > ";
     return 0;
 }
 

@@ -262,8 +262,8 @@ privategroup findPrivateGroup(json config, std::string name, bool isUserIn, std:
 
 std::string escapeBourrinJson(const std::string& input) {
     std::string soclean;
-    for (char c : input) {
-        if (c >= 0x20 && c <= 0x7E) {
+    for (unsigned char c : input) {
+        if ((c >= 0x20 && c <= 0x7E) || (c >= 0xA0 && c <= 0x4FF)) {
             soclean += c;
         }
     }
@@ -272,7 +272,7 @@ std::string escapeBourrinJson(const std::string& input) {
 
 std::string escapeJson(const std::string& input) {
     std::string escaped;
-    for (char c : input) {
+    for (unsigned char c : input) {
         switch (c) {
             case '\n':
                 escaped += "\\n";

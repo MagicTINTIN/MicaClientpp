@@ -71,7 +71,8 @@ int replyArg(json config, MessageMemory &mem, std::string &input, std::string co
     clearScreen();
     mem.print(config, msgsettings);
 
-    if (showReplying(mem, stoi(idtoreply), msgsettings) > 0)
+    Message::isgroupmessage igmreply;
+    if (showReplying(config, mem, stoi(idtoreply), msgsettings, igmreply) > 0)
     {
         std::cout << RED_NORMAL_COLOR << "Impossible to find this message" << std::endl;
         std::cin.get();
@@ -80,21 +81,28 @@ int replyArg(json config, MessageMemory &mem, std::string &input, std::string co
     std::getline(std::cin, input);
     if (input.length() > 0)
     {
-        if (safemode)
+        if (safemode || igmreply.visible)
         {
+            std::string privatereplyprefix("");
             unsigned char decryptedText[490] = "";
             unsigned char key[40] = "";
             unsigned char encryptedText[980] = "";
 
             std::copy(input.cbegin(), input.cend(), decryptedText);
-            std::copy(msgsettings.generalkey.cbegin(), msgsettings.generalkey.cend(), key);
+            if (igmreply.visible)
+            {
+                privatereplyprefix = "团" + igmreply.groupname;
+                std::copy(igmreply.key.cbegin(), igmreply.key.cend(), key);
+            }
+            else
+                std::copy(msgsettings.generalkey.cbegin(), msgsettings.generalkey.cend(), key);
             AES(decryptedText, key, encryptedText);
 
             std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
-            exitSendCode = sendMessage(serverurl, "答" + idtoreply + "护" + encryptedInput, username, token);
+            exitSendCode = sendMessage(serverurl, privatereplyprefix + "答" + idtoreply + "护" + encryptedInput, username, token);
         }
         else
-            exitSendCode = sendMessage(serverurl, "答" + idtoreply + "护" + input, username, token);
+            exitSendCode = sendMessage(serverurl, + "答" + idtoreply + "护" + input, username, token);
         if (exitSendCode != 0)
         {
             std::cout << "SEND REPLY ERROR " << exitSendCode << std::endl;

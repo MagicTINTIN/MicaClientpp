@@ -2,7 +2,7 @@
 #define DISPLAY_H_INCLUDED
 
 void showHelp(bool moderator = false);
-int showReplying(MessageMemory &mem, int id, Message::messageSettings &msgs);
+int showReplying(json config, MessageMemory &mem, int id, Message::messageSettings &msgs, Message::isgroupmessage &igm);
 // 0 nothing, -1 exit, 1 nothing but help, 2 impossible to find msg/group
 /**
  * Execute commands from the main chat
