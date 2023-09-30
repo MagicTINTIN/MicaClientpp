@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
         serverurl = data["server"].get<std::string>();
         username = data["username"].get<std::string>();
         token = data["token"].get<std::string>();
-        msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(), data["settings"]["displayOfflineMessages"].get<bool>(), genkey, data["settings"]["showMessageDateTime"].get<bool>(), username, moderatormode);
+        msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(), data["settings"]["displayOfflineMessages"].get<bool>(), genkey, data["settings"]["showMessageDateTime"].get<bool>(), username, moderatormode, encryptenabled);
         memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>());
     }
     catch (std::out_of_range &e)
@@ -69,6 +69,7 @@ int main(int argc, char const *argv[])
     }
 
     std::string input;
+    int resarg(0);
     while (true)
     {
         exitUpdateCode = getServerUpdate(serverurl, mem, memsettings);
@@ -85,194 +86,10 @@ int main(int argc, char const *argv[])
         std::cout << username << " > ";
         std::getline(std::cin, input);
 
-        if (input.length() == 0)
-            continue;
-        else if (input.rfind("/exit", 0) == 0)
-        {
-            break; // Exit program if /exit
-        }
-        else if (input.rfind("/help", 0) == 0 || input.rfind("/h", 0) == 0)
-        {
-            showHelp(moderatormode);
-        }
-        else if (moderatormode && (input.rfind("/d", 0) == 0 || input.rfind("/delmsg", 0) == 0))
-        {
-            if (input.rfind("/d ", 0) == 0)
-                ReplaceStringInPlace(input, "/d ", "");
-            else if (input.rfind("/delmsg ", 0) == 0)
-                ReplaceStringInPlace(input, "/delmsg ", "");
-            else
-            {
-                std::cout << RED_NORMAL_COLOR << "/d and /delmsg take the id as argument !" << std::endl;
-                std::cin.get();
-                continue;
-            }
-            exitSendCode = delMessage(serverurl, input, username, token);
-
-            if (exitUpdateCode != 0)
-            {
-                std::cout << "SEND UNSAFE ERROR " << exitUpdateCode << std::endl;
-                return exitUpdateCode;
-            }
-        }
-        else if (input.rfind("/r", 0) == 0)
-        {
-            std::string idtoreply("");
-            bool safemode(encryptenabled);
-            if (input.rfind("/r ", 0) == 0)
-            {
-                ReplaceStringInPlace(input, "/r ", "");
-                idtoreply = input;
-            }
-            else if (input.rfind("/ru ", 0) == 0)
-            {
-                ReplaceStringInPlace(input, "/ru ", "");
-                idtoreply = input;
-                safemode = false;
-            }
-            else if (input.rfind("/ru", 0) == 0)
-            {
-                safemode = false;
-                clearScreen();
-                mem.print(msgsettings, true);
-                std::cout << "Type the [ID] of the message you want to answer: ";
-                std::getline(std::cin, input);
-                idtoreply = input;
-            }
-            else if (input.rfind("/r", 0) == 0)
-            {
-                clearScreen();
-                mem.print(msgsettings, true);
-                std::cout << "Type the [ID] of the message you want to answer: ";
-                std::getline(std::cin, input);
-                idtoreply = input;
-            }
-            else
-            {
-                std::cout << RED_NORMAL_COLOR << "Use /help to know how to use replies" << std::endl;
-                std::cin.get();
-                continue;
-            }
-
-            clearScreen();
-            mem.print(msgsettings);
-
-            if (showReplying(mem, stoi(idtoreply), msgsettings) > 0)
-            {
-                std::cout << RED_NORMAL_COLOR << "Impossible to find this message" << std::endl;
-                std::cin.get();
-                continue;
-            }
-            std::getline(std::cin, input);
-            if (input.length() > 0)
-            {
-                if (safemode)
-                {
-                    unsigned char decryptedText[490] = "";
-                    unsigned char key[40] = "";
-                    unsigned char encryptedText[980] = "";
-
-                    std::copy(input.cbegin(), input.cend(), decryptedText);
-                    std::copy(genkey.cbegin(), genkey.cend(), key);
-                    AES(decryptedText, key, encryptedText);
-
-                    std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
-                    exitSendCode = sendMessage(serverurl, "答" + idtoreply + "护" + encryptedInput, username, token);
-                }
-                else
-                    exitSendCode = sendMessage(serverurl, "答" + idtoreply + "护" + input, username, token);
-                if (exitUpdateCode != 0)
-                {
-                    std::cout << "SEND REPLY ERROR " << exitUpdateCode << std::endl;
-                    return exitUpdateCode;
-                }
-            }
-        }
-        else if (input.rfind("/u ", 0) == 0)
-        {
-            ReplaceStringInPlace(input, "/u ", "");
-            exitSendCode = sendMessage(serverurl, input, username, token);
-            if (exitUpdateCode != 0)
-            {
-                std::cout << "SEND UNSAFE ERROR " << exitUpdateCode << std::endl;
-                return exitUpdateCode;
-            }
-        }
-        else if (input.rfind("/p", 0) == 0)
-        {
-            std::string privategroupname("");
-            if (input.rfind("/p ", 0) == 0)
-            {
-                ReplaceStringInPlace(input, "/p ", "");
-                privategroupname = input;
-            }
-            else if (input.rfind("/p", 0))
-            {
-                std::cout << "Type the name of the group: ";
-                std::getline(std::cin, input);
-                privategroupname = input;
-            }
-            else
-            {
-                std::cout << RED_NORMAL_COLOR << "Use /help to know how to use private groups" << std::endl;
-                std::cin.get();
-                continue;
-            }
-
-            privategroup privateg = findPrivateGroup(data, privategroupname);
-            if (!privateg.found)
-            {
-                std::cout << RED_NORMAL_COLOR << "Impossible to find this group" << std::endl;
-                std::cin.get();
-                continue;
-            }
-            std::getline(std::cin, input);
-            if (input.length() > 0)
-            {
-                    unsigned char decryptedText[490] = "";
-                    unsigned char key[40] = "";
-                    unsigned char encryptedText[980] = "";
-
-                    std::copy(input.cbegin(), input.cend(), decryptedText);
-                    std::copy(privateg.key.cbegin(), privateg.key.cend(), key);
-                    AES(decryptedText, key, encryptedText);
-
-                    std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
-                    exitSendCode = sendMessage(serverurl, "团" + privategroupname + "护" + encryptedInput, username, token);
-                if (exitUpdateCode != 0)
-                {
-                    std::cout << "SEND PRIVATE GROUP ERROR " << exitUpdateCode << std::endl;
-                    return exitUpdateCode;
-                }
-            }
-        }
-        else
-        {
-            if (encryptenabled)
-            {
-                unsigned char decryptedText[490] = "";
-                unsigned char key[40] = "";
-                unsigned char encryptedText[980] = "";
-
-                std::copy(input.cbegin(), input.cend(), decryptedText);
-                std::copy(genkey.cbegin(), genkey.cend(), key);
-                AES(decryptedText, key, encryptedText);
-
-                std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
-                exitSendCode = sendMessage(serverurl, "护" + encryptedInput, username, token);
-            }
-            else
-                exitSendCode = sendMessage(serverurl, input, username, token);
-
-            if (exitUpdateCode != 0)
-            {
-                std::cout << "SEND ERROR " << exitUpdateCode << std::endl;
-                return exitUpdateCode;
-            }
-        }
-
+        resarg = getArguments(mem, msgsettings, serverurl, data, username, token, input, moderatormode, exitUpdateCode, exitSendCode);
+        if (resarg < 0)
+            break;
         input = "";
-    contin:;
     }
 
     std::cout << "Exiting MicaClient++..." << std::endl;

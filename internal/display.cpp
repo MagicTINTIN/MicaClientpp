@@ -4,7 +4,6 @@
 #include <iostream>
 #include "message.h"
 #include "messagememory.h"
-#include "messagememory.h"
 #ifdef _WIN32
 #include <windows.h>
 #elif defined(__linux__)
@@ -14,6 +13,9 @@
 #include "colors.h"
 #include "tools.h"
 #include "display.h"
+#include "requests.h"
+#include "aes.h"
+#include "arguments.h"
 
 void clearScreen()
 {
@@ -75,5 +77,44 @@ int showReplying(MessageMemory &mem, int id, Message::messageSettings &msgs)
         return 1;
     msg.printReply(msgs);
     std::cout << THIN "Replying to " << msg.getAuthor() << NORMAL " | " << msgs.pseudo << " > ";
+    return 0;
+}
+
+int getArguments(MessageMemory &mem,
+                 Message::messageSettings &msgsettings, std::string const &serverurl, json &config,
+                 std::string &username, std::string &token, std::string &input,
+                 bool const &moderatormode,
+                 int &exitUpdateCode, int &exitSendCode)
+{
+    if (input.length() == 0)
+        return 0;
+    else if (input.rfind("/exit", 0) == 0)
+    {
+        return -1;
+    }
+    else if (input.rfind("/help", 0) == 0 || input.rfind("/h", 0) == 0)
+    {
+        showHelp(moderatormode);
+    }
+    else if (moderatormode && (input.rfind("/d", 0) == 0))
+    {
+        return deleteArg(input, serverurl, username, token, exitSendCode);
+    }
+    else if (input.rfind("/r", 0) == 0)
+    {
+        return replyArg(mem, input, serverurl, msgsettings, username, token, exitSendCode);
+    }
+    else if (input.rfind("/u ", 0) == 0)
+    {
+        return uSendArg(input, serverurl, username, token, exitSendCode);
+    }
+    else if (input.rfind("/p", 0) == 0)
+    {
+        return pSendArg(mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
+    }
+    else
+    {
+        return sendArg(msgsettings, input, serverurl, username, token, exitSendCode);
+    }
     return 0;
 }

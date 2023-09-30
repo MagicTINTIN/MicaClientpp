@@ -75,3 +75,8 @@ In config.json you have a section named "settings" :
     "displayOfflineMessages":true
 }
 ```
+---
+Futures features : 
+- /g *(optional: group name)* only print message from a group, if no group given print all
+- reply in groups
+- Themes : MicaClient++, Original (copy of micasend official client)  

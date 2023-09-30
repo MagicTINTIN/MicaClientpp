@@ -33,10 +33,11 @@ public:
         bool offlinemsg;
         bool datetimemsg;
         bool modmsg;
+        bool securemsg;
         std::string generalkey;
         std::string pseudo;
         messageSettings();
-        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod);
+        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec);
     };
 
     struct jsonMessage

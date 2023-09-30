@@ -225,10 +225,10 @@ privategroup findPrivateGroup(json config, std::string name)
     std::vector<std::string> users;
     try
     {
-        if (config["discussionGroupKeys"].contains(name))
+        if (config["discussionGroupKeys"].contains(name) && config["discussionGroupKeys"][name].contains("key") && config["discussionGroupKeys"][name].contains("users"))
         {
-            key = config["discussionGroupKeys"].get<std::string>();
-            for (auto &u : config["discussionGroupKeys"]["users"].items())
+            key = config["discussionGroupKeys"][name]["key"].get<std::string>();
+            for (auto &u : config["discussionGroupKeys"][name]["users"].items())
                 users.push_back(u.value().get<std::string>());
         }
         else
