@@ -15,6 +15,9 @@
 #endif
 #include "colors.h"
 #include "tools.h"
+#include "../includes/nlohmann/json.hpp"
+
+using json = nlohmann::json;
 
 /* ESCAPE SEQUENCES */
 
@@ -76,7 +79,6 @@ bool arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moder
     return true;
 }
 
-
 std::string urlEncode(const std::string &input)
 {
     std::ostringstream encoded;
@@ -101,7 +103,6 @@ std::string urlEncode(const std::string &input)
 
     return encoded.str();
 }
-
 
 bool isEncryptedMessage(const std::string &str)
 {
@@ -132,7 +133,6 @@ std::string createLineString(char c, int size)
 {
     return std::string(size, c);
 }
-
 
 time_t getTimestamp(std::string t)
 {
@@ -195,18 +195,48 @@ void replaceEscapeSequences(std::string &s)
     }
 }
 
-
-std::vector<std::string> split(std::string s, std::string delimiter) {
+std::vector<std::string> split(std::string s, std::string delimiter)
+{
     size_t pos_start = 0, pos_end, delim_len = delimiter.length();
     std::string token;
     std::vector<std::string> res;
 
-    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos) {
-        token = s.substr (pos_start, pos_end - pos_start);
+    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos)
+    {
+        token = s.substr(pos_start, pos_end - pos_start);
         pos_start = pos_end + delim_len;
-        res.push_back (token);
+        res.push_back(token);
     }
 
-    res.push_back (s.substr (pos_start));
+    res.push_back(s.substr(pos_start));
     return res;
+}
+
+privategroup::privategroup() : found(false), name(""), key("")
+{
+}
+privategroup::privategroup(bool f, std::string n, std::string k, std::vector<std::string> v) : found(f), name(n), key(k)
+{
+}
+
+privategroup findPrivateGroup(json config, std::string name)
+{
+    std::string key;
+    std::vector<std::string> users;
+    try
+    {
+        if (config["discussionGroupKeys"].contains(name))
+        {
+            key = config["discussionGroupKeys"].get<std::string>();
+            for (auto &u : config["discussionGroupKeys"]["users"].items())
+                users.push_back(u.value().get<std::string>());
+        }
+        else
+            return privategroup();
+    }
+    catch (std::out_of_range &e)
+    {
+        return privategroup();
+    }
+    return privategroup(true, name, key, users);
 }

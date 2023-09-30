@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include "../includes/nlohmann/json.hpp"
+using json = nlohmann::json;
 
 bool regexWishBoundaries(std::string &text, const std::string &word, const std::string &replacement);
 bool arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator);
@@ -17,5 +19,16 @@ void escapeBackslash(std::string &s);
 char getCharacterFromEscapeSequence(const std::string &escapeSequence);
 void replaceEscapeSequences(std::string &s);
 std::vector<std::string> split(std::string s, std::string delimiter);
+
+
+struct privategroup {
+    bool found;
+    std::string name;
+    std::string key;
+    privategroup();
+    privategroup(bool f, std::string n, std::string k, std::vector<std::string> v);
+};
+
+privategroup findPrivateGroup(json config, std::string name);
 
 #endif //TOOLS_H_INCLUDED

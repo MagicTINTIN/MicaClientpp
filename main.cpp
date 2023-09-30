@@ -200,17 +200,17 @@ int main(int argc, char const *argv[])
         }
         else if (input.rfind("/p", 0) == 0)
         {
-            std::string privategroup("");
+            std::string privategroupname("");
             if (input.rfind("/p ", 0) == 0)
             {
                 ReplaceStringInPlace(input, "/p ", "");
-                privategroup = input;
+                privategroupname = input;
             }
             else if (input.rfind("/p", 0))
             {
                 std::cout << "Type the name of the group: ";
                 std::getline(std::cin, input);
-                privategroup = input;
+                privategroupname = input;
             }
             else
             {
@@ -219,33 +219,29 @@ int main(int argc, char const *argv[])
                 continue;
             }
 
-            if (showReplying(mem, group, msgsettings) > 0)
+            privategroup privateg = findPrivateGroup(data, privategroupname);
+            if (!privateg.found)
             {
-                std::cout << RED_NORMAL_COLOR << "Impossible to find this message" << std::endl;
+                std::cout << RED_NORMAL_COLOR << "Impossible to find this group" << std::endl;
                 std::cin.get();
                 continue;
             }
             std::getline(std::cin, input);
             if (input.length() > 0)
             {
-                if (safemode)
-                {
                     unsigned char decryptedText[490] = "";
                     unsigned char key[40] = "";
                     unsigned char encryptedText[980] = "";
 
                     std::copy(input.cbegin(), input.cend(), decryptedText);
-                    std::copy(genkey.cbegin(), genkey.cend(), key);
+                    std::copy(privateg.key.cbegin(), privateg.key.cend(), key);
                     AES(decryptedText, key, encryptedText);
 
                     std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
-                    exitSendCode = sendMessage(serverurl, "答" + idtoreply + "护" + encryptedInput, username, token);
-                }
-                else
-                    exitSendCode = sendMessage(serverurl, "答" + idtoreply + "护" + input, username, token);
+                    exitSendCode = sendMessage(serverurl, "团" + privategroupname + "护" + encryptedInput, username, token);
                 if (exitUpdateCode != 0)
                 {
-                    std::cout << "SEND REPLY ERROR " << exitUpdateCode << std::endl;
+                    std::cout << "SEND PRIVATE GROUP ERROR " << exitUpdateCode << std::endl;
                     return exitUpdateCode;
                 }
             }
