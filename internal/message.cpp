@@ -98,6 +98,9 @@ Message::Message(std::string i, std::string author, std::string message, std::st
 
 void Message::print(messageSettings const &msettings, bool const &showids, int idReplied, Message repliedTo, bool const &isReply, std::string replyContent)
 {
+
+    if ((status == DELETED && !msettings.deletedmsg) || (status == OFFLINE && !msettings.offlinemsg))
+        return;
     std::string text;
     std::string copyContent = content;
     // IS REPLY ?
@@ -160,7 +163,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, int i
     }
 
     // USER RANK AND NAME
-
+    
     if (rank >= 15)
         std::cout << WHITE_NORMAL_COLOR << RED_NORMAL_BACKGROUND << "A" << NORMAL << "[" << BOLD << RED_NORMAL_COLOR << sender << NORMAL << "] ";
     else if (rank >= 12)
@@ -174,8 +177,10 @@ void Message::print(messageSettings const &msettings, bool const &showids, int i
 
     // MESSAGE CONTENT
     std::string mention("@" + msettings.pseudo);
-    std::string coloredMention(CYAN_DESAT_BACKGROUND BOLD BLACK_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND);
-    if (regexWishBoundaries(text, mention, coloredMention) || (repliedTo.getID() != -1 && repliedTo.getAuthor() == msettings.pseudo))
+    std::string coloredMention(CYAN_DESAT_BACKGROUND BOLD BLACK_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR);
+    if (status == ONLINE)
+        coloredMention += YELLOW_DESAT_BACKGROUND;
+    if ((regexWishBoundaries(text, mention, coloredMention) || (repliedTo.getID() != -1 && repliedTo.getAuthor() == msettings.pseudo)) && status == ONLINE)
     {
         std::cout << BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND;
     }
@@ -231,7 +236,7 @@ void Message::printReply(messageSettings const &msettings)
     else
         text = content;
 
-    std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "]" << text << NORMAL << std::endl;
+    std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "] " << text << NORMAL << std::endl;
 }
 
 void Message::setStatus(messageStatus const &newStatus)

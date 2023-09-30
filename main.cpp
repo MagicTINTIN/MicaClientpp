@@ -147,8 +147,9 @@ int main(int argc, char const *argv[])
                 std::getline(std::cin, input);
                 idtoreply = input;
             }
-            else {
-                std::cout << RED_NORMAL_COLOR << "Use /help to know how to user replies" << std::endl;
+            else
+            {
+                std::cout << RED_NORMAL_COLOR << "Use /help to know how to use replies" << std::endl;
                 std::cin.get();
                 continue;
             }
@@ -195,6 +196,58 @@ int main(int argc, char const *argv[])
             {
                 std::cout << "SEND UNSAFE ERROR " << exitUpdateCode << std::endl;
                 return exitUpdateCode;
+            }
+        }
+        else if (input.rfind("/p", 0) == 0)
+        {
+            std::string privategroup("");
+            if (input.rfind("/p ", 0) == 0)
+            {
+                ReplaceStringInPlace(input, "/p ", "");
+                privategroup = input;
+            }
+            else if (input.rfind("/p", 0))
+            {
+                std::cout << "Type the name of the group: ";
+                std::getline(std::cin, input);
+                privategroup = input;
+            }
+            else
+            {
+                std::cout << RED_NORMAL_COLOR << "Use /help to know how to use private groups" << std::endl;
+                std::cin.get();
+                continue;
+            }
+
+            if (showReplying(mem, group, msgsettings) > 0)
+            {
+                std::cout << RED_NORMAL_COLOR << "Impossible to find this message" << std::endl;
+                std::cin.get();
+                continue;
+            }
+            std::getline(std::cin, input);
+            if (input.length() > 0)
+            {
+                if (safemode)
+                {
+                    unsigned char decryptedText[490] = "";
+                    unsigned char key[40] = "";
+                    unsigned char encryptedText[980] = "";
+
+                    std::copy(input.cbegin(), input.cend(), decryptedText);
+                    std::copy(genkey.cbegin(), genkey.cend(), key);
+                    AES(decryptedText, key, encryptedText);
+
+                    std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
+                    exitSendCode = sendMessage(serverurl, "答" + idtoreply + "护" + encryptedInput, username, token);
+                }
+                else
+                    exitSendCode = sendMessage(serverurl, "答" + idtoreply + "护" + input, username, token);
+                if (exitUpdateCode != 0)
+                {
+                    std::cout << "SEND REPLY ERROR " << exitUpdateCode << std::endl;
+                    return exitUpdateCode;
+                }
             }
         }
         else
