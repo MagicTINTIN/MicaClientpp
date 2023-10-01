@@ -290,7 +290,7 @@ void AES(unsigned char* text,unsigned char* key,unsigned char* output)
     output[pOut] = '\0';
 }
 
-void inv_AES(unsigned char* text,unsigned char* key,unsigned char* output)
+int inv_AES(unsigned char* text,unsigned char* key,unsigned char* output)
 {
     //separating text in 16 Bytes blocks
     int blockCount = 0;
@@ -301,8 +301,8 @@ void inv_AES(unsigned char* text,unsigned char* key,unsigned char* output)
     blockCount=charCount/32;
     if(charCount%32!=0)
     {
-        printf("Error : input text has wrong size : %i\nThe given text is : %s",charCount,text);
-        return;
+        //printf("Error : input text has wrong size : %i\nThe given text is : %s",charCount,text);
+        return 1;
     }
     uint8* textV2 = (uint8*)calloc(blockCount*16,1);
     p=text;
@@ -341,4 +341,5 @@ void inv_AES(unsigned char* text,unsigned char* key,unsigned char* output)
         }
     }
     output[pOut] = '\0';
+    return 0;
 }

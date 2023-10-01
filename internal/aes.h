@@ -1,8 +1,11 @@
 #pragma once
 
-void AES(unsigned char* text,unsigned char* key,unsigned char* output);
 //make sure that [size(ouput)>=size(text)*2+30] and that the key is 16 bytes long
-void inv_AES(unsigned char* text,unsigned char* key,unsigned char* output);
+void AES(unsigned char* text,unsigned char* key,unsigned char* output);
+/**
+ * @returns 1 if error
+*/
+int inv_AES(unsigned char* text,unsigned char* key,unsigned char* output);
 /*
 additionnal info :
 the ouput could be much smaller but it would be unprintable (full of illegal characters)

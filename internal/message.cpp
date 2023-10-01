@@ -145,7 +145,6 @@ void Message::print(messageSettings const &msettings, bool const &showids, isgro
             ReplaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
-                std::cout << GREEN_NORMAL_BACKGROUND << BOLD << WHITE_NORMAL_COLOR << "S" << NORMAL;
                 unsigned char tdecryptedText[980] = "";
                 unsigned char tkey[40] = "";
                 unsigned char tencryptedText[980] = "";
@@ -154,8 +153,14 @@ void Message::print(messageSettings const &msettings, bool const &showids, isgro
                     std::copy(igm.key.cbegin(), igm.key.cend(), tkey);
                 else
                     std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
-                inv_AES(tencryptedText, tkey, tdecryptedText);
-                std::string decryptedContent(reinterpret_cast<char *>(tdecryptedText));
+                std::string decryptedContent;
+                if (inv_AES(tencryptedText, tkey, tdecryptedText))
+                    decryptedContent = copyContent;
+                else
+                {
+                    decryptedContent = reinterpret_cast<char *>(tdecryptedText);
+                    std::cout << GREEN_NORMAL_BACKGROUND << BOLD << WHITE_NORMAL_COLOR << "S" << NORMAL;
+                }
                 decrypted = escapeJson(decryptedContent);
                 cleanMessageList(decryptedContent);
                 text = decrypted;
@@ -249,8 +254,11 @@ void Message::printReply(messageSettings const &msettings, isgroupmessage const 
                     std::copy(igm.key.cbegin(), igm.key.cend(), tkey);
                 else
                     std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
-                inv_AES(tencryptedText, tkey, tdecryptedText);
-                std::string decryptedContent(reinterpret_cast<char *>(tdecryptedText));
+                std::string decryptedContent;
+                if (inv_AES(tencryptedText, tkey, tdecryptedText))
+                    decryptedContent = copyContent;
+                else
+                    decryptedContent = reinterpret_cast<char *>(tdecryptedText);
                 decrypted = escapeJson(decryptedContent);
                 cleanMessageList(decryptedContent);
                 text = decrypted;
