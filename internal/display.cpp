@@ -54,7 +54,8 @@ void showHelp(bool moderator)
               << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/p x Message" NORMAL " - To send a private message to the group x (only people that will have a 'x' section in discussionGroupKeys in config.json with the corect Key will be able to decrypt the message)" << std::endl
               << std::endl
               << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/u Message..." NORMAL " - To send an unsafe message (no encryption)" << std::endl
-
+              << "To filter message by group type " BLACK_NORMAL_BACKGROUND "/g groupname" NORMAL ", and to go back to general " BLACK_NORMAL_BACKGROUND "/g" NORMAL "." << std::endl
+              << "Be careful, if you are in a group channel and you send a message, it will only be sent to the group." << std::endl
               << std::endl;
 
     if (moderator)

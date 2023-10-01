@@ -51,7 +51,7 @@ As you might not have the same key, you will see encrypted message from users th
 Then, just communicate the name and the key of the group you created to your members, and ask them to complete the "users" section too.<br>
 <br>
 To filter message by group type `/g groupname`, and to go back to general `/g`.<br>
-Be careful, if you are in a group channel and you send a message, it will be only send to the group.
+Be careful, if you are in a group channel and you send a message, it will only be sent to the group.
 <br>
 
 ### Send a message in private group
