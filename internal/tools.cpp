@@ -272,7 +272,7 @@ std::string escapeBourrinJson(const std::string &input)
     std::string soclean;
     for (unsigned char c : input)
     {
-        if ((c >= 0x20 && c <= 0x7E) || (c >= 0xA0 && c <= 0x4FF))
+        if ((c >= 0x20 && c <= 0x7E) || (c >= 0xC0 && c <= 0xF0))
         {
             soclean += c;
         }
