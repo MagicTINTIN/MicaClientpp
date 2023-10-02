@@ -11,18 +11,156 @@
     },
 
     "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
+    "prompt": [
+        {
+            "type":"if",
+            "condition":"?isSendReply",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "print":"> ["
+                },
+                {
+                    "type":"print",
+                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR", "BOLD" ],
+                    "print":"$RAUTHOR"
+                },
+                {
+                    "type":"print",
+                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "print":"] $REPLY"
+                },
+                {
+                    "type":"NEWLINE"
+                },
+                {
+                    "type":"print",
+                    "style":[ "THIN" ],
+                    "print":"Replying to $RAUTHOR"
+                },
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":" | "
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"print",
+            "style":[],
+            "print":"$username"
+        },
+        {
+            "type":"if",
+            "condition":"?isSendGROUP",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[ "PURPLE_NORMAL_COLOR" ],
+                    "print":" -> $TOGROUP"
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"print",
+            "style":[],
+            "print":" > "
+        }
+    ],
+    "mention": [
+        {
+            "type":"print",
+            "style":[ "CYAN_DESAT_BACKGROUND", "BOLD", "BLACK_NORMAL_COLOR"],
+            "print":"$MENTION"
+        }
+    ],
     "message": [
+        {
+            "type":"if",
+            "condition":"settings:showDeletedMessages",
+            "true": [],
+            "false":[
+                {
+                    "type":"if",
+                    "condition":"?isDeleted",
+                    "true": [
+                        {
+                            "type":"DONOTDISPLAY"
+                        }
+                    ],
+                    "false":[]
+                }
+            ]
+        },
+        {
+            "type":"if",
+            "condition":"settings:showOfflineMessages",
+            "true": [],
+            "false":[
+                {
+                    "type":"if",
+                    "condition":"?isOffline",
+                    "true": [
+                        {
+                            "type":"DONOTDISPLAY"
+                        }
+                    ],
+                    "false":[]
+                }
+            ]
+        },
         {
             "type":"if",
             "condition":"?isReply",
             "true": [
                 {
                     "type":"print",
-                    "style":[ "", "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
-                    "print":"[$RAUTHOR] $REPLY$NEWLINE"
+                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "print":"> ["
+                },
+                {
+                    "type":"print",
+                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR", "BOLD" ],
+                    "print":"$RAUTHOR"
+                },
+                {
+                    "type":"print",
+                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "print":"] $REPLY"
+                },
+                {
+                    "type":"NEWLINE"
                 }
             ],
             "false":[]
+        },
+        {
+            "type":"if",
+            "condition":"?askingReply",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[ "BOLD", "BLINK", "YELLOW_NORMAL_COLOR" ],
+                    "print":"-> [$MSGID] "
+                }
+            ],
+            "false":[
+                {
+                    "type":"if",
+                    "condition":"settings:showDate",
+                    "true": [
+                        {
+                            "type":"print",
+                            "style":[ "THIN" ],
+                            "print":"[$MSGID] "
+                        }
+                    ],
+                    "false":[]
+                }
+            ]
         },
         {
             "type":"if",
@@ -31,7 +169,7 @@
                 {
                     "type":"print",
                     "style":[ "THIN" ],
-                    "print":"$DATE"
+                    "print":"$DATE "
                 }
             ],
             "false":[]
@@ -56,21 +194,247 @@
         },
         {
             "type":"if",
-            "condition":"?isCertified",
+            "condition":"?isVerified",
             "true": [
                 {
-                    "type":"print",
-                    "style":[ "BOLD", "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
-                    "print":"V"
+                    "type":"if",
+                    "condition":"?certifiedRank",
+                    "true": [
+                        {
+                            "type":"print",
+                            "style":[ "WHITE_NORMAL_COLOR", "GREEN_NORMAL_BACKGROUND" ],
+                            "print":"V"
+                        },
+                        {
+                            "type":"print",
+                            "style":[],
+                            "print":"["
+                        },
+                        {
+                            "type":"print",
+                            "style":[ "GREEN_NORMAL_COLOR", "BOLD" ],
+                            "print":"$MAUTHOR"
+                        },
+                        {
+                            "type":"print",
+                            "style":[],
+                            "print":"] "
+                        }
+                    ],
+                    "false":[]
+                },
+                {
+                    "type":"if",
+                    "condition":"?botRank",
+                    "true": [
+                        {
+                            "type":"print",
+                            "style":[ "WHITE_NORMAL_COLOR", "CYAN_NORMAL_BACKGROUND" ],
+                            "print":"B"
+                        },
+                        {
+                            "type":"print",
+                            "style":[],
+                            "print":"["
+                        },
+                        {
+                            "type":"print",
+                            "style":[ "CYAN_NORMAL_COLOR", "BOLD" ],
+                            "print":"$MAUTHOR"
+                        },
+                        {
+                            "type":"print",
+                            "style":[],
+                            "print":"] "
+                        }
+                    ],
+                    "false":[]
+                },
+                {
+                    "type":"if",
+                    "condition":"?ModeratorRank",
+                    "true": [
+                        {
+                            "type":"print",
+                            "style":[ "WHITE_NORMAL_COLOR", "BLUE_NORMAL_BACKGROUND"],
+                            "print":"M"
+                        },
+                        {
+                            "type":"print",
+                            "style":[],
+                            "print":"["
+                        },
+                        {
+                            "type":"print",
+                            "style":[ "BLUE_NORMAL_COLOR", "BOLD" ],
+                            "print":"$MAUTHOR"
+                        },
+                        {
+                            "type":"print",
+                            "style":[],
+                            "print":"] "
+                        }
+                    ],
+                    "false":[]
+                },
+                {
+                    "type":"if",
+                    "condition":"?AdminRank",
+                    "true": [
+                        {
+                            "type":"print",
+                            "style":[ "WHITE_NORMAL_COLOR", "RED_NORMAL_BACKGROUND" ],
+                            "print":"A"
+                        },
+                        {
+                            "type":"print",
+                            "style":[],
+                            "print":"["
+                        },
+                        {
+                            "type":"print",
+                            "style":[ "RED_NORMAL_COLOR", "BOLD" ],
+                            "print":"$MAUTHOR"
+                        },
+                        {
+                            "type":"print",
+                            "style":[],
+                            "print":"] "
+                        }
+                    ],
+                    "false":[]
                 }
             ],
             "false":[
                 {
                     "type":"print",
                     "style":[],
-                    "print":" "
+                    "print":" ["
+                },
+                {
+                    "type":"print",
+                    "style":[ "BOLD" ],
+                    "print":"$MAUTHOR"
+                },
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":"] "
                 }
             ]
+        },
+        {
+            "type":"if",
+            "condition":"?isGroup",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[ "PURPLE_NORMAL_COLOR" ],
+                    "print":"("
+                },
+                {
+                    "type":"print",
+                    "style":[ "PURPLE_NORMAL_COLOR", "BOLD" ],
+                    "print":"$GROUP"
+                },
+                {
+                    "type":"print",
+                    "style":[ "PURPLE_NORMAL_COLOR" ],
+                    "print":") "
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"if",
+            "condition":"?isOffline",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[ "BOLD", "BLACK_DESAT_COLOR" ],
+                    "print":"(offline)"
+                },
+                {
+                    "type":"print",
+                    "style":[ "BLACK_DESAT_COLOR", "THIN" ],
+                    "print":" $MSG"
+                }
+                
+            ],
+            "false":[
+                {
+                    "type":"if",
+                    "condition":"?isDeleted",
+                    "true": [
+                        {
+                            "type":"print",
+                            "style":[ "BOLD", "RED_DESAT_COLOR" ],
+                            "print":"(offline)"
+                        },
+                        {
+                            "type":"print",
+                            "style":[ "RED_DESAT_COLOR", "THIN" ],
+                            "print":" $MSG"
+                        }
+                        
+                    ],
+                    "false":[
+                        {
+                            "type":"if",
+                            "condition":"?isUnkonwnStatus",
+                            "true": [
+                                {
+                                    "type":"print",
+                                    "style":[ "BLACK_DESAT_COLOR" ],
+                                    "print":"(offline)"
+                                },
+                                {
+                                    "type":"print",
+                                    "style":[ "BLACK_DESAT_COLOR", "THIN" ],
+                                    "print":" $MSG"
+                                }
+                                
+                            ],
+                            "false":[
+                                {
+                                    "type":"if",
+                                    "condition":"?isMention",
+                                    "true": [
+                                        {
+                                            "type":"print",
+                                            "style":[ "BLACK_NORMAL_COLOR", "YELLOW_DESAT_BACKGROUND" ],
+                                            "print":"$MSG"
+                                        }
+                                        
+                                    ],
+                                    "false":[
+                                        {
+                                            "type":"print",
+                                            "style":[],
+                                            "print":"$MSG"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type":"NEWLINE"
+        },
+        {
+            "type":"NEWLINE"
         }
-    ]
+    ],
+    "messageInput": {
+        "style":[]
+    },
+    "groupInput": {
+        "style":[ "PURPLE_NORMAL_COLOR" ]
+    },
+    "replyInput": {
+        "style":[ "YELLOW_NORMAL_COLOR" ]
+    }
 }
