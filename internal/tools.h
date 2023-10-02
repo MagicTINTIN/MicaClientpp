@@ -37,4 +37,8 @@ std::string escapeBourrinJson(const std::string &input);
 
 std::string escapeJson(const std::string &input);
 
+std::string stringCleaner(std::string toclean);
+
+void charsCleaner(unsigned char *data, unsigned char *modifiedData);
+
 #endif //TOOLS_H_INCLUDED

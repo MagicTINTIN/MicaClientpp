@@ -82,22 +82,18 @@ int main()
     uint32_t characterValue;
     size_t dataIndex = 0; // Index for the modified data
 
-    // Create a buffer to store the modified data without valid UTF-8 characters
+    // Create a buffer to store the modified data without invalid UTF-8 characters
     unsigned char modifiedData[sizeof(data)];
 
     while (index < sizeof(data))
     {
         if (decodeUTF8Character(data, modifiedData, &index, &dataIndex, &characterValue))
         {
-            printf("v ");
-            // Valid UTF-8 Character Found, skip it
+            printf("v "); // valid
         }
         else
         {
-            printf("i ");
-            // Not a valid extended character, copy it to modifiedData
-            //modifiedData[dataIndex++] = ' '; // data[index++]
-            
+            printf("i "); // invalid
         }
         index++;
     }
