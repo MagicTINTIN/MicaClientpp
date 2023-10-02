@@ -161,7 +161,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, isgro
                     decryptedContent = reinterpret_cast<char *>(tdecryptedText);
                     std::cout << GREEN_NORMAL_BACKGROUND << BOLD << WHITE_NORMAL_COLOR << "S" << NORMAL;
                 }
-                decrypted = escapeJson(decryptedContent);
+                decrypted = stringCleaner(decryptedContent);
                 cleanMessageList(decryptedContent);
                 text = decrypted;
             }
@@ -259,7 +259,7 @@ void Message::printReply(messageSettings const &msettings, isgroupmessage const 
                     decryptedContent = copyContent;
                 else
                     decryptedContent = reinterpret_cast<char *>(tdecryptedText);
-                decrypted = escapeJson(decryptedContent);
+                decrypted = stringCleaner(decryptedContent);
                 cleanMessageList(decryptedContent);
                 text = decrypted;
             }

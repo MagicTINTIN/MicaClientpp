@@ -325,7 +325,7 @@ int isUTF8ContinuationByte(unsigned char c)
 
 int decodeUTF8Character(unsigned char *data, unsigned char *out, size_t *index, size_t *outIndex, uint32_t *value)
 {
-    unsigned char tmp[4];
+    unsigned char tmp[6];
     // Check if the byte at the given index is a start byte for a multibyte character
     if ((data[*index] & 0xC0) == 0xC0)
     {
@@ -361,8 +361,8 @@ int decodeUTF8Character(unsigned char *data, unsigned char *out, size_t *index, 
                     return 0;
                 }
             }
-            // if (*value >= 0x80 && *value <= 0xD7FF && *value != 0xFFFE && *value != 0xFFFF)
-            if (*value >= 0x80 && *value <= 0xFF && *value != 0xFFFE && *value != 0xFFFF)
+            if (*value >= 0x80 && *value <= 0xD7FF && *value != 0xFFFE && *value != 0xFFFF)
+            //if (*value >= 0x80 && *value <= 0xFF && *value != 0xFFFE && *value != 0xFFFF)
             {
                 for (size_t i = 0; i < leadingOnes; i++)
                 {
@@ -394,9 +394,9 @@ std::string stringCleaner(std::string toclean)
     size_t dataIndex = 0; // Index for the modified data
 
     // Create a buffer to store the modified data without invalid UTF-8 characters
-    unsigned char modifiedData[toclean.size() + 1];
+    unsigned char modifiedData[toclean.size()];
 
-    while (index < toclean.size() + 1)
+    while (index < toclean.size())
     {
         decodeUTF8Character(data, modifiedData, &index, &dataIndex, &characterValue);
         index++;
@@ -420,4 +420,22 @@ void charsCleaner(unsigned char *data, unsigned char *modifiedData)
     }
     // Null-terminate the modifiedData to make it a valid C string
     modifiedData[dataIndex] = '\0';
+}
+
+std::string charsToStringCleaner(unsigned char *data)
+{
+    size_t index = 0;
+    uint32_t characterValue;
+    size_t dataIndex = 0; // Index for the modified data
+    unsigned char modifiedData[sizeof(*data)] = "";
+
+    while (index < sizeof(*data))
+    {
+        decodeUTF8Character(data, modifiedData, &index, &dataIndex, &characterValue);
+        index++;
+    }
+    // Null-terminate the modifiedData to make it a valid C string
+    modifiedData[dataIndex] = '\0';
+
+    return reinterpret_cast<char *>(modifiedData);
 }

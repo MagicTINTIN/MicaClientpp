@@ -41,4 +41,6 @@ std::string stringCleaner(std::string toclean);
 
 void charsCleaner(unsigned char *data, unsigned char *modifiedData);
 
+std::string charsToStringCleaner(unsigned char *data);
+
 #endif //TOOLS_H_INCLUDED

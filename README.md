@@ -107,3 +107,4 @@ In config.json you have a section named "settings" :
 - Themes : MicaClient++, Original (copy of micasend official client)  
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)
+- fix last message deleted -> the message before appears twice
