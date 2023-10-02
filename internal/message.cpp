@@ -71,7 +71,7 @@ json Message::jsonMessage::toJson()
         {"certifiedUser", certifiedUser},
         {"rank", rank},
         {"timestamp", timestamp},
-        {"decrypted", decrypted},
+        {"decrypted", stringCleaner(decrypted)},
         {"status", status},
     };
 }
