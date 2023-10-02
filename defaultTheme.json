@@ -1,0 +1,76 @@
+{
+    "themeName": "Default MicaClient++ theme",
+    "author": "MagicTINTIN",
+    "version": 0,
+
+    "settings": {
+        "showMessageID":true,
+        "showDate":false,
+        "showDeletedMessages":true,
+        "showOfflineMessages":true
+    },
+
+    "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
+    "message": [
+        {
+            "type":"if",
+            "condition":"?isReply",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[ "", "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "print":"[$RAUTHOR] $REPLY$NEWLINE"
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"if",
+            "condition":"settings:showDate",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[ "THIN" ],
+                    "print":"$DATE"
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"if",
+            "condition":"?isEncrypted",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[ "BOLD", "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "print":"S"
+                }
+            ],
+            "false":[
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":" "
+                }
+            ]
+        },
+        {
+            "type":"if",
+            "condition":"?isCertified",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[ "BOLD", "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "print":"V"
+                }
+            ],
+            "false":[
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":" "
+                }
+            ]
+        }
+    ]
+}
