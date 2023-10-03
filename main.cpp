@@ -16,6 +16,8 @@
 using json = nlohmann::json;
 
 const int THEME_VERSION(1);
+const int MCPP_VERSION(0);
+const int CONFIG_VERSION(8);
 
 int main(int argc, char const *argv[])
 {
@@ -40,6 +42,14 @@ int main(int argc, char const *argv[])
 
     try
     {
+        int cfgv = data["version"].get<int>();
+        int cfgsv = data["subversion"].get<int>();
+        if (cfgv != MCPP_VERSION || cfgsv != CONFIG_VERSION)
+        {
+            std::cout << BOLD RED_NORMAL_COLOR "ERROR: CONFIG VERSION IS NOT COMPATIBLE" NORMAL << std::endl
+                      << "Please update your config to be able to use it with MicaClient++ v" << MCPP_VERSION << "." << CONFIG_VERSION << ", (found v" << cfgv << "." << cfgsv << ")" << std::endl;
+            return 7;
+        }
         genkey = data["generalKey"].get<std::string>();
         encryptenabled = data["enableEncryption"].get<bool>();
         serverurl = data["server"].get<std::string>();
@@ -72,8 +82,8 @@ int main(int argc, char const *argv[])
         if (themev != THEME_VERSION)
         {
             std::cout << BOLD RED_NORMAL_COLOR "ERROR: THEME VERSION IS NOT COMPATIBLE" NORMAL << std::endl
-                      << "Please update your theme to be able to use it with MicaClient++ theme manager v" << THEME_VERSION << ", (found v" << themev << ")" <<std::endl;
-                      return 7;
+                      << "Please update your theme to be able to use it with MicaClient++ theme manager v" << THEME_VERSION << ", (found v" << themev << ")" << std::endl;
+            return 7;
         }
 
         f.close();
@@ -119,6 +129,7 @@ int main(int argc, char const *argv[])
         if (msgsettings.channel != "")
             std::cout << PURPLE_NORMAL_COLOR "(" BOLD << msgsettings.channel << NORMAL PURPLE_NORMAL_COLOR ") " NORMAL;
         std::cout << username << " > ";
+        std::cin.clear();
         std::getline(std::cin, input);
 
         resarg = getArguments(mem, msgsettings, serverurl, data, username, token, input, moderatormode, exitUpdateCode, exitSendCode);

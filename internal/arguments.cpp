@@ -71,8 +71,29 @@ int replyArg(json config, MessageMemory &mem, std::string &input, std::string co
     clearScreen();
     mem.print(config, msgsettings);
 
+    int intidtoreply;
+    if (idtoreply.size() == 0)
+    {
+        std::cout << RED_NORMAL_COLOR << "No ID provided !" << std::endl;
+        std::cin.get();
+        return 2;
+    }
+    else
+    {
+        try
+        {
+            intidtoreply = std::stoi(idtoreply);
+        }
+        catch (...)
+        {
+            std::cout << RED_NORMAL_COLOR << "Invalid ID !" << std::endl;
+            std::cin.get();
+            return 2;
+        }
+    }
+
     Message::isgroupmessage igmreply;
-    if (showReplying(config, mem, stoi(idtoreply), msgsettings, igmreply) > 0)
+    if (showReplying(config, mem, intidtoreply, msgsettings, igmreply) > 0)
     {
         std::cout << RED_NORMAL_COLOR << "Impossible to find this message" << std::endl;
         std::cin.get();
@@ -102,7 +123,7 @@ int replyArg(json config, MessageMemory &mem, std::string &input, std::string co
             exitSendCode = sendMessage(serverurl, privatereplyprefix + "答" + idtoreply + "护" + encryptedInput, username, token);
         }
         else
-            exitSendCode = sendMessage(serverurl, + "答" + idtoreply + "护" + input, username, token);
+            exitSendCode = sendMessage(serverurl, +"答" + idtoreply + "护" + input, username, token);
         if (exitSendCode != 0)
         {
             std::cout << "SEND REPLY ERROR " << exitSendCode << std::endl;
@@ -228,7 +249,7 @@ int groupArg(std::string &input, Message::messageSettings &msettings, json &conf
         std::cin.get();
         return 2;
     }
-    
+
     std::string privategroupname("");
 
     if (input.rfind("/g ", 0) == 0)
