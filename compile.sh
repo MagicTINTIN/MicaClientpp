@@ -13,7 +13,7 @@ else
     slowcompile=""
 fi
 
-g++ ./main.cpp -o MicaClient.out -include ./includes/nlohmann/json.hpp ./internal/message.cpp ./internal/messagememory.cpp ./internal/display.cpp ./internal/aes.c ./internal/requests.cpp ./internal/tools.cpp ./internal/arguments.cpp $slowcompile -lcurl
+g++ ./main.cpp -o MicaClient.out -include ./includes/nlohmann/json.hpp ./internal/message.cpp ./internal/messagememory.cpp ./internal/display.cpp ./internal/aes.c ./internal/requests.cpp ./internal/tools.cpp ./internal/arguments.cpp ./internal/colors.cpp $slowcompile -lcurl
 if [[ $? == 0 ]]; then
     echo "$(tput setaf 2)$(tput bold)Compilation of MicaClient finished.$(tput sgr0)"
 fi

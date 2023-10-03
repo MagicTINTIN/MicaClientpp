@@ -42,7 +42,7 @@ public:
     /**
      * Print messages from memory
      */
-    void print(json config, Message::messageSettings const &msettings, bool const &showids = false);
+    void print(json &theme, json config, Message::messageSettings const &msettings, bool const &showids = false);
 };
 
 #endif // MESSAGEMEMORY_H_INCLUDED

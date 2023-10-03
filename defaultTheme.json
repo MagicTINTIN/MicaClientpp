@@ -47,7 +47,30 @@
                     "print":" | "
                 }
             ],
-            "false":[]
+            "false":[
+                {
+                    "type":"if",
+                    "condition":"?isInGroup",
+                    "true": [
+                        {
+                            "type":"print",
+                            "style":[ "PURPLE_NORMAL_COLOR" ],
+                            "print":"("
+                        },
+                        {
+                            "type":"print",
+                            "style":[ "PURPLE_NORMAL_COLOR", "BOLD" ],
+                            "print":"$INGROUP"
+                        },
+                        {
+                            "type":"print",
+                            "style":[ "PURPLE_NORMAL_COLOR" ],
+                            "print":") "
+                        }
+                    ],
+                    "false":[]
+                }
+            ]
         },
         {
             "type":"print",
@@ -56,12 +79,17 @@
         },
         {
             "type":"if",
-            "condition":"?isSendGROUP",
+            "condition":"?isSendGroup",
             "true": [
                 {
                     "type":"print",
+                    "style":[],
+                    "print":" -> "
+                },
+                {
+                    "type":"print",
                     "style":[ "PURPLE_NORMAL_COLOR" ],
-                    "print":" -> $TOGROUP"
+                    "print":"$TOGROUP"
                 }
             ],
             "false":[]

@@ -119,7 +119,7 @@ int main(int argc, char const *argv[])
         if (exitUpdateCode == 0)
         {
             clearScreen();
-            mem.print(data, msgsettings);
+            mem.print(themeData, data, msgsettings);
         }
         else
         {
@@ -132,7 +132,7 @@ int main(int argc, char const *argv[])
         std::cin.clear();
         std::getline(std::cin, input);
 
-        resarg = getArguments(mem, msgsettings, serverurl, data, username, token, input, moderatormode, exitUpdateCode, exitSendCode);
+        resarg = getArguments(themeData, mem, msgsettings, serverurl, data, username, token, input, moderatormode, exitUpdateCode, exitSendCode);
         if (resarg < 0)
             break;
         input = "";

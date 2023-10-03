@@ -16,6 +16,8 @@
 #include "requests.h"
 #include "aes.h"
 #include "arguments.h"
+#include "../includes/nlohmann/json.hpp"
+using json = nlohmann::json;
 
 void clearScreen()
 {
@@ -38,8 +40,9 @@ void createLine()
               << NORMAL;
 }
 
-void showHelp(bool moderator)
+void showHelp(json &theme, bool moderator)
 {
+    std::cout << theme["themeName"].get<std::string>() << " v" << theme["themeVersion"].get<std::string>() << std::endl;
     clearScreen();
     createLine();
     std::cout << BOLD UNDERLINED << "Here is the list of commands" NORMAL << std::endl
@@ -71,13 +74,13 @@ void showHelp(bool moderator)
     std::cin.get();
 }
 
-int showReplying(json config, MessageMemory &mem, int id, Message::messageSettings &msgs, Message::isgroupmessage &igm)
+int showReplying(json &theme, json config, MessageMemory &mem, int id, Message::messageSettings &msgs, Message::isgroupmessage &igm)
 {
     Message msg(mem.getMessageByID(id));
     if (msg.getID() < 0)
         return 1;
     igm = msg.isGroupContent(config);
-    msg.printReply(msgs, igm);
+    msg.printReply(theme, msgs, igm);
     if (igm.visible)
         std::cout << THIN "Replying to " << msg.getAuthor() << NORMAL " | " << msgs.pseudo << THIN " -> " NORMAL PURPLE_NORMAL_COLOR "(" << igm.groupname << ")" NORMAL " > ";
     else
@@ -85,7 +88,7 @@ int showReplying(json config, MessageMemory &mem, int id, Message::messageSettin
     return 0;
 }
 
-int getArguments(MessageMemory &mem,
+int getArguments(json &theme, MessageMemory &mem,
                  Message::messageSettings &msgsettings, std::string const &serverurl, json &config,
                  std::string &username, std::string &token, std::string &input,
                  bool const &moderatormode,
@@ -99,15 +102,15 @@ int getArguments(MessageMemory &mem,
     }
     else if (input.rfind("/h", 0) == 0)
     {
-        showHelp(moderatormode);
+        showHelp(theme, moderatormode);
     }
     else if (moderatormode && (input.rfind("/d", 0) == 0))
     {
-        return deleteArg(input, serverurl, username, token, exitSendCode);
+        return deleteArg(theme, input, serverurl, username, token, exitSendCode);
     }
     else if (input.rfind("/r", 0) == 0)
     {
-        return replyArg(config, mem, input, serverurl, msgsettings, username, token, exitSendCode);
+        return replyArg(theme, config, mem, input, serverurl, msgsettings, username, token, exitSendCode);
     }
     else if (input.rfind("/u ", 0) == 0)
     {
@@ -115,16 +118,16 @@ int getArguments(MessageMemory &mem,
     }
     else if (input.rfind("/p", 0) == 0)
     {
-        return pSendArg(mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
+        return pSendArg(theme, mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
     }
     else if (input.rfind("/g", 0) == 0)
     {
-        return groupArg(input, msgsettings, config);
+        return groupArg(theme, input, msgsettings, config);
     }
     else
     {
         if (msgsettings.channel != "")
-            return pChannelSendArg(mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
+            return pChannelSendArg(theme, mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
         else
             return sendArg(msgsettings, input, serverurl, username, token, exitSendCode);
     }

@@ -100,7 +100,7 @@ Message::Message(std::string i, std::string author, std::string message, std::st
 {
 }
 
-void Message::print(messageSettings const &msettings, bool const &showids, isgroupmessage const &igm, int idReplied, Message repliedTo, bool const &isReply, std::string replyContent)
+void Message::print(json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm, int idReplied, Message repliedTo, bool const &isReply, std::string replyContent)
 {
 
     if ((igm.isgroup && !igm.visible) ||
@@ -123,7 +123,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, isgro
         if (repliedTo.getID() == -1)
             std::cout << "> " << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "Uknown message n°" << idReplied << NORMAL << std::endl;
         else
-            repliedTo.printReply(msettings, igm);
+            repliedTo.printReply(theme, msettings, igm);
         copyContent = replyContent;
     }
 
@@ -225,7 +225,7 @@ void Message::print(messageSettings const &msettings, bool const &showids, isgro
                   << std::endl;
 }
 
-void Message::printReply(messageSettings const &msettings, isgroupmessage const &igm)
+void Message::printReply(json &theme, messageSettings const &msettings, isgroupmessage const &igm)
 {
     std::string text;
     std::string copyContent = content;

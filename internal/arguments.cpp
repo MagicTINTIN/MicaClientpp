@@ -12,7 +12,7 @@
 
 /* DELETED ARGUMENT FUNCTION */
 
-int deleteArg(std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode)
+int deleteArg(json &theme, std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode)
 {
     if (input.rfind("/d ", 0) == 0)
         ReplaceStringInPlace(input, "/d ", "");
@@ -36,7 +36,7 @@ int deleteArg(std::string &input, std::string const &serverurl, std::string &use
 
 /* REPLY ARGUMENTS FONCTION */
 
-int replyArg(json config, MessageMemory &mem, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
+int replyArg(json &theme, json config, MessageMemory &mem, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
 {
     std::string idtoreply("");
     bool safemode(msgsettings.securemsg);
@@ -56,7 +56,7 @@ int replyArg(json config, MessageMemory &mem, std::string &input, std::string co
         if (input.rfind("/ru", 0) == 0)
             safemode = false;
         clearScreen();
-        mem.print(config, msgsettings, true);
+        mem.print(theme, config, msgsettings, true);
         std::cout << "Type the [ID] of the message you want to answer: ";
         std::getline(std::cin, input);
         idtoreply = input;
@@ -69,7 +69,7 @@ int replyArg(json config, MessageMemory &mem, std::string &input, std::string co
     }
 
     clearScreen();
-    mem.print(config, msgsettings);
+    mem.print(theme, config, msgsettings);
 
     int intidtoreply;
     if (idtoreply.size() == 0)
@@ -93,7 +93,7 @@ int replyArg(json config, MessageMemory &mem, std::string &input, std::string co
     }
 
     Message::isgroupmessage igmreply;
-    if (showReplying(config, mem, intidtoreply, msgsettings, igmreply) > 0)
+    if (showReplying(theme, config, mem, intidtoreply, msgsettings, igmreply) > 0)
     {
         std::cout << RED_NORMAL_COLOR << "Impossible to find this message" << std::endl;
         std::cin.get();
@@ -150,7 +150,7 @@ int uSendArg(std::string &input, std::string const &serverurl, std::string &user
 
 /* PRIVATE GROUP MESSAGE SEND */
 
-int pSendArg(MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
+int pSendArg(json &theme, MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
 {
     if (!msgsettings.securemsg)
     {
@@ -186,7 +186,7 @@ int pSendArg(MessageMemory &mem, json &config, std::string &input, std::string c
     }
 
     clearScreen();
-    mem.print(config, msgsettings);
+    mem.print(theme, config, msgsettings);
     std::cout << username << THIN " -> " NORMAL PURPLE_NORMAL_COLOR "(" << privategroupname << ")" NORMAL " > ";
     std::getline(std::cin, input);
     if (input.length() > 0)
@@ -241,7 +241,7 @@ int sendArg(Message::messageSettings &msgsettings, std::string &input, std::stri
 
 /* GROUP VISION COMMAND */
 
-int groupArg(std::string &input, Message::messageSettings &msettings, json &config)
+int groupArg(json &theme, std::string &input, Message::messageSettings &msettings, json &config)
 {
     if (!msettings.securemsg)
     {
@@ -276,7 +276,7 @@ int groupArg(std::string &input, Message::messageSettings &msettings, json &conf
 
 /* PRIVATE GROUP CHANNEL MESSAGE SEND */
 
-int pChannelSendArg(MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
+int pChannelSendArg(json &theme, MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
 {
     if (!msgsettings.securemsg)
     {

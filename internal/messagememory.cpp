@@ -124,7 +124,7 @@ void MessageMemory::updateMemory(json const &messages, memorySettings memsetting
     }
 }
 
-void MessageMemory::print(json config, Message::messageSettings const &msettings, bool const &showids)
+void MessageMemory::print(json &theme, json config, Message::messageSettings const &msettings, bool const &showids)
 {
     for (Message &msg : memory)
     {
@@ -136,9 +136,9 @@ void MessageMemory::print(json config, Message::messageSettings const &msettings
             irm = msg.isRelpyContent();
 
         if (irm.isreply)
-            msg.print(msettings, showids, igm, irm.idreply, getMessageByID(irm.idreply), true, irm.messagecontent);
+            msg.print(theme, msettings, showids, igm, irm.idreply, getMessageByID(irm.idreply), true, irm.messagecontent);
         else
-            msg.print(msettings, showids, igm);
+            msg.print(theme, msettings, showids, igm);
     }
 }
 

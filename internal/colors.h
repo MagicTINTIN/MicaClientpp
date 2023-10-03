@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 #if defined(__APPLE__) || defined(__linux__)
 //the following are UBUNTU/LINUX, and MacOS ONLY terminal color codes.
@@ -97,3 +98,5 @@
 
 
 #endif
+
+std::string getColor(std::string color);
