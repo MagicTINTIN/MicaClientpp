@@ -1,6 +1,6 @@
 {
     "version":0,
-    "subversion":7,
+    "subversion":8,
 
     "server":"https://micasend.baptiste-reb.fr/",
     "username":"aSpecialUser",
@@ -42,5 +42,6 @@
         "displayOfflineMessages":true
     },
 
+    "mcppConfigPath":"./",
     "themeFile":"defaultTheme.json"
 }

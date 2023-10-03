@@ -15,22 +15,25 @@
 
 using json = nlohmann::json;
 
+const int THEME_VERSION(1);
+
 int main(int argc, char const *argv[])
 {
     int exitUpdateCode(0), exitSendCode(0);
     std::vector<std::string> args(argv, argv + argc);
 
-    std::string cfgPath("config.json");
+    std::string cfgFilePath("config.json");
     bool moderatormode(false);
 
-    if (!arguments(args, cfgPath, moderatormode))
+    if (!arguments(args, cfgFilePath, moderatormode))
         return 100;
 
-    std::ifstream f(cfgPath);
+    std::ifstream f(cfgFilePath);
     json data = json::parse(f);
+    f.close();
     // std::cout << data << std::endl;
 
-    std::string serverurl, username, token, genkey;
+    std::string serverurl, username, token, genkey, cfgPath;
     bool encryptenabled;
     Message::messageSettings msgsettings;
     MessageMemory::memorySettings memsettings;
@@ -42,6 +45,7 @@ int main(int argc, char const *argv[])
         serverurl = data["server"].get<std::string>();
         username = data["username"].get<std::string>();
         token = data["token"].get<std::string>();
+        cfgPath = data["mcppConfigPath"].get<std::string>();
         msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(),
                                                data["settings"]["displayOfflineMessages"].get<bool>(),
                                                genkey, data["settings"]["showMessageDateTime"].get<bool>(),
@@ -49,11 +53,34 @@ int main(int argc, char const *argv[])
                                                data["blockUnVerifiedUsers"].get<bool>(),
                                                data["blockedUsers"],
                                                "");
-        memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>());
+        memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>(), cfgPath);
     }
     catch (std::out_of_range &e)
     {
         std::cout << "JSON ERROR : " << e.what() << '\n';
+        return 1;
+    }
+
+    json themeData;
+    try
+    {
+        std::string themefpath = data["themeFile"].get<std::string>();
+        std::ifstream f(themefpath);
+        std::cout << "Loading theme (" << themefpath << ")..." << std::endl;
+        themeData = json::parse(f);
+        int themev = themeData["compatibilityVersion"].get<int>();
+        if (themev != THEME_VERSION)
+        {
+            std::cout << BOLD RED_NORMAL_COLOR "ERROR: THEME VERSION IS NOT COMPATIBLE" NORMAL << std::endl
+                      << "Please update your theme to be able to use it with MicaClient++ theme manager v" << THEME_VERSION << ", (found v" << themev << ")" <<std::endl;
+                      return 7;
+        }
+
+        f.close();
+    }
+    catch (std::out_of_range &e)
+    {
+        std::cout << "JSON THEME ERROR : " << e.what() << '\n';
         return 1;
     }
 
@@ -62,7 +89,7 @@ int main(int argc, char const *argv[])
     if (memsettings.backup)
     {
 
-        std::ifstream bf("backup.json");
+        std::ifstream bf(cfgPath + "backup.json");
         if (!bf.is_open())
         {
             std::cout << "No backup found" << std::endl;

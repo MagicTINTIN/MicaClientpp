@@ -16,8 +16,9 @@ public:
     struct memorySettings
     {
         bool backup;
+        std::string cfgpath;
         memorySettings();
-        memorySettings(bool back);
+        memorySettings(bool back, std::string path);
     };
 
     MessageMemory();

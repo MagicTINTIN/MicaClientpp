@@ -12,10 +12,10 @@ using json = nlohmann::json;
 
 /* MESSAGE MEMORY CLASS */
 
-MessageMemory::memorySettings::memorySettings() : backup(true)
+MessageMemory::memorySettings::memorySettings() : backup(true), cfgpath("./")
 {
 }
-MessageMemory::memorySettings::memorySettings(bool back) : backup(back)
+MessageMemory::memorySettings::memorySettings(bool back, std::string path) : backup(back), cfgpath(path)
 {
 }
 
@@ -119,7 +119,7 @@ void MessageMemory::updateMemory(json const &messages, memorySettings memsetting
             Message::jsonMessage jsonMsg(msg);
             j.push_back(jsonMsg.toJson());
         }
-        std::ofstream o("backup.json");
+        std::ofstream o(memsettings.cfgpath + "backup.json");
         o << std::setw(4) << j << std::endl;
     }
 }
