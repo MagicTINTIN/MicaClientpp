@@ -108,3 +108,5 @@ In config.json you have a section named "settings" :
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)
 - fix last message deleted -> the message before appears twice
+- fix /r and enter -> crash
+- argument -all pour voir la totalité des messages

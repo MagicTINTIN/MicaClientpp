@@ -1,7 +1,8 @@
 {
     "themeName": "Default MicaClient++ theme",
     "author": "MagicTINTIN",
-    "version": 0,
+    "themeVersion": 0,
+    "compatibilityVersion": 1,
 
     "settings": {
         "showMessageID":true,
@@ -9,6 +10,7 @@
         "showDeletedMessages":true,
         "showOfflineMessages":true
     },
+    "maxMessages":100,
 
     "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
     "prompt": [
@@ -150,7 +152,7 @@
             "false":[
                 {
                     "type":"if",
-                    "condition":"settings:showDate",
+                    "condition":"settings:showMessageID",
                     "true": [
                         {
                             "type":"print",
@@ -158,7 +160,20 @@
                             "print":"[$MSGID] "
                         }
                     ],
-                    "false":[]
+                    "false":[
+                        {
+                            "type":"if",
+                            "condition":"?isModeratorMode",
+                            "true": [
+                                {
+                                    "type":"print",
+                                    "style":[ "THIN" ],
+                                    "print":"[$MSGID] "
+                                }
+                            ],
+                            "false":[]
+                        }
+                    ]
                 }
             ]
         },

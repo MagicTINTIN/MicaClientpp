@@ -1,0 +1,193 @@
+{
+    "themeName": "Old Micasend theme",
+    "author": "MagicTINTIN",
+    "themeVersion": 0,
+    "compatibilityVersion": 1,
+
+    "settings": {},
+    "maxMessages":20,
+
+    "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
+    "prompt": [],
+    "mention": [],
+    "message": [
+        {
+            "type":"if",
+            "condition":"?isDeleted",
+            "true": [
+                {
+                    "type":"DONOTDISPLAY"
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"if",
+            "condition":"?isOffline",
+            "true": [
+                {
+                    "type":"DONOTDISPLAY"
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"NEWLINE"
+        },
+        {
+            "type":"if",
+            "condition":"?botRank",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":"["
+                },
+                {
+                    "type":"print",
+                    "style":[ "RED_NORMAL_COLOR" ],
+                    "print":"Bot"
+                },
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":"] "
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"if",
+            "condition":"?ModeratorRank",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":"["
+                },
+                {
+                    "type":"print",
+                    "style":[ "RED_NORMAL_COLOR" ],
+                    "print":"Mod"
+                },
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":"] "
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"if",
+            "condition":"?AdminRank",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":"["
+                },
+                {
+                    "type":"print",
+                    "style":[ "RED_NORMAL_COLOR" ],
+                    "print":"Admin"
+                },
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":"] "
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"if",
+            "condition":"?isVerified",
+            "true": [
+                {
+                    "type":"if",
+                    "condition":"?certifiedRank",
+                    "true": [
+                        {
+                            "type":"print",
+                            "style":[],
+                            "print":"["
+                        },
+                        {
+                            "type":"print",
+                            "style":[ "GREEN_NORMAL_COLOR", "BOLD" ],
+                            "print":"$MAUTHOR"
+                        },
+                        {
+                            "type":"if",
+                            "condition":"?isModeratorMode",
+                            "true": [
+                                {
+                                    "type":"print",
+                                    "style":[ "YELLOW_NORMAL_COLOR", "BOLD" ],
+                                    "print":"($IDMAUTHOR)"
+                                }
+                            ],
+                            "false":[]
+                        }
+                    ],
+                    "false":[]
+                }
+            ],
+            "false":[
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":" ["
+                },
+                {
+                    "type":"print",
+                    "style":[ "BOLD" ],
+                    "print":"$MAUTHOR"
+                },
+                {
+                    "type":"print",
+                    "style":[],
+                    "print":"] "
+                }
+            ]
+        },
+        {
+            "type":"print",
+            "style":[],
+            "print":" $DATE"
+        },
+        {
+            "type":"if",
+            "condition":"?isModeratorMode",
+            "true": [
+                {
+                    "type":"print",
+                    "style":[ "YELLOW_NORMAL_COLOR" ],
+                    "print":" ($MSGID)"
+                }
+            ],
+            "false":[]
+        },
+        {
+            "type":"NEWLINE"
+        },
+        {
+            "type":"print",
+            "style":[],
+            "print":"$MSG"
+        },
+        {
+            "type":"NEWLINE"
+        }
+    ],
+    "messageInput": {
+        "style":[]
+    },
+    "groupInput": {
+        "style":[]
+    },
+    "replyInput": {
+        "style":[]
+    }
+}
