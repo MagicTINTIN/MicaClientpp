@@ -133,3 +133,8 @@ int getArguments(json &theme, MessageMemory &mem,
     }
     return 0;
 }
+
+void themeProcess(json theme, std::string location, themeVariables tv)
+{
+
+}

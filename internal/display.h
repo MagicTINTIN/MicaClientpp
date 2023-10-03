@@ -17,4 +17,15 @@ int showReplying(json &theme, json config, MessageMemory &mem, int id, Message::
 int getArguments(json &theme, MessageMemory &mem, Message::messageSettings &msgsettings, std::string const &serverurl, json &config, std::string &username, std::string &token, std::string &input, bool const &moderatormode, int &exitUpdateCode, int &exitSendCode);
 void clearScreen();
 
+struct themeVariables
+{
+    bool isSendReply;
+    bool isInGroup;
+    std::string username; //
+    std::string rAuthor;
+    std::string reply;
+    std::string inGroup;
+};
+
+
 #endif // DISPLAY_H_INCLUDED

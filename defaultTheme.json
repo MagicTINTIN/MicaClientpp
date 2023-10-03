@@ -75,7 +75,7 @@
         {
             "type":"print",
             "style":[],
-            "print":"$username"
+            "print":"$USERNAME"
         },
         {
             "type":"if",
@@ -368,7 +368,7 @@
         },
         {
             "type":"if",
-            "condition":"?isGroup",
+            "condition":"?isGroupMessage",
             "true": [
                 {
                     "type":"print",
