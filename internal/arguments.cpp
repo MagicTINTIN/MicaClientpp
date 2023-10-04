@@ -57,8 +57,10 @@ int replyArg(json &theme, json config, MessageMemory &mem, std::string &input, s
             safemode = false;
         clearScreen();
         mem.print(theme, config, msgsettings, true);
-        std::cout << "Type the [ID] of the message you want to answer: ";
+        std::cout << "Type the [ID] of the message you want to reply: ";
+        std::cout << printStyle(theme["replyInput"]["style"]);
         std::getline(std::cin, input);
+        std::cout << NORMAL;
         idtoreply = input;
     }
     else
@@ -99,7 +101,9 @@ int replyArg(json &theme, json config, MessageMemory &mem, std::string &input, s
         std::cin.get();
         return 2;
     }
+    std::cout << printStyle(theme["messageInput"]["style"]);
     std::getline(std::cin, input);
+    std::cout << NORMAL;
     if (input.length() > 0)
     {
         if (safemode || igmreply.visible)
@@ -167,7 +171,9 @@ int pSendArg(json &theme, MessageMemory &mem, json &config, std::string &input, 
     else if (input.rfind("/p", 0) == 0)
     {
         std::cout << "Enter the name of the group: " PURPLE_NORMAL_COLOR;
+        std::cout << printStyle(theme["groupInput"]["style"]);
         std::getline(std::cin, input);
+        std::cout << NORMAL;
         privategroupname = input;
     }
     else
@@ -188,7 +194,9 @@ int pSendArg(json &theme, MessageMemory &mem, json &config, std::string &input, 
     clearScreen();
     mem.print(theme, config, msgsettings);
     std::cout << username << THIN " -> " NORMAL PURPLE_NORMAL_COLOR "(" << privategroupname << ")" NORMAL " > ";
+    std::cout << printStyle(theme["messageInput"]["style"]);
     std::getline(std::cin, input);
+    std::cout << NORMAL;
     if (input.length() > 0)
     {
         unsigned char decryptedText[490] = "";

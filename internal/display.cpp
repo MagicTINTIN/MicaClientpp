@@ -136,5 +136,14 @@ int getArguments(json &theme, MessageMemory &mem,
 
 void themeProcess(json theme, std::string location, themeVariables tv)
 {
+}
 
+std::string printStyle(json style)
+{
+    std::string finalstyle("");
+    for (auto &s : style.items())
+    {
+        finalstyle += getColor(s.value().get<std::string>());
+    }
+    return finalstyle;
 }

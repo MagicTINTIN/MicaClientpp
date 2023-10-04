@@ -129,9 +129,10 @@ int main(int argc, char const *argv[])
         if (msgsettings.channel != "")
             std::cout << PURPLE_NORMAL_COLOR "(" BOLD << msgsettings.channel << NORMAL PURPLE_NORMAL_COLOR ") " NORMAL;
         std::cout << username << " > ";
+        std::cout << printStyle(themeData["messageInput"]["style"]);
         std::cin.clear();
         std::getline(std::cin, input);
-
+        std::cout << NORMAL;
         resarg = getArguments(themeData, mem, msgsettings, serverurl, data, username, token, input, moderatormode, exitUpdateCode, exitSendCode);
         if (resarg < 0)
             break;

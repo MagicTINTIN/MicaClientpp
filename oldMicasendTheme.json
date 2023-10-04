@@ -58,7 +58,7 @@
         },
         {
             "type":"if",
-            "condition":"?ModeratorRank",
+            "condition":"?moderatorRank",
             "true": [
                 {
                     "type":"print",
@@ -80,7 +80,7 @@
         },
         {
             "type":"if",
-            "condition":"?AdminRank",
+            "condition":"?adminRank",
             "true": [
                 {
                     "type":"print",
@@ -175,7 +175,7 @@
         {
             "type":"print",
             "style":[],
-            "print":"$MSG"
+            "print":"$MESSAGECONTENT"
         },
         {
             "type":"NEWLINE"

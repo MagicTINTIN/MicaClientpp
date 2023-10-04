@@ -295,7 +295,7 @@
                 },
                 {
                     "type":"if",
-                    "condition":"?ModeratorRank",
+                    "condition":"?moderatorRank",
                     "true": [
                         {
                             "type":"print",
@@ -322,7 +322,7 @@
                 },
                 {
                     "type":"if",
-                    "condition":"?AdminRank",
+                    "condition":"?adminRank",
                     "true": [
                         {
                             "type":"print",
@@ -400,7 +400,7 @@
                 {
                     "type":"print",
                     "style":[ "BLACK_DESAT_COLOR", "THIN" ],
-                    "print":" $MSG"
+                    "print":" $MESSAGECONTENT"
                 }
                 
             ],
@@ -417,7 +417,7 @@
                         {
                             "type":"print",
                             "style":[ "RED_DESAT_COLOR", "THIN" ],
-                            "print":" $MSG"
+                            "print":" $MESSAGECONTENT"
                         }
                         
                     ],
@@ -429,12 +429,12 @@
                                 {
                                     "type":"print",
                                     "style":[ "BLACK_DESAT_COLOR" ],
-                                    "print":"(offline)"
+                                    "print":"(Unknown status)"
                                 },
                                 {
                                     "type":"print",
                                     "style":[ "BLACK_DESAT_COLOR", "THIN" ],
-                                    "print":" $MSG"
+                                    "print":" $MESSAGECONTENT"
                                 }
                                 
                             ],
@@ -446,7 +446,7 @@
                                         {
                                             "type":"print",
                                             "style":[ "BLACK_NORMAL_COLOR", "YELLOW_DESAT_BACKGROUND" ],
-                                            "print":"$MSG"
+                                            "print":"$MESSAGECONTENT"
                                         }
                                         
                                     ],
@@ -454,7 +454,7 @@
                                         {
                                             "type":"print",
                                             "style":[],
-                                            "print":"$MSG"
+                                            "print":"$MESSAGECONTENT"
                                         }
                                     ]
                                 }
