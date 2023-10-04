@@ -42,8 +42,8 @@ void createLine()
 
 void showHelp(json &theme, bool moderator)
 {
-    std::cout << theme["themeName"].get<std::string>() << " v" << theme["themeVersion"].get<std::string>() << std::endl;
     clearScreen();
+    std::cout << theme["themeName"].get<std::string>() << " v" << theme["themeVersion"].get<int>() << std::endl;
     createLine();
     std::cout << BOLD UNDERLINED << "Here is the list of commands" NORMAL << std::endl
               << std::endl

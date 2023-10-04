@@ -109,3 +109,7 @@ In config.json you have a section named "settings" :
 - add /adduser for admins (with /showuser /upuser)
 - fix last message deleted -> the message before appears twice
 - argument -all pour voir la totalité des messages
+- add /lg || /listgroups pour voir la liste des groupes dans lequels on est
+- fix prevent sending message with space
+- add \t and \n in message display
+- add /q /exit in /help

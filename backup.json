@@ -2218,7 +2218,7 @@
         "id": 469,
         "rank": 0,
         "sender": "aSpecialUser",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696252249
     },
     {
@@ -2229,7 +2229,7 @@
         "id": 470,
         "rank": 0,
         "sender": "aSpecialUser",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696252259
     },
     {
@@ -2429,5 +2429,27 @@
         "sender": "Victor",
         "status": 0,
         "timestamp": 1696334234
+    },
+    {
+        "certifiedUser": 0,
+        "content": "护1b7c37469c05d35d86a13a83e0066773",
+        "dateTime": "2023-10-04 09:57:15",
+        "decrypted": "test\\nDe message",
+        "id": 489,
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 0,
+        "timestamp": 1696402635
+    },
+    {
+        "certifiedUser": 0,
+        "content": "护6b0eb5aa28485429079ddd8a319abf29",
+        "dateTime": "2023-10-04 10:01:15",
+        "decrypted": "",
+        "id": 490,
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 0,
+        "timestamp": 1696402875
     }
 ]
