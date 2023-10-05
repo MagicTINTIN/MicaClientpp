@@ -48,6 +48,7 @@ void showHelp(json &theme, bool moderator)
     std::cout << BOLD UNDERLINED << "Here is the list of commands" NORMAL << std::endl
               << std::endl
               << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/h" NORMAL " or " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/help" NORMAL " - To show this message" << std::endl
+              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/q" NORMAL " or " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/exit" NORMAL " - To exit MicaClient++" << std::endl
               << std::endl
               << "To reply to a message type " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/r x" NORMAL ITALIC " (with x the message ID to reply)." NORMAL << std::endl
               << "If you don't know it, only type " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/r" NORMAL ", then choose the ID of the message you want to reply" << std::endl
@@ -146,4 +147,9 @@ std::string printStyle(json style)
         finalstyle += getColor(s.value().get<std::string>());
     }
     return finalstyle;
+}
+
+void title(std::string t)
+{
+    std::cout << "\033]0;" << t << "\007";
 }

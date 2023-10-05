@@ -35,6 +35,13 @@ void cleanMessageList(std::string &s)
     ReplaceStringInPlace(s, "\\\\\"", "\\\"");
 }
 
+std::string messageDisplayImprove(std::string s)
+{
+    ReplaceStringInPlace(s, "\\n", "\n");
+    ReplaceStringInPlace(s, "\\t", "\t");
+    return s;
+}
+
 /* MESSAGE SETTINGS */
 Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey(KEYNOTFOUND), datetimemsg(true), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel("")
 {
@@ -212,16 +219,16 @@ void Message::print(json &theme, messageSettings const &msettings, bool const &s
         std::cout << BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND;
     }
     if (status == ONLINE)
-        std::cout << text << NORMAL << std::endl
+        std::cout << messageDisplayImprove(text) << NORMAL << std::endl
                   << std::endl;
     else if (status == OFFLINE && msettings.offlinemsg)
-        std::cout << BOLD BLACK_DESAT_COLOR << "(offline) " << NORMAL BLACK_DESAT_COLOR THIN << text << NORMAL << std::endl
+        std::cout << BOLD BLACK_DESAT_COLOR << "(offline) " << NORMAL BLACK_DESAT_COLOR THIN << messageDisplayImprove(text) << NORMAL << std::endl
                   << std::endl;
     else if (status == DELETED && msettings.deletedmsg)
-        std::cout << BOLD RED_DESAT_COLOR << "(deleted) " << NORMAL RED_DESAT_COLOR THIN << text << NORMAL << std::endl
+        std::cout << BOLD RED_DESAT_COLOR << "(deleted) " << NORMAL RED_DESAT_COLOR THIN << messageDisplayImprove(text) << NORMAL << std::endl
                   << std::endl;
     else if (status != OFFLINE && status != DELETED)
-        std::cout << BLACK_DESAT_COLOR << "(unknown status) " << THIN << text << NORMAL << std::endl
+        std::cout << BLACK_DESAT_COLOR << "(unknown status) " << THIN << messageDisplayImprove(text) << NORMAL << std::endl
                   << std::endl;
 }
 
@@ -272,7 +279,7 @@ void Message::printReply(json &theme, messageSettings const &msettings, isgroupm
     else
         text = content;
 
-    std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "] " << text << NORMAL << std::endl;
+    std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "] " << messageDisplayImprove(text) << NORMAL << std::endl;
 }
 
 void Message::setStatus(messageStatus const &newStatus)

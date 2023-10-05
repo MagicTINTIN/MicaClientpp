@@ -21,6 +21,7 @@ const int CONFIG_VERSION(8);
 
 int main(int argc, char const *argv[])
 {
+    title("MicaClient++ - General");
     int exitUpdateCode(0), exitSendCode(0);
     std::vector<std::string> args(argv, argv + argc);
 
@@ -126,8 +127,9 @@ int main(int argc, char const *argv[])
             std::cout << "UPDATE ERROR " << exitUpdateCode << std::endl;
             return exitUpdateCode;
         }
-        if (msgsettings.channel != "")
+        if (msgsettings.channel != "") {
             std::cout << PURPLE_NORMAL_COLOR "(" BOLD << msgsettings.channel << NORMAL PURPLE_NORMAL_COLOR ") " NORMAL;
+        }
         std::cout << username << " > ";
         std::cout << printStyle(themeData["messageInput"]["style"]);
         std::cin.clear();

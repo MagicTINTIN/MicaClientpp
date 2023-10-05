@@ -1,11 +1,13 @@
 # MicaClient++
 A simple client for Micasend written in C++
 ![MicaClient++ banner](./images/banner.jpg)<br>
+Website : [https://mcpp.softplus.fr](https://mcpp.softplus.fr)
 # Installation
 To compile it you will need to first install the dependencies:<br>
 - Ubuntu: `sudo apt install g++ libcurl4-openssl-dev`
 - Arch Linux: `sudo pacman -S curl`
-<br>
+<br><br>
+
 Then you juste need to run `./compile` in your local folder.
 
 # How to use it
@@ -111,5 +113,4 @@ In config.json you have a section named "settings" :
 - argument -all pour voir la totalité des messages
 - add /lg || /listgroups pour voir la liste des groupes dans lequels on est
 - fix prevent sending message with space
-- add \t and \n in message display
-- add /q /exit in /help
+- add a command to delete message from memory (maybe /delmsg on offline/deleted message)

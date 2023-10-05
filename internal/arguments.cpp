@@ -267,6 +267,7 @@ int groupArg(json &theme, std::string &input, Message::messageSettings &msetting
     }
     else
     {
+        title("MicaClient++ - General");
         msettings.channel = "";
         return 0;
     }
@@ -278,6 +279,8 @@ int groupArg(json &theme, std::string &input, Message::messageSettings &msetting
         std::cin.get();
         return 2;
     }
+
+    title("MicaClient++ - (" + privategroupname + ")");
     msettings.channel = privategroupname;
     return 0;
 }

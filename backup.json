@@ -2240,7 +2240,7 @@
         "id": 471,
         "rank": 0,
         "sender": "aSpecialUser",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696252693
     },
     {
@@ -2251,7 +2251,7 @@
         "id": 472,
         "rank": 11,
         "sender": "Bot",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696310811
     },
     {
@@ -2262,7 +2262,7 @@
         "id": 473,
         "rank": 1,
         "sender": "MCpp",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696318247
     },
     {
@@ -2273,7 +2273,7 @@
         "id": 474,
         "rank": 15,
         "sender": "MagicTINTIN",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696318315
     },
     {
@@ -2445,11 +2445,55 @@
         "certifiedUser": 0,
         "content": "护6b0eb5aa28485429079ddd8a319abf29",
         "dateTime": "2023-10-04 10:01:15",
-        "decrypted": "",
+        "decrypted": "//help",
         "id": 490,
         "rank": 0,
         "sender": "aSpecialUser",
         "status": 0,
         "timestamp": 1696402875
+    },
+    {
+        "certifiedUser": 0,
+        "content": "护3dac48ba8d79258da181a72fc53a09599c3b5a553453fc86bb8f75c445ba31a0",
+        "dateTime": "2023-10-05 22:11:25",
+        "decrypted": "Un message\\nsur 2 lignes ?",
+        "id": 491,
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 0,
+        "timestamp": 1696533085
+    },
+    {
+        "certifiedUser": 0,
+        "content": "护9cb54e7e3c3abf053c31c18c0e8cc14b",
+        "dateTime": "2023-10-05 22:11:33",
+        "decrypted": "oui !",
+        "id": 492,
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 0,
+        "timestamp": 1696533093
+    },
+    {
+        "certifiedUser": 0,
+        "content": "test\ntest",
+        "dateTime": "2023-10-05 22:12:01",
+        "decrypted": "",
+        "id": 493,
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 0,
+        "timestamp": 1696533121
+    },
+    {
+        "certifiedUser": 0,
+        "content": "护12a2c30ae3db9065df08c7de5be99e46",
+        "dateTime": "2023-10-05 22:12:42",
+        "decrypted": "",
+        "id": 494,
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 0,
+        "timestamp": 1696533162
     }
 ]
