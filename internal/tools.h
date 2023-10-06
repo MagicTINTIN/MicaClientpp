@@ -7,7 +7,7 @@
 using json = nlohmann::json;
 
 bool regexWishBoundaries(std::string &text, const std::string &word, const std::string &replacement);
-bool arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator);
+int arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator, std::string const &v);
 bool isEncryptedMessage(const std::string &str);
 std::string urlEncode(const std::string &input);
 int getWidth();

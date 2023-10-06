@@ -56,7 +56,7 @@ std::map<std::string, char> const escapeSequenceMap = {
     // Add more escape sequences as needed
 };
 
-bool arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator)
+int arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator, std::string const &v)
 {
     for (size_t i = 0; i < args.size(); ++i)
     {
@@ -72,11 +72,16 @@ bool arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moder
             else
             {
                 std::cout << RED_NORMAL_COLOR BOLD << "--cfg needs to be followed by a path to a config file" << NORMAL << std::endl;
-                return false;
+                return -1;
             }
         }
+        else if (args[i] == "--version" || args[i] == "-v")
+        {
+            std::cout << "MicaClient++ Version " << v << std::endl;
+            return 1;
+        }
     }
-    return true;
+    return 0;
 }
 
 std::string urlEncode(const std::string &input)

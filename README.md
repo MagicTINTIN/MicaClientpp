@@ -13,12 +13,15 @@ To compile it you will need to first install the dependencies:<br>
 - Ubuntu: `sudo apt install cmake`
 - Arch Linux: `sudo pacman -S cmake`
 Then you just need to run `./cmakecompile` in your local folder.
+>- You can add --release argument to optimize the program (it will be a little bit slower)<br>
+>- You can also add --fastcompile to compile on multiple cores<br>
+>- Finally, you can also add --reset to reset compilation data from previous compilations
 
 ## Compilation via g++
 - Ubuntu: `sudo apt install g++`
 - Arch Linux: `sudo pacman -S g++`
 Then you just need to run `./gppcompile` in your local folder.
-
+>- You can add --quickprog argument to optimize the program (but it will compile slower)
 # How to use it
 ## Setup
 First, set settings like username, token... in `config.json`.<br>

@@ -5,8 +5,8 @@ mkdir build
 makearg=""
 cmakearg=""
 for arg in "$@"; do
-    if [ "$arg" = "--quickprog" ]; then
-        cmakearg+=" -DCMAKE_BUILD_TYPE=Release "
+    if [ "$arg" = "--release" ]; then
+        cmakearg+=" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=\"-O3\" "
     elif [ "$arg" = "--fastcomile" ]; then
         makearg+=" -j4 "
     elif [ "$arg" = "--reset" ]; then
