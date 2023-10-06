@@ -106,7 +106,8 @@ In config.json you have a section named "settings" :
 ```
 ---
 # Futures features : 
-- Themes : MicaClient++, Original (copy of micasend official client)  
+- [FULL IMPLEMENTATION] Themes : MicaClient++, Original (copy of micasend official client)  
+- [FULL IMPLEMENTATION] Language : en/fr
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)
 - fix last message deleted -> the message before appears twice

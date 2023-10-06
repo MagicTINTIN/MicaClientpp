@@ -1,6 +1,6 @@
 {
     "version":0,
-    "subversion":8,
+    "subversion":9,
 
     "server":"https://micasend.baptiste-reb.fr/",
     "username":"aSpecialUser",
@@ -14,6 +14,10 @@
     "blockUnVerifiedUsers":false,
     "blockedUsers": [],
 
+    "mcppConfigPath":"./",
+    "themeFile":"themes/defaultTheme.json",
+    "languageFile":"languages/en.json",
+
     "discussionGroupKeys": {
         "a":{
             "users": [ "MagicTest", "Michel", "MagicTINTIN"],
@@ -24,11 +28,6 @@
             "users": [ "*" ],
             "blocked": [],
             "key":"thisIsaPublicGroup"
-        },
-        "group":{
-            "users": [ "*" ],
-            "blocked": [],
-            "key":"th1s1sNotTheSameGroup"
         }
     },
     "privateEncryptionKeys": {
@@ -45,8 +44,5 @@
         "showMessageDateTime":false,
         "displayDeletedMessages":true,
         "displayOfflineMessages":true
-    },
-
-    "mcppConfigPath":"./",
-    "themeFile":"defaultTheme.json"
+    }
 }

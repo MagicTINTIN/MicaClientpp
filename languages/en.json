@@ -1,0 +1,11 @@
+{
+    "package":"language",
+    "type":"en",
+    "compatibilityVersion": 1,
+    "window":{
+        "gentitle":"General"
+    },
+    "errors":{
+
+    }
+}

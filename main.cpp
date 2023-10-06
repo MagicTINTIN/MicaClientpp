@@ -15,15 +15,18 @@
 
 using json = nlohmann::json;
 
-const int THEME_VERSION(1);
 const int MCPP_VERSION(0);
-const int CONFIG_VERSION(8);
+const int CONFIG_VERSION(9);
+
+const int THEME_VERSION(1);
+const int LANGUAGE_VERSION(1);
 
 const int MSG_MAX_SIZE(490);
 
 int main(int argc, char const *argv[])
 {
-    title("MicaClient++ - General");
+    std::cout << "Starting MicaClient++..." << std::endl;
+    title("MicaClient++ - Starting...");
     int exitUpdateCode(0), exitSendCode(0);
     std::vector<std::string> args(argv, argv + argc);
 
@@ -89,7 +92,6 @@ int main(int argc, char const *argv[])
                       << "Please update your theme to be able to use it with MicaClient++ theme manager v" << THEME_VERSION << ", (found v" << themev << ")" << std::endl;
             return 7;
         }
-
         f.close();
     }
     catch (std::out_of_range &e)
@@ -97,9 +99,30 @@ int main(int argc, char const *argv[])
         std::cout << "JSON THEME ERROR : " << e.what() << '\n';
         return 1;
     }
+    json languageData;
+    try
+    {
+        std::string languagefpath = data["languageFile"].get<std::string>();
+        std::ifstream f(languagefpath);
+        std::cout << "Loading language (" << languagefpath << ")..." << std::endl;
+        languageData = json::parse(f);
+        int langv = languageData["compatibilityVersion"].get<int>();
+        if (langv != LANGUAGE_VERSION)
+        {
+            std::cout << BOLD RED_NORMAL_COLOR "ERROR: LANGUAGE VERSION IS NOT COMPATIBLE" NORMAL << std::endl
+                      << "Please update your language to be able to use it with MicaClient++ theme manager v" << LANGUAGE_VERSION << ", (found v" << langv << ")" << std::endl;
+            return 7;
+        }
+        title("MicaClient++ - " + languageData["window"]["gentitle"].get<std::string>());
+        f.close();
+    }
+    catch (std::out_of_range &e)
+    {
+        std::cout << "JSON LANGAGE ERROR : " << e.what() << '\n';
+        return 1;
+    }
 
     MessageMemory mem;
-
     if (memsettings.backup)
     {
 
@@ -138,12 +161,13 @@ int main(int argc, char const *argv[])
         std::cin.clear();
         std::getline(std::cin, input);
         std::cout << NORMAL;
-        resarg = getArguments(themeData, mem, msgsettings, serverurl, data, username, token, input, moderatormode, exitUpdateCode, exitSendCode);
+        resarg = getArguments(languageData, themeData, mem, msgsettings, serverurl, data, username, token, input, moderatormode, exitUpdateCode, exitSendCode);
         if (resarg < 0)
             break;
         input = "";
     }
 
+    clearScreen();
     std::cout << "Exiting MicaClient++..." << std::endl;
 
     return 0;

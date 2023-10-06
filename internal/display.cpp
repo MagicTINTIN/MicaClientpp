@@ -89,7 +89,7 @@ int showReplying(json &theme, json config, MessageMemory &mem, int id, Message::
     return 0;
 }
 
-int getArguments(json &theme, MessageMemory &mem,
+int getArguments(json &lang, json &theme, MessageMemory &mem,
                  Message::messageSettings &msgsettings, std::string const &serverurl, json &config,
                  std::string &username, std::string &token, std::string &input,
                  bool const &moderatormode,

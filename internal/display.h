@@ -14,7 +14,7 @@ int showReplying(json &theme, json config, MessageMemory &mem, int id, Message::
  *          < -1 fatal errors from internals functions ||
  *          > 3 errors messages from internals functions
 */
-int getArguments(json &theme, MessageMemory &mem, Message::messageSettings &msgsettings, std::string const &serverurl, json &config, std::string &username, std::string &token, std::string &input, bool const &moderatormode, int &exitUpdateCode, int &exitSendCode);
+int getArguments(json &lang, json &theme, MessageMemory &mem, Message::messageSettings &msgsettings, std::string const &serverurl, json &config, std::string &username, std::string &token, std::string &input, bool const &moderatormode, int &exitUpdateCode, int &exitSendCode);
 std::string printStyle(json style);
 void title(std::string t);
 void clearScreen();
