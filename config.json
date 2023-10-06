@@ -24,6 +24,11 @@
             "users": [ "*" ],
             "blocked": [],
             "key":"thisIsaPublicGroup"
+        },
+        "group":{
+            "users": [ "*" ],
+            "blocked": [],
+            "key":"th1s1sNotTheSameGroup"
         }
     },
     "privateEncryptionKeys": {
@@ -36,7 +41,7 @@
     },
 
     "settings": {
-        "backupMessages":true,
+        "backupMessages":false,
         "showMessageDateTime":false,
         "displayDeletedMessages":true,
         "displayOfflineMessages":true

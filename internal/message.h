@@ -50,8 +50,10 @@ public:
         std::string generalkey;
         std::string pseudo;
         std::string channel;
+        int msgmaxsize;
+        int encryptedmaxsize;
         messageSettings();
-        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch);
+        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg);
     };
 
     struct jsonMessage

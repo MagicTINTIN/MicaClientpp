@@ -39,8 +39,8 @@ std::string escapeJson(const std::string &input);
 
 std::string stringCleaner(std::string toclean);
 
-void charsCleaner(unsigned char *data, unsigned char *modifiedData);
+void charsCleaner(unsigned char *data, int const &sizeofdata, unsigned char *modifiedData);
 
-std::string charsToStringCleaner(unsigned char *data);
+std::string charsToStringCleaner(unsigned char *data, int const &sizeofdata);
 
 #endif //TOOLS_H_INCLUDED

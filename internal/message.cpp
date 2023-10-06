@@ -43,11 +43,11 @@ std::string messageDisplayImprove(std::string s)
 }
 
 /* MESSAGE SETTINGS */
-Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey(KEYNOTFOUND), datetimemsg(true), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel("")
+Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey(KEYNOTFOUND), datetimemsg(true), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel(""), msgmaxsize(0), encryptedmaxsize(0) 
 {
 }
 
-Message::messageSettings::messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch) : deletedmsg(ddel), offlinemsg(doff), generalkey(gkey), datetimemsg(dt), pseudo(psd), modmsg(mod), securemsg(sec), blockUnverified(buu), channel(ch)
+Message::messageSettings::messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg) : deletedmsg(ddel), offlinemsg(doff), generalkey(gkey), datetimemsg(dt), pseudo(psd), modmsg(mod), securemsg(sec), blockUnverified(buu), channel(ch), msgmaxsize(maxsmsg), encryptedmaxsize(maxsmsg * 2)
 {
     for (auto &u : blu.items())
     {
@@ -152,24 +152,26 @@ void Message::print(json &theme, messageSettings const &msettings, bool const &s
             ReplaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
-                unsigned char tdecryptedText[980] = "";
+                unsigned char tdecryptedText[msettings.encryptedmaxsize] = "";
                 unsigned char tkey[40] = "";
-                unsigned char tencryptedText[980] = "";
+                unsigned char tencryptedText[msettings.encryptedmaxsize] = "";
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
                 if (igm.isgroup)
                     std::copy(igm.key.cbegin(), igm.key.cend(), tkey);
                 else
                     std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
                 std::string decryptedContent;
-                if (inv_AES(tencryptedText, tkey, tdecryptedText))
+                if (inv_AES(tencryptedText, tkey, tdecryptedText)) {
+                    std::cout << " " << NORMAL;
                     decryptedContent = copyContent;
+                }
                 else
                 {
-                    decryptedContent = reinterpret_cast<char *>(tdecryptedText);
+                    decryptedContent = charsToStringCleaner(tdecryptedText, msettings.encryptedmaxsize);
                     std::cout << GREEN_NORMAL_BACKGROUND << BOLD << WHITE_NORMAL_COLOR << "S" << NORMAL;
                 }
                 decrypted = stringCleaner(decryptedContent);
-                cleanMessageList(decryptedContent);
+                cleanMessageList(decrypted);
                 text = decrypted;
             }
             else
@@ -253,9 +255,9 @@ void Message::printReply(json &theme, messageSettings const &msettings, isgroupm
             ReplaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
-                unsigned char tdecryptedText[980] = "";
+                unsigned char tdecryptedText[msettings.encryptedmaxsize] = "";
                 unsigned char tkey[40] = "";
-                unsigned char tencryptedText[980] = "";
+                unsigned char tencryptedText[msettings.encryptedmaxsize] = "";
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
                 if (igm.isgroup)
                     std::copy(igm.key.cbegin(), igm.key.cend(), tkey);
@@ -265,7 +267,7 @@ void Message::printReply(json &theme, messageSettings const &msettings, isgroupm
                 if (inv_AES(tencryptedText, tkey, tdecryptedText))
                     decryptedContent = copyContent;
                 else
-                    decryptedContent = reinterpret_cast<char *>(tdecryptedText);
+                    decryptedContent = charsToStringCleaner(tdecryptedText, msettings.encryptedmaxsize);
                 decrypted = stringCleaner(decryptedContent);
                 cleanMessageList(decryptedContent);
                 text = decrypted;

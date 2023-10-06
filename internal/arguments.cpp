@@ -109,9 +109,9 @@ int replyArg(json &theme, json config, MessageMemory &mem, std::string &input, s
         if (safemode || igmreply.visible)
         {
             std::string privatereplyprefix("");
-            unsigned char decryptedText[490] = "";
+            unsigned char decryptedText[msgsettings.msgmaxsize] = "";
             unsigned char key[40] = "";
-            unsigned char encryptedText[980] = "";
+            unsigned char encryptedText[msgsettings.encryptedmaxsize] = "";
 
             std::copy(input.cbegin(), input.cend(), decryptedText);
             if (igmreply.visible)
@@ -199,9 +199,9 @@ int pSendArg(json &theme, MessageMemory &mem, json &config, std::string &input, 
     std::cout << NORMAL;
     if (input.length() > 0)
     {
-        unsigned char decryptedText[490] = "";
+        unsigned char decryptedText[msgsettings.msgmaxsize] = "";
         unsigned char key[40] = "";
-        unsigned char encryptedText[980] = "";
+        unsigned char encryptedText[msgsettings.encryptedmaxsize] = "";
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
         std::copy(privateg.key.cbegin(), privateg.key.cend(), key);
@@ -225,9 +225,9 @@ int sendArg(Message::messageSettings &msgsettings, std::string &input, std::stri
 {
     if (msgsettings.securemsg)
     {
-        unsigned char decryptedText[490] = "";
+        unsigned char decryptedText[msgsettings.msgmaxsize] = "";
         unsigned char key[40] = "";
-        unsigned char encryptedText[980] = "";
+        unsigned char encryptedText[msgsettings.encryptedmaxsize] = "";
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
         std::copy(msgsettings.generalkey.cbegin(), msgsettings.generalkey.cend(), key);
@@ -307,9 +307,9 @@ int pChannelSendArg(json &theme, MessageMemory &mem, json &config, std::string &
 
     if (input.length() > 0)
     {
-        unsigned char decryptedText[490] = "";
+        unsigned char decryptedText[msgsettings.msgmaxsize] = "";
         unsigned char key[40] = "";
-        unsigned char encryptedText[980] = "";
+        unsigned char encryptedText[msgsettings.encryptedmaxsize] = "";
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
         std::copy(privateg.key.cbegin(), privateg.key.cend(), key);

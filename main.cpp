@@ -19,6 +19,8 @@ const int THEME_VERSION(1);
 const int MCPP_VERSION(0);
 const int CONFIG_VERSION(8);
 
+const int MSG_MAX_SIZE(490);
+
 int main(int argc, char const *argv[])
 {
     title("MicaClient++ - General");
@@ -63,7 +65,8 @@ int main(int argc, char const *argv[])
                                                username, moderatormode, encryptenabled,
                                                data["blockUnVerifiedUsers"].get<bool>(),
                                                data["blockedUsers"],
-                                               "");
+                                               "",
+                                               MSG_MAX_SIZE);
         memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>(), cfgPath);
     }
     catch (std::out_of_range &e)

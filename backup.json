@@ -2284,7 +2284,7 @@
         "id": 475,
         "rank": 0,
         "sender": "aSpecialUser",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696329340
     },
     {
@@ -2295,7 +2295,7 @@
         "id": 476,
         "rank": 12,
         "sender": "Victor",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696329502
     },
     {
@@ -2306,7 +2306,7 @@
         "id": 477,
         "rank": 12,
         "sender": "Victor",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696329530
     },
     {
@@ -2317,7 +2317,7 @@
         "id": 478,
         "rank": 12,
         "sender": "Victor",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696329539
     },
     {
@@ -2328,7 +2328,7 @@
         "id": 479,
         "rank": 15,
         "sender": "MagicTINTIN",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696330028
     },
     {
@@ -2339,7 +2339,7 @@
         "id": 480,
         "rank": 15,
         "sender": "MagicTINTIN",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696330033
     },
     {
@@ -2350,7 +2350,7 @@
         "id": 481,
         "rank": 12,
         "sender": "Victor",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696332766
     },
     {
@@ -2361,7 +2361,7 @@
         "id": 482,
         "rank": 12,
         "sender": "Victor",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696332779
     },
     {
@@ -2372,7 +2372,7 @@
         "id": 483,
         "rank": 12,
         "sender": "Victor",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696332801
     },
     {
@@ -2383,7 +2383,7 @@
         "id": 484,
         "rank": 15,
         "sender": "MagicTINTIN",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696332872
     },
     {
@@ -2394,7 +2394,7 @@
         "id": 485,
         "rank": 15,
         "sender": "MagicTINTIN",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696332895
     },
     {
@@ -2405,7 +2405,7 @@
         "id": 486,
         "rank": 12,
         "sender": "Victor",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696333617
     },
     {
@@ -2416,7 +2416,7 @@
         "id": 487,
         "rank": 15,
         "sender": "MagicTINTIN",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696333685
     },
     {
@@ -2427,7 +2427,7 @@
         "id": 488,
         "rank": 12,
         "sender": "Victor",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696334234
     },
     {
@@ -2438,7 +2438,7 @@
         "id": 489,
         "rank": 0,
         "sender": "aSpecialUser",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696402635
     },
     {
@@ -2449,7 +2449,7 @@
         "id": 490,
         "rank": 0,
         "sender": "aSpecialUser",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696402875
     },
     {
@@ -2460,7 +2460,7 @@
         "id": 491,
         "rank": 0,
         "sender": "aSpecialUser",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696533085
     },
     {
@@ -2471,7 +2471,7 @@
         "id": 492,
         "rank": 0,
         "sender": "aSpecialUser",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696533093
     },
     {
@@ -2482,18 +2482,348 @@
         "id": 493,
         "rank": 0,
         "sender": "aSpecialUser",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696533121
     },
     {
         "certifiedUser": 0,
         "content": "护12a2c30ae3db9065df08c7de5be99e46",
         "dateTime": "2023-10-05 22:12:42",
-        "decrypted": "",
+        "decrypted": "\\tTexte décalé",
         "id": 494,
         "rank": 0,
         "sender": "aSpecialUser",
-        "status": 0,
+        "status": 1,
         "timestamp": 1696533162
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护efc85f248577fc0017cdb8e20d072955",
+        "dateTime": "2023-10-05 22:19:17",
+        "decrypted": "Salut à tous !",
+        "id": 495,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 1,
+        "timestamp": 1696533557
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护e6f4aabaab0d5e036c56e106c301e5110550303f39f827c488bfefa10eed8f158a64bbb96b610ad48da13928f5d0c816",
+        "dateTime": "2023-10-05 22:19:38",
+        "decrypted": "Utilisez MicaClient++ dès à présent",
+        "id": 496,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 1,
+        "timestamp": 1696533578
+    },
+    {
+        "certifiedUser": 0,
+        "content": "Mais pourquoi ?",
+        "dateTime": "2023-10-05 22:20:02",
+        "decrypted": "",
+        "id": 497,
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 1,
+        "timestamp": 1696533602
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护87de08eb21e0091cb2d8cbf6fefc34adc2ce9134b82c0d26f891eb58fd91c561f206de04d8905156e6f1b0ab5cb1acf5632cef562278e5c027543926f552883b7eb030aeb51f97cd762b2ac090863e6376414d530918500e9686423277064d97",
+        "dateTime": "2023-10-05 22:20:57",
+        "decrypted": "Il y a plein d'avantages, par exemple vous aurez la possibilité de chiffrer vos messages !",
+        "id": 498,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 1,
+        "timestamp": 1696533657
+    },
+    {
+        "certifiedUser": 0,
+        "content": "答498护3fcbcc748db26f2b5c5ed54683b2f3d83ab521296354820690e2c5023e645019d7c9ebdd38fce9a899934fb2f9c486e6a58cc24625001ec7feedf8a3ee9e6c24016e25c5d025d54f4db6b08296392c4cd5b0833741cac932dcd83174c8bfdd79c442effb82671ab1ea540ceeffc189e3",
+        "dateTime": "2023-10-05 22:22:28",
+        "decrypted": "Wow mais c'est génial ! En plus il y a plein de nouvelles fonctionnalités uniquement accessibles via MC++",
+        "id": 499,
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 1,
+        "timestamp": 1696533748
+    },
+    {
+        "certifiedUser": 7,
+        "content": "答499护6cf3f413e66b22504410446d176f836f0b59920067c8cd9c33c5bcfb90a54201ed36c73318c7c0f6bde7cf23f27d914a704ad331132e5b7d9b337706384f20d387b201648fd3dec899097e99368a7847947275d19bc25ae9cfdc808164be01da63cb33244f3fee2681f57a5c57e649351887014fef7c23afdb7d9092571a728cbd567bd2cbc51a7bd7fe616d9227e5ccf1c15778717acd666ca2639c81bafe6cf45e146b42542009bc5e66445abee572",
+        "dateTime": "2023-10-05 22:24:35",
+        "decrypted": "Eh oui ! Réponses, groupes de discussions, meilleur affichage des messages avec par exemple :\\n- Des retours à la ligne\\n\\t- Des tabulations\\n- et bien plus à venir !",
+        "id": 500,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 1,
+        "timestamp": 1696533875
+    },
+    {
+        "certifiedUser": 2,
+        "content": "护3076193f74d8bb4c0b3bbb9293861236ee5c3008812201bf88529543f6a7a9fa12341d96884b6e9216949926dc6b1e07732c4a1177c6ed8460936cd461d1131f",
+        "dateTime": "2023-10-05 22:27:47",
+        "decrypted": "En plus le nouvel affichage est incroyable ! @MCpp",
+        "id": 501,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 1,
+        "timestamp": 1696534067
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护c997e38321fcbd5ff46fc03fe23c8d2dceadcdfdb3859de47a5f874d21a386c15cd6994d8fa6974631ffea36cf96f299f41612b915ec79a680401e2806460fe972b48e1cc68c6c89d7a942ee5343f544f126b03ba83ef1c8df13a09877ff6bc2",
+        "dateTime": "2023-10-05 22:30:29",
+        "decrypted": "Ah ah ! Oui, nous avons pensé notre affichage pour être le plus minimaliste possible",
+        "id": 502,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 1,
+        "timestamp": 1696534229
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护4ce60c204daff1363342b0c05401313617a9e1fcda62e9c2c71457ea77e16a50b6233ac23952fd72530cb70ac3f663811cf5b172289003e6e16d23151c3937fd55944edcc2162022e72ec04aa6973c7a386346d94b73bbe6c2fab7ef5a6c2f151250ca606f55aba1b188abc6665e02b0b6e0ae35ebb2ed40d8df43119e1cb375dce8219d0b72a788918a3d6e3b3e7f49f3a37d83f1a216be8404391c16a8fad2715d71b85435a671f65826e02e2e9d11c6116c02cb348080e34ff102a08a4e6b",
+        "dateTime": "2023-10-05 22:31:36",
+        "decrypted": "Cependant, s'il ne vous convient pas, vous pouvez toujours utiliser des thèmes (un second thème est disponible pour avoir l'ancien look du MicaSend), voire même créer le votre !",
+        "id": 503,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696534296
+    },
+    {
+        "certifiedUser": 2,
+        "content": "Mais il y a des limitations liées au serveur pourtant... comment faîtes vous ?",
+        "dateTime": "2023-10-05 22:34:21",
+        "decrypted": "",
+        "id": 504,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1696534461
+    },
+    {
+        "certifiedUser": 3,
+        "content": "Nemuyg : Il a raison ! Car moi je ne souhaite pas utiliser un autre serveur pour discuter !",
+        "dateTime": "2023-10-05 22:38:00",
+        "decrypted": "",
+        "id": 505,
+        "rank": 11,
+        "sender": "Bot",
+        "status": 0,
+        "timestamp": 1696534680
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护f90561c7908dc924d797290f1bd88f5b6a1ec6fb849fc1443a4dd0adf8d64781fdc287f9c8985d1d9c5e5323e256631b3157381ca43485b2a8bb46defc00f119db6cecf0c21fda76afb5e1b0684450d36d9bd8119a74a24a05f3cec48ac9655546d66db144d9bc4ba9e3c0ef79b5bdaf34258fc5b04322bcaeae773c53a63f4c18308976923c4062962290464ec48d78a3e16b803c6bb5392c1dfe41aed16fabf9ba71674592dcffed5cdae3bffe1024f9642c80e3f2cefffd41cb2a63796aa4",
+        "dateTime": "2023-10-05 22:39:54",
+        "decrypted": "Pas d'inquiétudes ! toutes les modifications que vous voyez à l'écran ne sont que locales ! (si ce n'est que personne à part les utilisateur de MC++ ne peuvent lire les messages chiffrés)",
+        "id": 506,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696534794
+    },
+    {
+        "certifiedUser": 7,
+        "content": "团group护bfd6cf9c0a8bc471e2db28b6aa087dbc52ca7353b7033bb4262615e3738f03eb020a5a601b5cfe5a6c47877045aefed7f9d3985a1f2cdcfe70181fda3a922c306dd726d41a6637c6651287bb8b02b3b84a99d5053cbe7f5da88b9b4a2b78e8bf",
+        "dateTime": "2023-10-05 22:41:14",
+        "decrypted": "",
+        "id": 507,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696534874
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护440c27a00b86729f21a9ac48411349348550cb6d31fa101e0a050403b72358ba0ef863d9c3ba268f09ec86461091472a8252eee7bb0f9628ea8c102f0384ce5adae9a22b3a128f1922073680cded503a04d98c287f6c16786c7db892757c32669efcec5588c279ad1a8e0dcdba26c149bdc3cca763d5df5a4754b1d9449f6dd8",
+        "dateTime": "2023-10-05 22:41:57",
+        "decrypted": "De nombreuses commandes sont disponibles telles que /r /g /u... etc, mais vous pourrez toutes les retrouver dans /help.",
+        "id": 508,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 2,
+        "timestamp": 1696534917
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护72fcc51ef6e46aa1833226ce89cf3245e2f550af2e19e3d3f427f19de7e2d9804d4ac0908fa7710d7f7c38da056c8d355696db694b638b784b65f6175875beeea7d32921f7a8c1da4e7570e42648afe1fc3eb1d88034315e4748a597f5a9df63f56c3b83560a08c31e358ad34c2eff0585a085c4af3fee8bcb4ac92830f1759e",
+        "dateTime": "2023-10-05 22:43:32",
+        "decrypted": "",
+        "id": 509,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696535012
+    },
+    {
+        "certifiedUser": 0,
+        "content": "护83c45e984d6eb7daaed3c2f8eb5ff9853caad4b1afcc9cb872bba452eed5a602bc58b0400b87642ba78d6859b4a40284",
+        "dateTime": "2023-10-05 22:43:48",
+        "decrypted": "",
+        "id": 510,
+        "rank": 0,
+        "sender": "aSpecialUser",
+        "status": 2,
+        "timestamp": 1696535028
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护a792108fb3cc608d1cc2713912fdd4605989ab920e5798f1ee998e368c1474fb54825987ca0c2cd06926e96c4bfaac58cb46d92cadd91941c926dac651701dfabc81a1999430c8deb892094f9bc7cf2236effecdcc048b2f3f83022202b0d32fd8804115f03c33aafb1a0efa4e3e922d8d25ec230a9748f0c7f64295ca7cd88f",
+        "dateTime": "2023-10-05 22:45:19",
+        "decrypted": "",
+        "id": 511,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696535119
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护2fcb159cb82674dba1ee7cab317fc9e17b3cf6d66561aad6370bc087188faaba12a304344ffef11faaba4c10040e25c95e00de7801fc465eeb9288fb4be7c944",
+        "dateTime": "2023-10-05 22:47:39",
+        "decrypted": "",
+        "id": 512,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696535259
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护78f3571959674d798b41cbd52ce9bd2008b4be139818de5a26ba851452918d5b298bf552f9430a8442f49df7a08f56686cdd547ea3d4c545825e91a35f8a5f710398a7874728a8326baf7e7e7c5fda38",
+        "dateTime": "2023-10-05 22:48:04",
+        "decrypted": "",
+        "id": 513,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696535284
+    },
+    {
+        "certifiedUser": 2,
+        "content": "护88de612eef05516973a3c95898b9ce014a5e7fb123248ab0b604437f5d3449e09cbf78d4b6e3c2a2432ff4101cb5c631dcb51816d7f95f45a2d6d716f833d08d1e9ea688e5d4732aaf97b97f51b79a18ff08d0484e7674bb3722daca953828992733b799b0d4b191e0f88904e93e1e1e",
+        "dateTime": "2023-10-05 22:48:59",
+        "decrypted": "",
+        "id": 514,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1696535339
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护97941de1759e2837a651d22864a142c1950612f558e92a4095c0dc152e8a081cd61930ed3c45ab3a515a10e0bc556929521f5cf64f459c682cc8fbfc3e9d1d8815fdff24c528888291ee671dfcbe5cc59395e1b6bf79c06c0d51991d72a18e7bd7ba2aa68ab3c3c69850695a41bab553",
+        "dateTime": "2023-10-05 22:49:55",
+        "decrypted": "",
+        "id": 515,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696535395
+    },
+    {
+        "certifiedUser": 7,
+        "content": "护ad565a1e7afc3451cbe17b2e82a8e393351cfe83634c5081581edc81350672cb572e5c9e3db8cdd6d2f2115bf68060f0e93dbe716c2ab2e0328f4ecbae73aa67a76e9644298c91de894725e7774accfb72454feb51863c0a4eb541a51e3afd5330bf08c578ce8e8581fe04073219b768",
+        "dateTime": "2023-10-05 22:51:00",
+        "decrypted": "",
+        "id": 516,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696535460
+    },
+    {
+        "certifiedUser": 2,
+        "content": "团group护111f39dcbef685cbbd305362bf2b4d39eb1f2f9b1b46faaccf38e994f49d6b52910eb4abd85b29719f0d272d8f0e961fdb2f250dd066846ddd581d4becb34e8e",
+        "dateTime": "2023-10-06 10:30:24",
+        "decrypted": "",
+        "id": 517,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1696577424
+    },
+    {
+        "certifiedUser": 7,
+        "content": "团group护6d2e8b6a1b450433a8665e044e8fe285d9e552237178773a848771e0ca940481ade8a86b11ba0ecfad49b93861c11c4713beacf3e1cbc86182f43d44d883a3b235552270a65e34b892174762f5b629c3182c2219ea3e74fdc5321efa21c905d1",
+        "dateTime": "2023-10-06 10:32:18",
+        "decrypted": "",
+        "id": 518,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696577538
+    },
+    {
+        "certifiedUser": 2,
+        "content": "团group答518护6d2e8b6a1b450433a8665e044e8fe2850651fae9e565c40d2aee40290e59d70f88241b7bab308814e907f9ff20fcc93ed04f53832378cd674c21d2a9e1f1b9db",
+        "dateTime": "2023-10-06 10:33:33",
+        "decrypted": "",
+        "id": 519,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1696577613
+    },
+    {
+        "certifiedUser": 7,
+        "content": "团group护476bfd560b375272c17cbfa941c852a2b2b0e198f225f4bf03877cd26574dc285a492b4e34e13c43904af4b85a61f401",
+        "dateTime": "2023-10-06 10:34:01",
+        "decrypted": "",
+        "id": 520,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696577641
+    },
+    {
+        "certifiedUser": 2,
+        "content": "团group护ed6bc179314947f7bc79515d535ccac3ba915e99f421d5c5cc7227c35024cf21",
+        "dateTime": "2023-10-06 10:37:51",
+        "decrypted": "",
+        "id": 521,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1696577871
+    },
+    {
+        "certifiedUser": 2,
+        "content": "团group护71cd5310af5d88b0554f9925756d0b6c532f2d99a98669a4bb4e273d1ea09dbbf32db31d4d723aa1bbd6434860fe01f158a83c4f78aa31c7bc150dbe593ddc7087131945de3ce683f9c129d5b4008b3c3bddd246445bd252a0e91b46c55532cd00c68cfb1d6c3042c5348d2a443962b0",
+        "dateTime": "2023-10-06 10:38:59",
+        "decrypted": "",
+        "id": 522,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1696577939
+    },
+    {
+        "certifiedUser": 7,
+        "content": "团group护dc138e138e5bf24b54525e821702669a",
+        "dateTime": "2023-10-06 10:39:09",
+        "decrypted": "",
+        "id": 523,
+        "rank": 1,
+        "sender": "MCpp",
+        "status": 0,
+        "timestamp": 1696577949
+    },
+    {
+        "certifiedUser": 2,
+        "content": "团group护2a61c783e1e3f7b7f31d0144820a3e70504a0f12b9013919bdc9dac12416639436a1f605700b275b7c033c3741eb863897f058b3382c66b2a7628a7226462b252e08c060ae42a757fcddaeb030f5467ec30db7fb93b7ffe44dd726681035e2abff836a1dec7a9297f8e4270c489d7c1407cd83b1a57aae57f6ba49bf2fa8aa008ff9615d464ba086853ab2167a8d1079",
+        "dateTime": "2023-10-06 10:46:07",
+        "decrypted": "",
+        "id": 524,
+        "rank": 15,
+        "sender": "MagicTINTIN",
+        "status": 0,
+        "timestamp": 1696578367
     }
 ]

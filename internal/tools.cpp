@@ -338,6 +338,8 @@ int decodeUTF8Character(unsigned char *data, unsigned char *out, size_t *index, 
 
         while ((data[*index] & mask) == mask)
         {
+            if (leadingOnes >= 6)
+                return 0;
             leadingOnes++;
             mask >>= 1;
         }
@@ -407,13 +409,13 @@ std::string stringCleaner(std::string toclean)
     return reinterpret_cast<char *>(modifiedData);
 }
 
-void charsCleaner(unsigned char *data, unsigned char *modifiedData)
+void charsCleaner(unsigned char *data, int const &sizeofdata, unsigned char *modifiedData)
 {
     size_t index = 0;
     uint32_t characterValue;
     size_t dataIndex = 0; // Index for the modified data
 
-    while (index < sizeof(*data))
+    while (index < sizeofdata)
     {
         decodeUTF8Character(data, modifiedData, &index, &dataIndex, &characterValue);
         index++;
@@ -422,14 +424,13 @@ void charsCleaner(unsigned char *data, unsigned char *modifiedData)
     modifiedData[dataIndex] = '\0';
 }
 
-std::string charsToStringCleaner(unsigned char *data)
+std::string charsToStringCleaner(unsigned char *data, int const &sizeofdata)
 {
     size_t index = 0;
     uint32_t characterValue;
     size_t dataIndex = 0; // Index for the modified data
-    unsigned char modifiedData[sizeof(*data)] = "";
-
-    while (index < sizeof(*data))
+    unsigned char modifiedData[sizeofdata] = "";
+    while (index < sizeofdata && data[index] != (unsigned)'\0')
     {
         decodeUTF8Character(data, modifiedData, &index, &dataIndex, &characterValue);
         index++;
