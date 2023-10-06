@@ -3,18 +3,27 @@ A simple client for Micasend written in C++
 ![MicaClient++ banner](./images/banner.jpg)<br>
 Website : [https://mcpp.softplus.fr](https://mcpp.softplus.fr)
 # Installation
+## Required dependencies
 To compile it you will need to first install the dependencies:<br>
-- Ubuntu: `sudo apt install g++ libcurl4-openssl-dev`
+- Ubuntu: `sudo apt install libcurl4-openssl-dev`
 - Arch Linux: `sudo pacman -S curl`
 <br><br>
 
-Then you juste need to run `./compile` in your local folder.
+## Compilation via CMake (recommanded)
+- Ubuntu: `sudo apt install cmake`
+- Arch Linux: `sudo pacman -S cmake`
+Then you just need to run `./cmakecompile` in your local folder.
+
+## Compilation via g++
+- Ubuntu: `sudo apt install g++`
+- Arch Linux: `sudo pacman -S g++`
+Then you just need to run `./gppcompile` in your local folder.
 
 # How to use it
 ## Setup
 First, set settings like username, token... in `config.json`.<br>
 ## Basic usage
-Then, you can run `./MicaClient`, and now you should see the chat.<br>
+Then, you can run `build/MicaClient` *(or `./MicaClient.out` if you compiled via g++)*, and now you should see the chat.<br>
 <br>
 To send a message: just type it, and press Enter !<br>
 ## Reply to a message

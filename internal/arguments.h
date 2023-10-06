@@ -2,6 +2,19 @@
 
 #ifndef ARGUMENTS_H_INCLUDED
 #define ARGUMENTS_H_INCLUDED
+#include <string>
+#include <iomanip>
+#include <iostream>
+#include "message.h"
+#include "messagememory.h"
+#include "colors.h"
+#include "tools.h"
+#include "display.h"
+#include "requests.h"
+#include "aes.h"
+#include "arguments.h"
+
+using json = nlohmann::json;
 
 int deleteArg(json &theme, std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode);
 
