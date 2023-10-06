@@ -80,6 +80,13 @@ int arguments(std::vector<std::string> &args, std::string &cfgPath, bool &modera
             std::cout << "MicaClient++ Version " << v << std::endl;
             return 1;
         }
+        else if (args[i] == "--help" || args[i] == "-h")
+        {
+            std::cout << "MicaClient++ is an alternative client for Micasend" << std::endl
+            << " -m, --moderator to start it in moderator mode" << std::endl
+            << " --cfg path/to/a/config/file.json to load a specific config" << std::endl;
+            return 1;
+        }
     }
     return 0;
 }

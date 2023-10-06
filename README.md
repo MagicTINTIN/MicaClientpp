@@ -29,6 +29,8 @@ First, set settings like username, token... in `config.json`.<br>
 Then, you can run `build/MicaClient` *(or `./MicaClient.out` if you compiled via g++)*, and now you should see the chat.<br>
 <br>
 To send a message: just type it, and press Enter !<br>
+![MicaClient++ theme](./images/mcpp.jpg)<br>
+
 ## Reply to a message
 To reply to a message type `/r x` *(with x the message ID to reply)*.<br>
 If you don't know it, only type `/r`, then choose the ID of the message you want to reply<br>
@@ -57,16 +59,18 @@ To create a group, in config.json just add a new object to discussionGroupKeys s
 In this example the group is named "a" and its associated key is "thisIsAPrivateGroup".<br>
 **Groups should not have spaces in their name !**
 <br>
-> /!\\ Several users can create groups with the same name /!\\<br>
+> **/!\\ Several users can create groups with the same name /!\\**<br>
 As you might not have the same key, you will see encrypted message from users that are not in your group.<br>
 > - So to be sure private message are coming from the right group you must **add** the users that belong to your group.
 > - To receive messages from everyone in this group, add "*" in "users"<br>
 <br>
+
 Then, just communicate the name and the key of the group you created to your members, and ask them to complete the "users" section too.<br>
 <br>
 To filter message by group type `/g groupname`, and to go back to general `/g`.<br>
 Be careful, if you are in a group channel and you send a message, it will only be sent to the group.
 <br>
+![Group filter in MC++](./images/groups.jpg)<br>
 
 ### Send a message in private group
 To send a message in a private group, just type `/p groupname` or `/p` and then type the group name.

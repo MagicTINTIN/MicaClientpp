@@ -64,7 +64,7 @@ searchin() {
             fi
         fi
 
-        if [[ -d "$f" && "$f" != *"includes"* ]]
+        if [[ -d "$f" && "$f" != *"includes"* && "$f" != *"build"* ]]
         then
             let foldernb++
             echo "[D] $f"
