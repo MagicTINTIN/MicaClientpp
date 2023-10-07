@@ -39,7 +39,7 @@
                 {
                     "type":"print",
                     "style":[ "THIN" ],
-                    "print":"Replying to $RAUTHOR"
+                    "print":"$LREPLYINGTO $RAUTHOR"
                 },
                 {
                     "type":"print",
@@ -479,5 +479,8 @@
     },
     "replyInput": {
         "style":[ "YELLOW_NORMAL_COLOR" ]
+    },
+    "error": {
+        "style": [ "RED_NORMAL_COLOR" ]
     }
 }

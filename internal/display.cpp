@@ -107,7 +107,7 @@ int getArguments(json &lang, json &theme, MessageMemory &mem,
     }
     else if (moderatormode && (input.rfind("/d", 0) == 0))
     {
-        return deleteArg(theme, input, serverurl, username, token, exitSendCode);
+        return deleteArg(lang, theme, input, serverurl, username, token, exitSendCode);
     }
     else if (input.rfind("/r", 0) == 0)
     {
@@ -119,16 +119,16 @@ int getArguments(json &lang, json &theme, MessageMemory &mem,
     }
     else if (input.rfind("/p", 0) == 0)
     {
-        return pSendArg(theme, mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
+        return pSendArg(lang, theme, mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
     }
     else if (input.rfind("/g", 0) == 0)
     {
-        return groupArg(theme, input, msgsettings, config);
+        return groupArg(lang, theme, input, msgsettings, config);
     }
     else
     {
         if (msgsettings.channel != "")
-            return pChannelSendArg(theme, mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
+            return pChannelSendArg(lang, theme, mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
         else
             return sendArg(msgsettings, input, serverurl, username, token, exitSendCode);
     }
@@ -152,4 +152,9 @@ std::string printStyle(json style)
 void title(std::string t)
 {
     std::cout << "\033]0;" << t << "\007";
+}
+
+void userError(json &theme, std::string err)
+{
+    std::cout << printStyle(theme["error"]["style"]) << err << NORMAL << std::endl;
 }

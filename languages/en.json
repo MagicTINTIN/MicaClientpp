@@ -5,13 +5,30 @@
     "window":{
         "gentitle":"General"
     },
-    "errors":{
-
-    },
     "common":{
-        "or":" or "
+        "or":" or ",
+        "and":" and "
+    },
+    "fromTheme":{
+        "replyingto":"Replying to"
+    },
+    "errors":{
+        "featnotavailable":"You can't use this feature without Encryption enabled",
+        "idneeded":" take the id as argument !",
+        "missingId":"No ID provided !",
+        "invalidID":"Invalid ID !",
+        "msgnotfound":"Impossible to find this message",
+        "groupnotfound":"Impossible to find this group",
+        "usehr":"Use /help to know how to use replies",
+        "userhpg": "Use /help to know how to use private groups"
     },
     "commands":{
+        "group":{
+            "entergroup":"Enter the name of the group: "
+        },
+        "reply":{
+            "enterid":"Type the [ID] of the message you want to reply: "
+        },
         "help":{
             "groupname":" groupname",
             "message":" Message",

@@ -5,13 +5,30 @@
     "window":{
         "gentitle":"Général"
     },
-    "errors":{
-
-    },
     "common":{
-        "or":" ou "
+        "or":" ou ",
+        "and":" et "
+    },
+    "fromTheme":{
+        "replyingto":"Réponse à"
+    },
+    "errors":{
+        "featnotavailable":"Vous ne pouvez pas utiliser cette fonctionnalité sans le Chiffrement activé (enableEncryption)",
+        "idneeded":" prennent un id comme argument !",
+        "missingId":"Pas d'ID fourni !",
+        "invalidID":"ID invalide !",
+        "msgnotfound":"Impossible de trouver ce message",
+        "groupnotfound":"Impossible de trouver ce groupe",
+        "usehr": "Utilisez /help pour apprendre à utiliser les réponses",
+        "userhpg": "Utilisez /help pour apprendre  à utiliser les groupes privés"
     },
     "commands":{
+        "group":{
+            "entergroup":"Entrez le nom du groupe : "
+        },
+        "reply":{
+            "enterid":"Entrez l'[ID] du message auquel vous souhaitez répondre : "
+        },
         "help":{
             "groupname":" nomdugroupe",
             "message":" Message",

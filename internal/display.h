@@ -17,6 +17,7 @@ int showReplying(json &lang, json &theme, json config, MessageMemory &mem, int i
 int getArguments(json &lang, json &theme, MessageMemory &mem, Message::messageSettings &msgsettings, std::string const &serverurl, json &config, std::string &username, std::string &token, std::string &input, bool const &moderatormode, int &exitUpdateCode, int &exitSendCode);
 std::string printStyle(json style);
 void title(std::string t);
+void userError(json &theme, std::string err);
 void clearScreen();
 
 struct themeVariables

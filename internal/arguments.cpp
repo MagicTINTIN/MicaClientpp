@@ -14,7 +14,7 @@ using json = nlohmann::json;
 
 /* DELETED ARGUMENT FUNCTION */
 
-int deleteArg(json &theme, std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode)
+int deleteArg(json &lang, json &theme, std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode)
 {
     if (input.rfind("/d ", 0) == 0)
         ReplaceStringInPlace(input, "/d ", "");
@@ -22,7 +22,7 @@ int deleteArg(json &theme, std::string &input, std::string const &serverurl, std
         ReplaceStringInPlace(input, "/delmsg ", "");
     else
     {
-        std::cout << RED_NORMAL_COLOR << "/d and /delmsg take the id as argument !" << std::endl;
+        userError(theme, "/d" + lang["common"]["and"].get<std::string>() + "/delmsg" + lang["errors"]["idneeded"].get<std::string>());
         std::cin.get();
         return 1;
     }
@@ -59,7 +59,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
             safemode = false;
         clearScreen();
         mem.print(theme, config, msgsettings, true);
-        std::cout << "Type the [ID] of the message you want to reply: ";
+        std::cout << lang["commands"]["reply"]["enterid"].get<std::string>();
         std::cout << printStyle(theme["replyInput"]["style"]);
         std::getline(std::cin, input);
         std::cout << NORMAL;
@@ -67,7 +67,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
     }
     else
     {
-        std::cout << RED_NORMAL_COLOR << "Use /help to know how to use replies" << std::endl;
+        userError(theme, lang["errors"]["usehr"].get<std::string>());
         std::cin.get();
         return 1;
     }
@@ -78,7 +78,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
     int intidtoreply;
     if (idtoreply.size() == 0)
     {
-        std::cout << RED_NORMAL_COLOR << "No ID provided !" << std::endl;
+        userError(theme, lang["errors"]["missingId"].get<std::string>());
         std::cin.get();
         return 2;
     }
@@ -90,7 +90,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
         }
         catch (...)
         {
-            std::cout << RED_NORMAL_COLOR << "Invalid ID !" << std::endl;
+            userError(theme, lang["errors"]["invalidID"].get<std::string>());
             std::cin.get();
             return 2;
         }
@@ -99,7 +99,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
     Message::isgroupmessage igmreply;
     if (showReplying(lang, theme, config, mem, intidtoreply, msgsettings, igmreply) > 0)
     {
-        std::cout << RED_NORMAL_COLOR << "Impossible to find this message" << std::endl;
+        userError(theme, lang["errors"]["msgnotfound"].get<std::string>());
         std::cin.get();
         return 2;
     }
@@ -156,11 +156,11 @@ int uSendArg(std::string &input, std::string const &serverurl, std::string &user
 
 /* PRIVATE GROUP MESSAGE SEND */
 
-int pSendArg(json &theme, MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
+int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
 {
     if (!msgsettings.securemsg)
     {
-        std::cout << RED_NORMAL_COLOR << "You can't use this feature without Encryption enabled" << std::endl;
+        userError(theme, lang["errors"]["featnotavailable"].get<std::string>());
         std::cin.get();
         return 2;
     }
@@ -172,7 +172,7 @@ int pSendArg(json &theme, MessageMemory &mem, json &config, std::string &input, 
     }
     else if (input.rfind("/p", 0) == 0)
     {
-        std::cout << "Enter the name of the group: " PURPLE_NORMAL_COLOR;
+        std::cout << lang["commands"]["group"]["entergroup"].get<std::string>();
         std::cout << printStyle(theme["groupInput"]["style"]);
         std::getline(std::cin, input);
         std::cout << NORMAL;
@@ -180,7 +180,7 @@ int pSendArg(json &theme, MessageMemory &mem, json &config, std::string &input, 
     }
     else
     {
-        std::cout << RED_NORMAL_COLOR << "Use /help to know how to use private groups" << std::endl;
+        userError(theme, lang["errors"]["userhpg"].get<std::string>());
         std::cin.get();
         return 1;
     }
@@ -188,7 +188,7 @@ int pSendArg(json &theme, MessageMemory &mem, json &config, std::string &input, 
     privategroup privateg = findPrivateGroup(config, privategroupname);
     if (!privateg.found)
     {
-        std::cout << RED_NORMAL_COLOR << "Impossible to find this group" << std::endl;
+        userError(theme, lang["errors"]["groupnotfound"].get<std::string>());
         std::cin.get();
         return 2;
     }
@@ -251,11 +251,11 @@ int sendArg(Message::messageSettings &msgsettings, std::string &input, std::stri
 
 /* GROUP VISION COMMAND */
 
-int groupArg(json &theme, std::string &input, Message::messageSettings &msettings, json &config)
+int groupArg(json &lang, json &theme, std::string &input, Message::messageSettings &msettings, json &config)
 {
     if (!msettings.securemsg)
     {
-        std::cout << RED_NORMAL_COLOR << "You can't use this feature without Encryption enabled" << std::endl;
+        userError(theme, lang["errors"]["featnotavailable"].get<std::string>());
         std::cin.get();
         return 2;
     }
@@ -277,7 +277,7 @@ int groupArg(json &theme, std::string &input, Message::messageSettings &msetting
     privategroup privateg = findPrivateGroup(config, privategroupname);
     if (!privateg.found)
     {
-        std::cout << RED_NORMAL_COLOR << "Impossible to find this group" << std::endl;
+        userError(theme, lang["errors"]["groupnotfound"].get<std::string>());
         std::cin.get();
         return 2;
     }
@@ -289,11 +289,11 @@ int groupArg(json &theme, std::string &input, Message::messageSettings &msetting
 
 /* PRIVATE GROUP CHANNEL MESSAGE SEND */
 
-int pChannelSendArg(json &theme, MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
+int pChannelSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
 {
     if (!msgsettings.securemsg)
     {
-        std::cout << RED_NORMAL_COLOR << "You can't use this feature without Encryption enabled" << std::endl;
+        userError(theme, lang["errors"]["featnotavailable"].get<std::string>());
         std::cin.get();
         return 2;
     }
@@ -302,7 +302,7 @@ int pChannelSendArg(json &theme, MessageMemory &mem, json &config, std::string &
     privategroup privateg = findPrivateGroup(config, privategroupname);
     if (!privateg.found)
     {
-        std::cout << RED_NORMAL_COLOR << "Impossible to find this group" << std::endl;
+        userError(theme, lang["errors"]["groupnotfound"].get<std::string>());
         std::cin.get();
         return 2;
     }
