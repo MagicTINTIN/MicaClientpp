@@ -18,7 +18,7 @@ using json = nlohmann::json;
 
 int deleteArg(json &theme, std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode);
 
-int replyArg(json &theme, json config, MessageMemory &mem, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode);
+int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode);
 
 int uSendArg(std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode);
 

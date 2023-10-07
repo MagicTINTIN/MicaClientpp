@@ -1,8 +1,8 @@
 #ifndef DISPLAY_H_INCLUDED
 #define DISPLAY_H_INCLUDED
 
-void showHelp(json &theme, bool moderator = false);
-int showReplying(json &theme, json config, MessageMemory &mem, int id, Message::messageSettings &msgs, Message::isgroupmessage &igm);
+void showHelp(json &lang, json &theme, bool moderator = false);
+int showReplying(json &lang, json &theme, json config, MessageMemory &mem, int id, Message::messageSettings &msgs, Message::isgroupmessage &igm);
 // 0 nothing, -1 exit, 1 nothing but help, 2 impossible to find msg/group
 /**
  * Execute commands from the main chat

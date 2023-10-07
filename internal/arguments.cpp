@@ -38,7 +38,7 @@ int deleteArg(json &theme, std::string &input, std::string const &serverurl, std
 
 /* REPLY ARGUMENTS FONCTION */
 
-int replyArg(json &theme, json config, MessageMemory &mem, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
+int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode)
 {
     std::string idtoreply("");
     bool safemode(msgsettings.securemsg);
@@ -97,7 +97,7 @@ int replyArg(json &theme, json config, MessageMemory &mem, std::string &input, s
     }
 
     Message::isgroupmessage igmreply;
-    if (showReplying(theme, config, mem, intidtoreply, msgsettings, igmreply) > 0)
+    if (showReplying(lang, theme, config, mem, intidtoreply, msgsettings, igmreply) > 0)
     {
         std::cout << RED_NORMAL_COLOR << "Impossible to find this message" << std::endl;
         std::cin.get();

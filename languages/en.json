@@ -8,7 +8,35 @@
     "errors":{
 
     },
+    "common":{
+        "or":" or "
+    },
     "commands":{
-        "help":""
+        "help":{
+            "groupname":" groupname",
+            "message":" Message",
+            "title":"Here is the list of the available commands : ",
+            "helpcmd":"To show this message",
+            "exitcmd":"To exit MicaClient++",
+            "rp1":"To reply to a message, type ",
+            "rp2":" (with x the message ID to reply).",
+            "rp3":"If you don't know it, only type ",
+            "rp4":", then choose the ID of the message you want to reply",
+            "rp5":"Then, press [ENTER], and you will be able to write and send your answer !",
+            "rp6":"You can use ",
+            "rp7": " to relpy in unsafe mode.",
+            "privatecmd":"To send a private message to the group 'groupname' (only people that will have a 'groupname' section in discussionGroupKeys in config.json with the corect Key will be able to decrypt the message)",
+            "gp1":"To filter message by group, type ",
+            "gp2":", and to go back to general ",
+            "gp3":"Be careful, if you are in a group channel and you send a message, it will only be sent to the group.",
+            "unsafecmd":"To send an unsafe message (no encryption)",
+
+            "modtitle":"Here is the list of MODERATORS commands",
+            "delcmd":"To delete the message with the id x",
+            
+            "endp1":"Press ",
+            "endp2":"[ENTER]",
+            "endp3":" to go back to chat"
+        }
     }
 }

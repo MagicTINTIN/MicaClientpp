@@ -1,0 +1,42 @@
+{
+    "package":"language",
+    "type":"fr",
+    "compatibilityVersion": 1,
+    "window":{
+        "gentitle":"Général"
+    },
+    "errors":{
+
+    },
+    "common":{
+        "or":" ou "
+    },
+    "commands":{
+        "help":{
+            "groupname":" nomdugroupe",
+            "message":" Message",
+            "title":"Voici la liste des commandes disponibles : ",
+            "helpcmd":"Pour afficher ce message",
+            "exitcmd":"Pour quitter MicaClient++",
+            "rp1":"Pour répondre à un message, tapez ",
+            "rp2":" (avec x l'ID du message auquel répondre).",
+            "rp3":"Si vous ne le connaissez pas, tapez uniquement ",
+            "rp4":", puis choisissez l'ID du message auquel vous souhaitez répondre",
+            "rp5":"Enfin, appuyez sur [ENTRÉE], et vous allez pouvoir écrire et envoyer votre réponse !",
+            "rp6":"Vous pouvez utiliser ",
+            "rp7": " pour répondre en mode non sécurisé.",
+            "privatecmd":"Pour envoyer un message privé au groupe 'nomdugroupe' (seulement les utilisateur qui ont une section'nomdugroupe' dans discussionGroupKeys, qui se trouve dans le fichier config.json, avec la bonne clé pourront déchiffrer le message)",
+            "gp1":"Pour filtrer les messages par groupe, tapez ",
+            "gp2":", et pour retourner dans le général, tapez ",
+            "gp3":"Attention, si vous êtes dans un salon de groupe et que vous envoyez un message, il sera uniquement envoyé au groupe.",
+            "unsafecmd":"Pour envoyer un message non sécurisé (sans chiffrement)",
+
+            "modtitle":"Voici la liste des commandes pour les MODÉRATEURS",
+            "delcmd":"Pour supprimer le message avec l'ID x",
+            
+            "endp1":"Appuyez sur ",
+            "endp2":"[ENTRÉE]",
+            "endp3":" pour revenir au chat"
+        }
+    }
+}

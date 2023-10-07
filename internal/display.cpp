@@ -39,42 +39,43 @@ void createLine()
               << NORMAL;
 }
 
-void showHelp(json &theme, bool moderator)
+void showHelp(json &lang, json &theme, bool moderator)
 {
     clearScreen();
+    json hl = lang["commands"]["help"];
     std::cout << theme["themeName"].get<std::string>() << " v" << theme["themeVersion"].get<int>() << std::endl;
     createLine();
-    std::cout << BOLD UNDERLINED << "Here is the list of commands" NORMAL << std::endl
+    std::cout << BOLD UNDERLINED << hl["title"].get<std::string>() << NORMAL << std::endl
               << std::endl
-              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/h" NORMAL " or " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/help" NORMAL " - To show this message" << std::endl
-              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/q" NORMAL " or " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/exit" NORMAL " - To exit MicaClient++" << std::endl
+              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/h" NORMAL << lang["common"]["or"].get<std::string>() << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/help" NORMAL " - " << hl["helpcmd"].get<std::string>() << std::endl
+              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/q" NORMAL << lang["common"]["or"].get<std::string>() << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/exit" NORMAL " - " << hl["exitcmd"].get<std::string>() << std::endl
               << std::endl
-              << "To reply to a message type " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/r x" NORMAL ITALIC " (with x the message ID to reply)." NORMAL << std::endl
-              << "If you don't know it, only type " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/r" NORMAL ", then choose the ID of the message you want to reply" << std::endl
-              << "Then, press [ENTER], and you will be able to write and send your answer ! " << std::endl
-              << THIN "You can use " BLACK_NORMAL_BACKGROUND "/ru x" NORMAL THIN " or " BLACK_NORMAL_BACKGROUND "/ru" NORMAL THIN " to relpy in unsafe mode" << std::endl
+              << hl["rp1"].get<std::string>() << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/r x" NORMAL ITALIC << hl["rp2"].get<std::string>() << NORMAL << std::endl
+              << hl["rp2"].get<std::string>() << hl["rp3"].get<std::string>() << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/r" NORMAL << hl["rp4"].get<std::string>() << std::endl
+              << hl["rp5"].get<std::string>() << std::endl
+              << THIN << hl["rp6"].get<std::string>() << BLACK_NORMAL_BACKGROUND "/ru x" NORMAL THIN " or " BLACK_NORMAL_BACKGROUND "/ru" NORMAL THIN << hl["rp7"].get<std::string>() << NORMAL << std::endl
               << std::endl
-              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/p x Message" NORMAL " - To send a private message to the group x (only people that will have a 'x' section in discussionGroupKeys in config.json with the corect Key will be able to decrypt the message)" << std::endl
+              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/p" << hl["groupname"].get<std::string>() << hl["message"].get<std::string>() <<  NORMAL " - " << hl["privatecmd"].get<std::string>() << std::endl
               << std::endl
-              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/u Message..." NORMAL " - To send an unsafe message (no encryption)" << std::endl
-              << "To filter message by group type " BLACK_NORMAL_BACKGROUND "/g groupname" NORMAL ", and to go back to general " BLACK_NORMAL_BACKGROUND "/g" NORMAL "." << std::endl
-              << "Be careful, if you are in a group channel and you send a message, it will only be sent to the group." << std::endl
+              << hl["gp1"].get<std::string>() << BLACK_NORMAL_BACKGROUND "/g" << hl["groupname"].get<std::string>() << NORMAL << hl["gp2"].get<std::string>() << BLACK_NORMAL_BACKGROUND "/g" NORMAL "." << std::endl
+              << hl["gp3"].get<std::string>() << std::endl
+              << std::endl
+              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/u" << hl["message"].get<std::string>() << NORMAL " - " << hl["unsafecmd"].get<std::string>() << std::endl
               << std::endl;
 
     if (moderator)
     {
-        createLine();
-        std::cout << BOLD UNDERLINED "Here is the list of MODERATORS commands" NORMAL << std::endl
+        std::cout << NORMAL BOLD UNDERLINED << hl["modtitle"].get<std::string>() << NORMAL << std::endl
                   << std::endl
-                  << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/delmsg x" NORMAL " or " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/d x" NORMAL " - To delete the message with the id x" << std::endl
+                  << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/delmsg x" NORMAL " or " WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/d x" NORMAL " - " << hl["delcmd"].get<std::string>() << std::endl
                   << std::endl;
     }
     std::cout << std::endl
-              << "Press " REVERSED BLINK "[ENTER]" NORMAL " to go back to chat" << std::endl;
+              << hl["endp1"].get<std::string>() << REVERSED BLINK << hl["endp2"].get<std::string>() << NORMAL << hl["endp3"].get<std::string>() << std::endl;
     std::cin.get();
 }
 
-int showReplying(json &theme, json config, MessageMemory &mem, int id, Message::messageSettings &msgs, Message::isgroupmessage &igm)
+int showReplying(json &lang, json &theme, json config, MessageMemory &mem, int id, Message::messageSettings &msgs, Message::isgroupmessage &igm)
 {
     Message msg(mem.getMessageByID(id));
     if (msg.getID() < 0)
@@ -102,7 +103,7 @@ int getArguments(json &lang, json &theme, MessageMemory &mem,
     }
     else if (input.rfind("/h", 0) == 0)
     {
-        showHelp(theme, moderatormode);
+        showHelp(lang, theme, moderatormode);
     }
     else if (moderatormode && (input.rfind("/d", 0) == 0))
     {
@@ -110,7 +111,7 @@ int getArguments(json &lang, json &theme, MessageMemory &mem,
     }
     else if (input.rfind("/r", 0) == 0)
     {
-        return replyArg(theme, config, mem, input, serverurl, msgsettings, username, token, exitSendCode);
+        return replyArg(lang, theme, config, mem, input, serverurl, msgsettings, username, token, exitSendCode);
     }
     else if (input.rfind("/u ", 0) == 0)
     {

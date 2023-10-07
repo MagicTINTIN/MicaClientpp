@@ -16,7 +16,7 @@
 
     "mcppConfigPath":"./",
     "themeFile":"themes/defaultTheme.json",
-    "languageFile":"languages/en.json",
+    "languageFile":"languages/fr.json",
 
     "discussionGroupKeys": {
         "a":{
