@@ -112,7 +112,7 @@
                     "condition":"?isDeleted",
                     "true": [
                         {
-                            "type":"DONOTDISPLAY"
+                            "type":"BREAKDISPLAY"
                         }
                     ],
                     "false":[]
@@ -129,7 +129,7 @@
                     "condition":"?isOffline",
                     "true": [
                         {
-                            "type":"DONOTDISPLAY"
+                            "type":"BREAKDISPLAY"
                         }
                     ],
                     "false":[]

@@ -25,6 +25,7 @@ struct themeVariables
     bool isGroupMessage;
     bool isMention;
     bool isYourMessage;
+    bool isModeratorMode;
 
     std::string username;
     std::string mention;
@@ -41,7 +42,7 @@ struct themeVariables
     std::string messageContent;
 
     themeVariables();
-    themeVariables(bool isr, bool iig, bool isg,
+    themeVariables(bool isr, bool iig, bool isg, bool imm,
                    std::string u, std::string ra, std::string r,
                    std::string ig, std::string tg, std::string idr);
     themeVariables(std::string u, std::string ra, std::string r,
@@ -49,7 +50,7 @@ struct themeVariables
                    std::string ma, std::string gm, std::string mc,
                    bool idel, bool ioff, bool ius, bool ir,
                    bool askr, bool iencr, bool iv, bool cr, bool br,
-                   bool mr, bool ar, bool igm, bool im, bool iym
+                   bool mr, bool ar, bool igm, bool im, bool iym, bool imm
                    );
 };
 
@@ -57,7 +58,7 @@ std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv,
 
 bool themeProcessBoolVar(std::string s, themeVariables &tv, json &themesettings);
 
-void themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle);
+int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle);
 
 void themeProcessLocation(json &lang, json &theme, std::string const &location, themeVariables &tv);
 

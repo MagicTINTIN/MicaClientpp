@@ -83,7 +83,7 @@ int showReplying(json &lang, json &theme, json config, MessageMemory &mem, int i
         return 1;
     igm = msg.isGroupContent(config);
     
-    themeVariables tv = themeVariables(true, msgs.channel != "", igm.isgroup, msgs.pseudo, msg.getAuthor(), msg.getReplyContent(msgs, igm), msgs.channel, igm.groupname, std::to_string(msg.getID()));
+    themeVariables tv = themeVariables(true, msgs.channel != "", igm.isgroup, msgs.modmsg, msgs.pseudo, msg.getAuthor(), msg.getReplyContent(msgs, igm), msgs.channel, igm.groupname, std::to_string(msg.getID()));
     themeProcessLocation(lang, theme, "prompt", tv);
     return 0;
 }

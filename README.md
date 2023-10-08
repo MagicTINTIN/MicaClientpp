@@ -122,8 +122,6 @@ In config.json you have a section named "settings" :
 ```
 ---
 # Futures features : 
-- [FULL IMPLEMENTATION] Themes : MicaClient++, Original (copy of micasend official client)  
-- [FULL IMPLEMENTATION] Language : en/fr
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)
 - fix last message deleted -> the message before appears twice
@@ -133,4 +131,4 @@ In config.json you have a section named "settings" :
 - add a command to delete message from memory (maybe /delmsg on offline/deleted message)
 - add number message displayed limit from theme
 - set text values in settings for themes
-- add basic formatting text (bold, underlined, italic, (strokethrough ?), overlined (colors exchanged))
+- add basic formatting text ( **bold**/*italic*/__underlined__/~~strokethrough~~/`inversedColors`)

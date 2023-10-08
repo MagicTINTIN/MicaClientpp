@@ -15,7 +15,7 @@
             "condition":"?isDeleted",
             "true": [
                 {
-                    "type":"DONOTDISPLAY"
+                    "type":"BREAKDISPLAY"
                 }
             ],
             "false":[]
@@ -25,7 +25,7 @@
             "condition":"?isOffline",
             "true": [
                 {
-                    "type":"DONOTDISPLAY"
+                    "type":"BREAKDISPLAY"
                 }
             ],
             "false":[]
@@ -105,13 +105,8 @@
             "true": [
                 {
                     "type":"if",
-                    "condition":"?certifiedRank",
+                    "condition":"?isVerified",
                     "true": [
-                        {
-                            "type":"print",
-                            "style":[],
-                            "print":"["
-                        },
                         {
                             "type":"print",
                             "style":[ "GREEN_NORMAL_COLOR", "BOLD" ],
@@ -136,25 +131,15 @@
             "false":[
                 {
                     "type":"print",
-                    "style":[],
-                    "print":" ["
-                },
-                {
-                    "type":"print",
-                    "style":[ "BOLD" ],
-                    "print":"$MAUTHOR"
-                },
-                {
-                    "type":"print",
-                    "style":[],
-                    "print":"] "
+                    "style":[ "RED_NORMAL_COLOR" ],
+                    "print":"$MAUTHOR "
                 }
             ]
         },
         {
             "type":"print",
             "style":[],
-            "print":" $DATE"
+            "print":" $DATETIME"
         },
         {
             "type":"if",
@@ -173,7 +158,7 @@
         },
         {
             "type":"print",
-            "style":[],
+            "style":[ "BLUE_NORMAL_COLOR" ],
             "print":"$MESSAGECONTENT"
         },
         {

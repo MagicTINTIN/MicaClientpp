@@ -80,7 +80,7 @@ int main(int argc, char const *argv[])
             return exitUpdateCode;
         }
 
-        themeVariables tv = themeVariables(false, msgsettings.channel != "", false, msgsettings.pseudo, "", "", msgsettings.channel, "", "X");
+        themeVariables tv = themeVariables(false, msgsettings.channel != "", false, msgsettings.modmsg, msgsettings.pseudo, "", "", msgsettings.channel, "", "X");
         themeProcessLocation(languageData, themeData, "prompt", tv);
         std::cout << printStyle(themeData["messageInput"]["style"]);
         std::cin.clear();

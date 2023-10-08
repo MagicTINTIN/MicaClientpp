@@ -190,7 +190,7 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
             else
             {
                 isSecured = false;
-                text = copyContent;
+                text = stringCleaner(copyContent);
             }
         }
         else
@@ -202,7 +202,7 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
     else
     {
         isSecured = false;
-        text = content;
+        text = stringCleaner(content);
     }
 
     // USER RANK AND NAME
@@ -239,7 +239,7 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
     std::string msgcontent = messageDisplayImprove(text);
     
     themeVariables tv = themeVariables(msettings.pseudo, rauthor, replyContent, rid, std::to_string(id), std::to_string(certifiedUser), dateTime, sender, igm.groupname, msgcontent,
-    status == DELETED, status == OFFLINE, (status != OFFLINE && status != ONLINE && status != DELETED), isReply, showids, isSecured, isVerified, certifiedRank, botRank, modRank, adminRank, igm.isgroup, isMention, sender == msettings.pseudo);
+    status == DELETED, status == OFFLINE, (status != OFFLINE && status != ONLINE && status != DELETED), isReply, showids, isSecured, isVerified, certifiedRank, botRank, modRank, adminRank, igm.isgroup, isMention, sender == msettings.pseudo, msettings.modmsg);
     themeProcessLocation(lang, theme, "message", tv);
 }
 

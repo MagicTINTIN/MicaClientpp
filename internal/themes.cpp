@@ -17,10 +17,10 @@ themeVariables::themeVariables()
       IDMAuthor("X"), datetime("YYYY-MM-DD HH:MM:SS"), mAuthor(""), groupMsg(""), messageContent("")
 {
 }
-themeVariables::themeVariables(bool isr, bool iig, bool isg,
+themeVariables::themeVariables(bool isr, bool iig, bool isg, bool imm,
                                std::string u, std::string ra, std::string r,
                                std::string ig, std::string tg, std::string idr)
-    : isSendReply(isr), isInGroup(iig), isSendGroup(isg), isYourMessage(false),
+    : isSendReply(isr), isInGroup(iig), isSendGroup(isg), isYourMessage(false), isModeratorMode(imm),
       isDeleted(false), isOffline(false), isUnkonwnStatus(false), isReply(false),
       askingReply(false), isEncrypted(false), isVerified(false), certifiedRank(false),
       botRank(false), moderatorRank(false), adminRank(false), isGroupMessage(false), isMention(false),
@@ -35,8 +35,8 @@ themeVariables::themeVariables(std::string u, std::string ra, std::string r,
                                std::string dt, std::string ma, std::string gm, std::string mc,
                    bool idel, bool ioff, bool ius, bool ir,
                    bool askr, bool iencr, bool iv, bool cr, bool br,
-                   bool mr, bool ar, bool igm, bool im, bool iym)
-    : isSendReply(false), isInGroup(false), isSendGroup(false), isYourMessage(iym),
+                   bool mr, bool ar, bool igm, bool im, bool iym, bool imm)
+    : isSendReply(false), isInGroup(false), isSendGroup(false), isYourMessage(iym), isModeratorMode(imm),
       isDeleted(idel), isOffline(ioff), isUnkonwnStatus(ius), isReply(ir),
       askingReply(askr), isEncrypted(iencr), isVerified(iv), certifiedRank(cr),
       botRank(br), moderatorRank(mr), adminRank(ar), isGroupMessage(igm), isMention(im),
@@ -108,6 +108,8 @@ bool themeProcessBoolVar(std::string s, themeVariables &tv, json &themesettings)
             return tv.isMention;
         if (s == "isYourMessage")
             return tv.isYourMessage;
+        if (s == "isModeratorMode")
+            return tv.isModeratorMode;
     }
     else if (s.rfind("settings:", 0) == 0)
     {
@@ -119,22 +121,28 @@ bool themeProcessBoolVar(std::string s, themeVariables &tv, json &themesettings)
     return false;
 }
 
-void themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle)
+int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle)
 {
+    int rtn(0);
     for (auto &ofs : themeseq.items())
     {
         if (ofs.value()["type"].get<std::string>() == "if")
         {
             if (themeProcessBoolVar(ofs.value()["condition"].get<std::string>(), tv, themesettings))
-                themeProcessSequence(lang, ofs.value()["true"], tv, themesettings, mentionstyle);
+                rtn = themeProcessSequence(lang, ofs.value()["true"], tv, themesettings, mentionstyle);
             else
-                themeProcessSequence(lang, ofs.value()["false"], tv, themesettings, mentionstyle);
+                rtn = themeProcessSequence(lang, ofs.value()["false"], tv, themesettings, mentionstyle);
         }
         else if (ofs.value()["type"].get<std::string>() == "print")
             std::cout << printStyle(ofs.value()["style"]) << themeProcessStringVar(lang, ofs.value()["print"], tv, mentionstyle, ofs.value()["style"]) << NORMAL;
         else if (ofs.value()["type"].get<std::string>() == "NEWLINE")
             std::cout << std::endl;
+        else if (ofs.value()["type"].get<std::string>() == "BREAKDISPLAY")
+            return 1;
+        if (rtn != 0)
+            return rtn;
     }
+    return 0;
 }
 
 void themeProcessLocation(json &lang, json &theme, std::string const &location, themeVariables &tv)
