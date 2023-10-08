@@ -79,10 +79,6 @@ int main(int argc, char const *argv[])
             std::cout << "UPDATE ERROR " << exitUpdateCode << std::endl;
             return exitUpdateCode;
         }
-        if (msgsettings.channel != "")
-        {
-            std::cout << PURPLE_NORMAL_COLOR "(" BOLD << msgsettings.channel << NORMAL PURPLE_NORMAL_COLOR ") " NORMAL;
-        }
 
         themeVariables tv = themeVariables(false, msgsettings.channel != "", false, msgsettings.pseudo, "", "", msgsettings.channel, "", "X");
         themeProcessLocation(languageData, themeData, "prompt", tv);

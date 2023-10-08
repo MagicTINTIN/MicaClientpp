@@ -116,7 +116,7 @@ Message::Message(std::string i, std::string author, std::string message, std::st
 {
 }
 
-void Message::print(json &lang, json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm, int idReplied, Message repliedTo, bool const &isReply, std::string replyContent)
+void Message::print(json &lang, json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm, int idReplied, Message repliedTo, bool const &isReply, std::string newMessageContent)
 {
 
     if ((igm.isgroup && !igm.visible) ||
@@ -133,7 +133,7 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
         copyContent = igm.messagecontent;
 
     // IS REPLY ?
-    std::string replycontent, rauthor, rid;
+    std::string replyContent, rauthor, rid;
     if (isReply)
     {
         if (repliedTo.getID() == -1)
@@ -148,7 +148,7 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
             rauthor = repliedTo.getAuthor();
             rid = repliedTo.getID();
         }
-        copyContent = replyContent;
+        copyContent = newMessageContent;
     }
     else
     {
@@ -228,22 +228,21 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
         botRank = true;
     }
     else if (rank >= 1)
+    {
         isVerified = true;
         certifiedRank = true;
+    }
 
     // MESSAGE CONTENT
     std::string mention("@" + msettings.pseudo);
-    std::string coloredMention(CYAN_DESAT_BACKGROUND BOLD BLACK_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR);
-    if (status == ONLINE)
-        coloredMention += YELLOW_DESAT_BACKGROUND;
 
     bool isMention = (regexWishBoundaries(text, mention) || (repliedTo.getID() != -1 && repliedTo.getAuthor() == msettings.pseudo));
 
     std::string msgcontent = messageDisplayImprove(text);
     
-    themeVariables tv = themeVariables(msettings.pseudo, rauthor, replyContent, rid, std::to_string(id), std::to_string(certifiedUser), dateTime, sender, igm.groupname, content,
+    themeVariables tv = themeVariables(msettings.pseudo, rauthor, replyContent, rid, std::to_string(id), std::to_string(certifiedUser), dateTime, sender, igm.groupname, msgcontent,
     status == DELETED, status == OFFLINE, (status != OFFLINE && status != ONLINE && status != DELETED), isReply, showids, isSecured, isVerified, certifiedRank, botRank, modRank, adminRank, igm.isgroup, isMention, sender == msettings.pseudo);
-    themeProcessLocation(lang, theme, "prompt", tv);
+    themeProcessLocation(lang, theme, "message", tv);
 }
 
 std::string Message::getReplyContent(messageSettings const &msettings, isgroupmessage const &igm)

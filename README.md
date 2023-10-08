@@ -133,3 +133,4 @@ In config.json you have a section named "settings" :
 - add a command to delete message from memory (maybe /delmsg on offline/deleted message)
 - add number message displayed limit from theme
 - set text values in settings for themes
+- add basic formatting text (bold, underlined, italic, (strokethrough ?), overlined (colors exchanged))

@@ -193,16 +193,18 @@ void replacePrefixes(json &valuesource, std::string const prefix, std::string &s
 {
     size_t startPos = 0;
     while ((startPos = s.find(prefix, startPos)) != std::string::npos) {
-        size_t endPos = s.find(" ", startPos + prefix.length());
+        size_t endPos = startPos + prefix.length();
+        while (isalnum(s[endPos]) && endPos < s.length())
+            endPos++;
 
         // if last word in string
-        if (endPos == std::string::npos) {
+        if (endPos == std::string::npos || endPos == s.length()) {
             endPos = s.length(); 
         }
 
         std::string keyToFind = s.substr(startPos + prefix.length(), endPos - (startPos + prefix.length()));
         std::string valueFound = getValFromJSONSource(valuesource, keyToFind);
-        replaceStringInPlace(s, prefix + keyToFind, valueFound);
+        replaceRegexWishBoundaries(s, prefix + keyToFind, valueFound);
 
         startPos += valueFound.length();
     }

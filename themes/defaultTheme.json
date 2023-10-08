@@ -21,17 +21,17 @@
             "true": [
                 {
                     "type":"print",
-                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
                     "print":"> ["
                 },
                 {
                     "type":"print",
-                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR", "BOLD" ],
+                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR", "BOLD" ],
                     "print":"$RAUTHOR"
                 },
                 {
                     "type":"print",
-                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
                     "print":"] $REPLY"
                 },
                 {
@@ -142,17 +142,17 @@
             "true": [
                 {
                     "type":"print",
-                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
                     "print":"> ["
                 },
                 {
                     "type":"print",
-                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR", "BOLD" ],
+                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR", "BOLD" ],
                     "print":"$RAUTHOR"
                 },
                 {
                     "type":"print",
-                    "style":[ "GREEN_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
                     "print":"] $REPLY"
                 },
                 {
