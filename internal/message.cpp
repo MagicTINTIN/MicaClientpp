@@ -52,11 +52,11 @@ std::string messageDisplayImprove(std::string s, bool r = false)
 }
 
 /* MESSAGE SETTINGS */
-Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey(KEYNOTFOUND), datetimemsg(true), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel(""), msgmaxsize(0), encryptedmaxsize(0)
+Message::messageSettings::messageSettings() : generalkey(KEYNOTFOUND), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel(""), msgmaxsize(0), encryptedmaxsize(0)
 {
 }
 
-Message::messageSettings::messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg) : deletedmsg(ddel), offlinemsg(doff), generalkey(gkey), datetimemsg(dt), pseudo(psd), modmsg(mod), securemsg(sec), blockUnverified(buu), channel(ch), msgmaxsize(maxsmsg), encryptedmaxsize(maxsmsg * 2)
+Message::messageSettings::messageSettings(std::string gkey, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg) : generalkey(gkey), pseudo(psd), modmsg(mod), securemsg(sec), blockUnverified(buu), channel(ch), msgmaxsize(maxsmsg), encryptedmaxsize(maxsmsg * 2)
 {
     for (auto &u : blu.items())
     {
@@ -120,8 +120,6 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
 {
 
     if ((igm.isgroup && !igm.visible) ||
-        (status == DELETED && !msettings.deletedmsg) ||
-        (status == OFFLINE && !msettings.offlinemsg) ||
         (msettings.blockUnverified && rank < 1) ||
         (std::find(msettings.blockedUsers.begin(), msettings.blockedUsers.end(), sender) != msettings.blockedUsers.end()) ||
         (msettings.channel != "" && (!igm.visible || igm.groupname != msettings.channel)))

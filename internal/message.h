@@ -40,9 +40,6 @@ public:
     };
     struct messageSettings
     {
-        bool deletedmsg;
-        bool offlinemsg;
-        bool datetimemsg;
         bool modmsg;
         bool securemsg;
         bool blockUnverified;
@@ -53,7 +50,7 @@ public:
         int msgmaxsize;
         int encryptedmaxsize;
         messageSettings();
-        messageSettings(bool ddel, bool doff, std::string gkey, bool dt, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg);
+        messageSettings(std::string gkey, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg);
     };
 
     struct jsonMessage

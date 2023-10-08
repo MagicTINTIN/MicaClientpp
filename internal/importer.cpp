@@ -37,9 +37,7 @@ int configImporter(int const &MCPP_VERSION, int const &CONFIG_VERSION, int const
         username = data["username"].get<std::string>();
         token = data["token"].get<std::string>();
         cfgPath = data["mcppConfigPath"].get<std::string>();
-        msgsettings = Message::messageSettings(data["settings"]["displayDeletedMessages"].get<bool>(),
-                                               data["settings"]["displayOfflineMessages"].get<bool>(),
-                                               genkey, data["settings"]["showMessageDateTime"].get<bool>(),
+        msgsettings = Message::messageSettings(genkey,
                                                username, moderatormode, encryptenabled,
                                                data["blockUnVerifiedUsers"].get<bool>(),
                                                data["blockedUsers"],

@@ -18,8 +18,8 @@
 using json = nlohmann::json;
 
 const int MCPP_VERSION(0);
-const int CONFIG_VERSION(10);
-const int PROGRAM_VERSION(1);
+const int CONFIG_VERSION(11);
+const int PROGRAM_VERSION(2);
 
 const int THEME_VERSION(1);
 const int LANGUAGE_VERSION(1);

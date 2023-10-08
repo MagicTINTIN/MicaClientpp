@@ -1,6 +1,6 @@
 {
     "version":0,
-    "subversion":10,
+    "subversion":11,
 
     "server":"https://micasend.baptiste-reb.fr/",
     "username":"aSpecialUser",
@@ -40,9 +40,6 @@
     },
 
     "settings": {
-        "backupMessages":false,
-        "showMessageDateTime":false,
-        "displayDeletedMessages":true,
-        "displayOfflineMessages":true
+        "backupMessages":false
     }
 }

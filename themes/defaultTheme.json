@@ -141,19 +141,65 @@
             "condition":"?isReply",
             "true": [
                 {
-                    "type":"print",
-                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
-                    "print":"> ["
-                },
-                {
-                    "type":"print",
-                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR", "BOLD" ],
-                    "print":"$RAUTHOR"
-                },
-                {
-                    "type":"print",
-                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
-                    "print":"] $REPLY"
+                    "type":"if",
+                    "condition":"?isDeleted",
+                    "true": [
+                        {
+                            "type":"print",
+                            "style":[ "BLACK_NORMAL_BACKGROUND", "RED_NORMAL_COLOR" ],
+                            "print":"> ["
+                        },
+                        {
+                            "type":"print",
+                            "style":[ "BLACK_NORMAL_BACKGROUND", "RED_NORMAL_COLOR", "BOLD" ],
+                            "print":"$RAUTHOR"
+                        },
+                        {
+                            "type":"print",
+                            "style":[ "BLACK_NORMAL_BACKGROUND", "RED_NORMAL_COLOR" ],
+                            "print":"] $REPLY"
+                        }
+                    ],
+                    "false": [
+                        {
+                            "type":"if",
+                            "condition":"?isOffline",
+                            "true": [
+                                {
+                                    "type":"print",
+                                    "style":[ "BLACK_NORMAL_BACKGROUND", "THIN" ],
+                                    "print":"> ["
+                                },
+                                {
+                                    "type":"print",
+                                    "style":[ "BLACK_NORMAL_BACKGROUND", "THIN", "BOLD" ],
+                                    "print":"$RAUTHOR"
+                                },
+                                {
+                                    "type":"print",
+                                    "style":[ "BLACK_NORMAL_BACKGROUND", "THIN" ],
+                                    "print":"] $REPLY"
+                                }
+                            ],
+                            "false": [
+                                {
+                                    "type":"print",
+                                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                                    "print":"> ["
+                                },
+                                {
+                                    "type":"print",
+                                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR", "BOLD" ],
+                                    "print":"$RAUTHOR"
+                                },
+                                {
+                                    "type":"print",
+                                    "style":[ "BLACK_NORMAL_BACKGROUND", "WHITE_NORMAL_COLOR" ],
+                                    "print":"] $REPLY"
+                                }
+                            ]
+                        } 
+                    ]
                 },
                 {
                     "type":"NEWLINE"
