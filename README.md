@@ -132,3 +132,4 @@ In config.json you have a section named "settings" :
 - fix prevent sending message with space
 - add a command to delete message from memory (maybe /delmsg on offline/deleted message)
 - add number message displayed limit from theme
+- set text values in settings for themes

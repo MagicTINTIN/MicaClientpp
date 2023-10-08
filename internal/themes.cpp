@@ -18,19 +18,19 @@ themeVariables::themeVariables()
 {
 }
 themeVariables::themeVariables(bool isr, bool iig, bool isg,
-                               std::string u, std::string m, std::string ra, std::string r,
-                               std::string ig, std::string tg, std::string idr, std::string sg)
+                               std::string u, std::string ra, std::string r,
+                               std::string ig, std::string tg, std::string idr)
     : isSendReply(isr), isInGroup(iig), isSendGroup(isg), isYourMessage(false),
       isDeleted(false), isOffline(false), isUnkonwnStatus(false), isReply(false),
       askingReply(false), isEncrypted(false), isVerified(false), certifiedRank(false),
       botRank(false), moderatorRank(false), adminRank(false), isGroupMessage(false), isMention(false),
 
-      username(u), mention(m), rAuthor(ra), reply(r), rID(idr), inGroup(ig), toGroup(tg), msgID("X"),
+      username(u), mention("@" + u), rAuthor(ra), reply(r), rID(idr), inGroup(ig), toGroup(tg), msgID("X"),
       IDMAuthor("X"), datetime("YYYY-MM-DD HH:MM:SS"), mAuthor(""), groupMsg(""), messageContent("")
 
 {
 }
-themeVariables::themeVariables(std::string u, std::string m, std::string ra, std::string r,
+themeVariables::themeVariables(std::string u, std::string ra, std::string r,
                                std::string idr, std::string mid, std::string idma,
                                std::string dt, std::string ma, std::string gm, std::string mc,
                    bool idel, bool ioff, bool ius, bool ir,
@@ -41,7 +41,7 @@ themeVariables::themeVariables(std::string u, std::string m, std::string ra, std
       askingReply(askr), isEncrypted(iencr), isVerified(iv), certifiedRank(cr),
       botRank(br), moderatorRank(mr), adminRank(ar), isGroupMessage(igm), isMention(im),
 
-      username(u), mention(m), rAuthor(ra), reply(r), rID(idr), inGroup(gm), toGroup(gm), msgID(mid),
+      username(u), mention("@" + u), rAuthor(ra), reply(r), rID(idr), inGroup(gm), toGroup(gm), msgID(mid),
       IDMAuthor(idma), datetime(dt), mAuthor(ma), groupMsg(gm), messageContent(mc)
 {
 }
@@ -140,7 +140,7 @@ void themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &
 void themeProcessLocation(json &lang, json &theme, std::string const &location, themeVariables &tv)
 {
     if (location == "prompt" || location == "message")
-        themeProcessSequence(lang, theme[location], tv, theme["settings"], theme["mention"]);
+        themeProcessSequence(lang, theme[location], tv, theme["settings"], theme["mention"]["style"]);
 }
 
 std::string printStyle(json &style)

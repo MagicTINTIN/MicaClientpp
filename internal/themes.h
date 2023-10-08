@@ -42,9 +42,9 @@ struct themeVariables
 
     themeVariables();
     themeVariables(bool isr, bool iig, bool isg,
-                   std::string u, std::string m, std::string ra, std::string r,
-                   std::string ig, std::string tg, std::string idr, std::string sg);
-    themeVariables(std::string u, std::string m, std::string ra, std::string r,
+                   std::string u, std::string ra, std::string r,
+                   std::string ig, std::string tg, std::string idr);
+    themeVariables(std::string u, std::string ra, std::string r,
                    std::string idr, std::string mid, std::string idma, std::string dt,
                    std::string ma, std::string gm, std::string mc,
                    bool idel, bool ioff, bool ius, bool ir,

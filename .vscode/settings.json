@@ -78,5 +78,6 @@
         "stop_token": "cpp",
         "cfenv": "cpp",
         "typeindex": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": true
 }

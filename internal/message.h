@@ -90,7 +90,7 @@ public:
     /**
      * Replied message
      */
-    std::string getReplyContent(json &theme, messageSettings const &msettings, isgroupmessage const &igm = isgroupmessage());
+    std::string getReplyContent(messageSettings const &msettings, isgroupmessage const &igm = isgroupmessage());
     /**
      * Set a message author
      */

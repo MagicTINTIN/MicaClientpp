@@ -196,7 +196,8 @@ int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::str
 
     clearScreen();
     mem.print(lang, theme, config, msgsettings);
-    std::cout << username << THIN " -> " NORMAL PURPLE_NORMAL_COLOR "(" << privategroupname << ")" NORMAL " > ";
+    themeVariables tv = themeVariables(false, msgsettings.channel != "", true, msgsettings.pseudo, "", "", msgsettings.channel, privategroupname, "X");
+    themeProcessLocation(lang, theme, "prompt", tv);
     std::cout << printStyle(theme["messageInput"]["style"]);
     std::getline(std::cin, input);
     std::cout << NORMAL;

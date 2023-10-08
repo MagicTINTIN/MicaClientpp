@@ -133,25 +133,28 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
         copyContent = igm.messagecontent;
 
     // IS REPLY ?
-    std::string replycontent, rauthor;
+    std::string replycontent, rauthor, rid;
     if (isReply)
     {
         if (repliedTo.getID() == -1)
         {
             replyContent = lang["errors"]["unknownmsg"].get<std::string>() + std::to_string(idReplied);
             rauthor = lang["errors"]["unknownauthor"].get<std::string>();
+            rid = "X";
         }
         else
         {
-            replycontent = repliedTo.getReplyContent(theme, msettings, igm);
+            replyContent = repliedTo.getReplyContent(msettings, igm);
             rauthor = repliedTo.getAuthor();
+            rid = repliedTo.getID();
         }
         copyContent = replyContent;
     }
     else
     {
-        replycontent = "";
+        replyContent = "";
         rauthor = "";
+        rid = "X";
     }
 
     // DECRYPTION MESSAGE
@@ -205,26 +208,28 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
     }
 
     // USER RANK AND NAME
-    bool isCertified = false;
+    bool isVerified = false;
     bool adminRank = false;
     bool modRank = false;
     bool botRank = false;
+    bool certifiedRank = false;
     if (rank >= 15) {
-        isCertified = true;
+        isVerified = true;
         adminRank = true;
     }
     else if (rank >= 12)
     {
-        isCertified = true;
+        isVerified = true;
         modRank = true;
     }
     else if (rank >= 11)
     {
-        isCertified = true;
+        isVerified = true;
         botRank = true;
     }
     else if (rank >= 1)
-        isCertified = true;
+        isVerified = true;
+        certifiedRank = true;
 
     // MESSAGE CONTENT
     std::string mention("@" + msettings.pseudo);
@@ -236,11 +241,12 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
 
     std::string msgcontent = messageDisplayImprove(text);
     
-    themeVariables tv = themeVariables();
+    themeVariables tv = themeVariables(msettings.pseudo, rauthor, replyContent, rid, std::to_string(id), std::to_string(certifiedUser), dateTime, sender, igm.groupname, content,
+    status == DELETED, status == OFFLINE, (status != OFFLINE && status != ONLINE && status != DELETED), isReply, showids, isSecured, isVerified, certifiedRank, botRank, modRank, adminRank, igm.isgroup, isMention, sender == msettings.pseudo);
     themeProcessLocation(lang, theme, "prompt", tv);
 }
 
-std::string Message::getReplyContent(json &theme, messageSettings const &msettings, isgroupmessage const &igm)
+std::string Message::getReplyContent(messageSettings const &msettings, isgroupmessage const &igm)
 {
     std::string text;
     std::string copyContent = content;

@@ -478,6 +478,6 @@
         "style": [ "RED_NORMAL_COLOR" ]
     },
     "mention": {
-        "style":[ "CYAN_DESAT_BACKGROUND", "BOLD", "BLACK_NORMAL_COLOR"]
+        "style":[ "CYAN_DESAT_BACKGROUND", "BOLD", "BLACK_NORMAL_COLOR" ]
     }
 }
