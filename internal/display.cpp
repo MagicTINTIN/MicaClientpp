@@ -135,10 +135,10 @@ int getArguments(json &lang, json &theme, MessageMemory &mem,
     return 0;
 }
 
-std::string themeProcessStringVar(std::string s, themeVariables &tv)
+std::string themeProcessStringVar(std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle)
 {
     ReplaceStringInPlace(s, "$USERNAME", tv.username);
-    ReplaceStringInPlace(s, "$MENTION", tv.mention);
+    ReplaceStringInPlace(s, "$MENTION", printStyle(mentionstyle) + tv.mention + printStyle(postmentionstyle));
     ReplaceStringInPlace(s, "$RAUTHOR", tv.rAuthor);
     ReplaceStringInPlace(s, "$REPLY", tv.reply);
     ReplaceStringInPlace(s, "$INGROUP", tv.inGroup);
@@ -151,7 +151,7 @@ std::string themeProcessStringVar(std::string s, themeVariables &tv)
     return s;
 }
 
-bool themeProcessBoolVer(std::string &s, themeVariables &tv, json &themesettings)
+bool themeProcessBoolVar(std::string s, themeVariables &tv, json &themesettings)
 {
     if (s.rfind("?", 0) == 0)
     {
@@ -195,21 +195,32 @@ bool themeProcessBoolVer(std::string &s, themeVariables &tv, json &themesettings
         if (themesettings.contains(s))
             return themesettings[s];
     }
-    
+
     return false;
 }
 
-void themeProcessSequence(json &themeseq, themeVariables &tv, json &themesettings)
+void themeProcessSequence(json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle)
 {
-    for (auto &os : themeseq.items())
+    for (auto &ofs : themeseq.items())
     {
+        if (ofs.value()["type"].get<std::string>() == "if")
+        {
+            if (themeProcessBoolVar(ofs.value()["condition"].get<std::string>(), tv, themesettings))
+                themeProcessSequence(ofs.value()["true"], tv, themesettings, mentionstyle);
+            else
+                themeProcessSequence(ofs.value()["false"], tv, themesettings, mentionstyle);
+        }
+        else if (ofs.value()["type"].get<std::string>() == "print")
+            std::cout << printStyle(ofs.value()["style"]) << themeProcessStringVar(ofs.value()["print"], tv, mentionstyle, ofs.value()["style"]) << NORMAL;
+        else if (ofs.value()["type"].get<std::string>() == "NEWLINE")
+            std::cout << std::endl;
     }
 }
 
 void themeProcessLocation(json &theme, std::string &location, themeVariables &tv)
 {
-    if (location == "prompt" || location == "mention" || location == "message")
-        themeProcessSequence(theme[location], tv, theme["settings"]);
+    if (location == "prompt" || location == "message")
+        themeProcessSequence(theme[location], tv, theme["settings"], theme["mention"]);
 }
 
 std::string printStyle(json &style)

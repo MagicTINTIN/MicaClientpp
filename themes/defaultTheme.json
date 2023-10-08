@@ -101,13 +101,6 @@
             "print":" > "
         }
     ],
-    "mention": [
-        {
-            "type":"print",
-            "style":[ "CYAN_DESAT_BACKGROUND", "BOLD", "BLACK_NORMAL_COLOR"],
-            "print":"$MENTION"
-        }
-    ],
     "message": [
         {
             "type":"if",
@@ -483,5 +476,8 @@
     },
     "error": {
         "style": [ "RED_NORMAL_COLOR" ]
+    },
+    "mention": {
+        "style":[ "CYAN_DESAT_BACKGROUND", "BOLD", "BLACK_NORMAL_COLOR"]
     }
 }

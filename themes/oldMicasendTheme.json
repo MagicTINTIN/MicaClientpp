@@ -9,13 +9,6 @@
 
     "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
     "prompt": [],
-    "mention": [
-        {
-            "type":"print",
-            "style":[],
-            "print":"$MENTION"
-        }
-    ],
     "message": [
         {
             "type":"if",
@@ -194,6 +187,9 @@
         "style":[]
     },
     "replyInput": {
+        "style":[]
+    },
+    "mention": {
         "style":[]
     }
 }
