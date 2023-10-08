@@ -28,17 +28,17 @@ std::vector<int> split(const std::string &s, char delim)
 
 void cleanMessageList(std::string &s)
 {
-    ReplaceStringInPlace(s, "§", " ");
+    replaceStringInPlace(s, "§", " ");
     replaceEscapeSequences(s);
     escapeBackslash(s);
-    ReplaceStringInPlace(s, "\\\\n", "\\n");
-    ReplaceStringInPlace(s, "\\\\\"", "\\\"");
+    replaceStringInPlace(s, "\\\\n", "\\n");
+    replaceStringInPlace(s, "\\\\\"", "\\\"");
 }
 
 std::string messageDisplayImprove(std::string s)
 {
-    ReplaceStringInPlace(s, "\\n", "\n");
-    ReplaceStringInPlace(s, "\\t", "\t");
+    replaceStringInPlace(s, "\\n", "\n");
+    replaceStringInPlace(s, "\\t", "\t");
     return s;
 }
 
@@ -149,7 +149,7 @@ void Message::print(json &theme, messageSettings const &msettings, bool const &s
     {
         if (decrypted == "")
         {
-            ReplaceStringInPlace(copyContent, "护", "");
+            replaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
                 unsigned char tdecryptedText[msettings.encryptedmaxsize] = "";
@@ -252,7 +252,7 @@ void Message::printReply(json &theme, messageSettings const &msettings, isgroupm
     {
         if (decrypted == "")
         {
-            ReplaceStringInPlace(copyContent, "护", "");
+            replaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
                 unsigned char tdecryptedText[msettings.encryptedmaxsize] = "";
@@ -352,7 +352,7 @@ Message::isgroupmessage Message::isGroupContent(json config)
 
     if (copyContent.rfind("团", 0) == 0)
     {
-        ReplaceStringInPlace(copyContent, "团", "");
+        replaceStringInPlace(copyContent, "团", "");
         if (copyContent.find("答") != std::string::npos)
         {
             std::vector<std::string> msgParts = split(copyContent, "答");
@@ -389,7 +389,7 @@ Message::isreplymessage Message::isRelpyContent(bool fromGroup, std::string grou
         copyContent = content;
     if (copyContent.rfind("答", 0) == 0)
     {
-        ReplaceStringInPlace(copyContent, "答", "");
+        replaceStringInPlace(copyContent, "答", "");
         if (copyContent.find("护") != std::string::npos)
         {
             std::vector<std::string> msgParts = split(copyContent, "护");

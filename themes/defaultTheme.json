@@ -40,7 +40,7 @@
                 {
                     "type":"print",
                     "style":[ "THIN" ],
-                    "print":"$LREPLYINGTO $RAUTHOR"
+                    "print":"$lang:replyingto $RAUTHOR"
                 },
                 {
                     "type":"print",

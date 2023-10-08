@@ -155,13 +155,39 @@ time_t getTimestamp(std::string t)
         return -1;
 }
 
-void ReplaceStringInPlace(std::string &s, const std::string &search, const std::string &replace)
+void replaceStringInPlace(std::string &s, const std::string &search, const std::string &replace)
 {
     size_t pos(0);
     while ((pos = s.find(search, pos)) != std::string::npos)
     {
         s.replace(pos, search.length(), replace);
         pos += replace.length();
+    }
+}
+
+std::string getValFromJSONSource(json &valuesource, std::string k)
+{
+    if (valuesource.contains(k))
+        return valuesource[k].get<std::string>();
+    return "";
+}
+
+void replacePrefixes(json &valuesource, std::string const prefix, std::string &s)
+{
+    size_t startPos = 0;
+    while ((startPos = s.find(prefix, startPos)) != std::string::npos) {
+        size_t endPos = s.find(" ", startPos + prefix.length());
+
+        // if last word in string
+        if (endPos == std::string::npos) {
+            endPos = s.length(); 
+        }
+
+        std::string keyToFind = s.substr(startPos + prefix.length(), endPos - (startPos + prefix.length()));
+        std::string valueFound = getValFromJSONSource(valuesource, keyToFind);
+        replaceStringInPlace(s, prefix + keyToFind, valueFound);
+
+        startPos += valueFound.length();
     }
 }
 

@@ -17,9 +17,9 @@ using json = nlohmann::json;
 int deleteArg(json &lang, json &theme, std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode)
 {
     if (input.rfind("/d ", 0) == 0)
-        ReplaceStringInPlace(input, "/d ", "");
+        replaceStringInPlace(input, "/d ", "");
     else if (input.rfind("/delmsg ", 0) == 0)
-        ReplaceStringInPlace(input, "/delmsg ", "");
+        replaceStringInPlace(input, "/delmsg ", "");
     else
     {
         userError(theme, "/d" + lang["common"]["and"].get<std::string>() + "/delmsg" + lang["errors"]["idneeded"].get<std::string>());
@@ -44,12 +44,12 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
     bool safemode(msgsettings.securemsg);
     if (input.rfind("/r ", 0) == 0)
     {
-        ReplaceStringInPlace(input, "/r ", "");
+        replaceStringInPlace(input, "/r ", "");
         idtoreply = input;
     }
     else if (input.rfind("/ru ", 0) == 0)
     {
-        ReplaceStringInPlace(input, "/ru ", "");
+        replaceStringInPlace(input, "/ru ", "");
         idtoreply = input;
         safemode = false;
     }
@@ -144,7 +144,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
 
 int uSendArg(std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode)
 {
-    ReplaceStringInPlace(input, "/u ", "");
+    replaceStringInPlace(input, "/u ", "");
     exitSendCode = sendMessage(serverurl, input, username, token);
     if (exitSendCode != 0)
     {
@@ -167,7 +167,7 @@ int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::str
     std::string privategroupname("");
     if (input.rfind("/p ", 0) == 0)
     {
-        ReplaceStringInPlace(input, "/p ", "");
+        replaceStringInPlace(input, "/p ", "");
         privategroupname = input;
     }
     else if (input.rfind("/p", 0) == 0)
@@ -264,7 +264,7 @@ int groupArg(json &lang, json &theme, std::string &input, Message::messageSettin
 
     if (input.rfind("/g ", 0) == 0)
     {
-        ReplaceStringInPlace(input, "/g ", "");
+        replaceStringInPlace(input, "/g ", "");
         privategroupname = input;
     }
     else
