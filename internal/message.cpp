@@ -236,6 +236,8 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
 
     std::string msgcontent = messageDisplayImprove(text);
     
+    themeVariables tv = themeVariables();
+    themeProcessLocation(lang, theme, "prompt", tv);
 }
 
 std::string Message::getReplyContent(json &theme, messageSettings const &msettings, isgroupmessage const &igm)

@@ -72,17 +72,20 @@ int main(int argc, char const *argv[])
         if (exitUpdateCode == 0)
         {
             clearScreen();
-            mem.print(lang, themeData, data, msgsettings);
+            mem.print(languageData, themeData, data, msgsettings);
         }
         else
         {
             std::cout << "UPDATE ERROR " << exitUpdateCode << std::endl;
             return exitUpdateCode;
         }
-        if (msgsettings.channel != "") {
+        if (msgsettings.channel != "")
+        {
             std::cout << PURPLE_NORMAL_COLOR "(" BOLD << msgsettings.channel << NORMAL PURPLE_NORMAL_COLOR ") " NORMAL;
         }
-        std::cout << username << " > ";
+
+        themeVariables tv = themeVariables();
+        themeProcessLocation(languageData, themeData, "prompt", tv);
         std::cout << printStyle(themeData["messageInput"]["style"]);
         std::cin.clear();
         std::getline(std::cin, input);

@@ -24,18 +24,33 @@ struct themeVariables
     bool adminRank;
     bool isGroupMessage;
     bool isMention;
+    bool isYourMessage;
 
     std::string username;
     std::string mention;
     std::string rAuthor;
     std::string reply;
+    std::string rID;
     std::string inGroup;
     std::string toGroup;
     std::string msgID;
+    std::string IDMAuthor;
     std::string datetime;
     std::string mAuthor;
     std::string groupMsg;
     std::string messageContent;
+
+    themeVariables();
+    themeVariables(bool isr, bool iig, bool isg,
+                   std::string u, std::string m, std::string ra, std::string r,
+                   std::string ig, std::string tg, std::string idr, std::string sg);
+    themeVariables(std::string u, std::string m, std::string ra, std::string r,
+                   std::string idr, std::string mid, std::string idma, std::string dt,
+                   std::string ma, std::string gm, std::string mc,
+                   bool idel, bool ioff, bool ius, bool ir,
+                   bool askr, bool iencr, bool iv, bool cr, bool br,
+                   bool mr, bool ar, bool igm, bool im, bool iym
+                   );
 };
 
 std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle);
@@ -44,7 +59,7 @@ bool themeProcessBoolVar(std::string s, themeVariables &tv, json &themesettings)
 
 void themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle);
 
-void themeProcessLocation(json &lang, json &theme, std::string &location, themeVariables &tv);
+void themeProcessLocation(json &lang, json &theme, std::string const &location, themeVariables &tv);
 
 std::string printStyle(json &style);
 

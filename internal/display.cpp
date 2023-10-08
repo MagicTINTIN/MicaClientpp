@@ -15,6 +15,7 @@
 #include "requests.h"
 #include "aes.h"
 #include "arguments.h"
+#include "themes.h"
 #include "../includes/nlohmann/json.hpp"
 using json = nlohmann::json;
 
@@ -81,11 +82,9 @@ int showReplying(json &lang, json &theme, json config, MessageMemory &mem, int i
     if (msg.getID() < 0)
         return 1;
     igm = msg.isGroupContent(config);
-    msg.printReply(theme, msgs, igm);
-    if (igm.visible)
-        std::cout << THIN "Replying to " << msg.getAuthor() << NORMAL " | " << msgs.pseudo << THIN " -> " NORMAL PURPLE_NORMAL_COLOR "(" << igm.groupname << ")" NORMAL " > ";
-    else
-        std::cout << THIN "Replying to " << msg.getAuthor() << NORMAL " | " << msgs.pseudo << " > ";
+    
+    themeVariables tv = themeVariables();
+    themeProcessLocation(lang, theme, "prompt", tv);
     return 0;
 }
 
