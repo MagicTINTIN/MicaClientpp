@@ -389,7 +389,7 @@
                 {
                     "type":"print",
                     "style":[ "BOLD", "BLACK_DESAT_COLOR" ],
-                    "print":"(offline)"
+                    "print":"($lang:offlinemsg)"
                 },
                 {
                     "type":"print",
@@ -406,7 +406,7 @@
                         {
                             "type":"print",
                             "style":[ "BOLD", "RED_DESAT_COLOR" ],
-                            "print":"(offline)"
+                            "print":"($lang:deletedmsg)"
                         },
                         {
                             "type":"print",
@@ -423,7 +423,7 @@
                                 {
                                     "type":"print",
                                     "style":[ "BLACK_DESAT_COLOR" ],
-                                    "print":"(Unknown status)"
+                                    "print":"($lang:unknownstatusmsg)"
                                 },
                                 {
                                     "type":"print",

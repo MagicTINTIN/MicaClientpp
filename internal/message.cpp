@@ -8,6 +8,7 @@
 #include "tools.h"
 #include "colors.h"
 #include "aes.h"
+#include "themes.h"
 
 #include "../includes/nlohmann/json.hpp"
 using json = nlohmann::json;
@@ -35,15 +36,23 @@ void cleanMessageList(std::string &s)
     replaceStringInPlace(s, "\\\\\"", "\\\"");
 }
 
-std::string messageDisplayImprove(std::string s)
+std::string messageDisplayImprove(std::string s, bool r = false)
 {
-    replaceStringInPlace(s, "\\n", "\n");
-    replaceStringInPlace(s, "\\t", "\t");
+    if (r)
+    {
+        replaceStringInPlace(s, "\\n", " ");
+        replaceStringInPlace(s, "\\t", " ");
+    }
+    else
+    {
+        replaceStringInPlace(s, "\\n", "\n");
+        replaceStringInPlace(s, "\\t", "\t");
+    }
     return s;
 }
 
 /* MESSAGE SETTINGS */
-Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey(KEYNOTFOUND), datetimemsg(true), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel(""), msgmaxsize(0), encryptedmaxsize(0) 
+Message::messageSettings::messageSettings() : deletedmsg(true), offlinemsg(true), generalkey(KEYNOTFOUND), datetimemsg(true), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel(""), msgmaxsize(0), encryptedmaxsize(0)
 {
 }
 
@@ -107,7 +116,7 @@ Message::Message(std::string i, std::string author, std::string message, std::st
 {
 }
 
-void Message::print(json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm, int idReplied, Message repliedTo, bool const &isReply, std::string replyContent)
+void Message::print(json &lang, json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm, int idReplied, Message repliedTo, bool const &isReply, std::string replyContent)
 {
 
     if ((igm.isgroup && !igm.visible) ||
@@ -124,27 +133,29 @@ void Message::print(json &theme, messageSettings const &msettings, bool const &s
         copyContent = igm.messagecontent;
 
     // IS REPLY ?
-
+    std::string replycontent, rauthor;
     if (isReply)
     {
         if (repliedTo.getID() == -1)
-            std::cout << "> " << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "Uknown message n°" << idReplied << NORMAL << std::endl;
+        {
+            replyContent = lang["errors"]["unknownmsg"].get<std::string>() + std::to_string(idReplied);
+            rauthor = lang["errors"]["unknownauthor"].get<std::string>();
+        }
         else
-            repliedTo.printReply(theme, msettings, igm);
+        {
+            replycontent = repliedTo.getReplyContent(theme, msettings, igm);
+            rauthor = repliedTo.getAuthor();
+        }
         copyContent = replyContent;
     }
-
-    // SHOW IDS ?
-
-    if (msettings.modmsg && !showids)
-        std::cout << THIN << "[" << id << "] " << NORMAL;
-    if (showids)
-        std::cout << BOLD BLINK YELLOW_NORMAL_COLOR << "[" << id << "] -> " << NORMAL;
-    else if (msettings.datetimemsg)
-        std::cout << dateTime << " ";
+    else
+    {
+        replycontent = "";
+        rauthor = "";
+    }
 
     // DECRYPTION MESSAGE
-
+    bool isSecured = false;
     if (copyContent.rfind("护", 0) == 0 && msettings.securemsg)
     {
         if (decrypted == "")
@@ -161,14 +172,15 @@ void Message::print(json &theme, messageSettings const &msettings, bool const &s
                 else
                     std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
                 std::string decryptedContent;
-                if (inv_AES(tencryptedText, tkey, tdecryptedText)) {
-                    std::cout << " " << NORMAL;
+                if (inv_AES(tencryptedText, tkey, tdecryptedText))
+                {
+                    isSecured = false;
                     decryptedContent = copyContent;
                 }
                 else
                 {
                     decryptedContent = charsToStringCleaner(tdecryptedText, msettings.encryptedmaxsize);
-                    std::cout << GREEN_NORMAL_BACKGROUND << BOLD << WHITE_NORMAL_COLOR << "S" << NORMAL;
+                    isSecured = true;
                 }
                 decrypted = stringCleaner(decryptedContent);
                 cleanMessageList(decrypted);
@@ -176,65 +188,57 @@ void Message::print(json &theme, messageSettings const &msettings, bool const &s
             }
             else
             {
-                std::cout << " " << NORMAL;
+                isSecured = false;
                 text = copyContent;
             }
         }
         else
         {
-            std::cout << GREEN_NORMAL_BACKGROUND << BOLD << WHITE_NORMAL_COLOR << "S" << NORMAL;
+            isSecured = true;
             text = decrypted;
         }
     }
     else
     {
+        isSecured = false;
         text = content;
-        std::cout << " " << NORMAL;
     }
 
     // USER RANK AND NAME
-
-    if (rank >= 15)
-        std::cout << WHITE_NORMAL_COLOR RED_NORMAL_BACKGROUND "A" NORMAL "[" BOLD RED_NORMAL_COLOR << sender << NORMAL "] ";
-    else if (rank >= 12)
-        std::cout << WHITE_NORMAL_COLOR BLUE_NORMAL_BACKGROUND "M" NORMAL "[" BOLD BLUE_NORMAL_COLOR << sender << NORMAL "] ";
-    else if (rank >= 11)
-        std::cout << WHITE_NORMAL_COLOR CYAN_NORMAL_BACKGROUND "B" NORMAL "[" BOLD CYAN_NORMAL_COLOR << sender << NORMAL "] ";
-    else if (rank >= 1)
-        std::cout << WHITE_NORMAL_COLOR GREEN_NORMAL_BACKGROUND "V" NORMAL "[" BOLD GREEN_NORMAL_COLOR << sender << NORMAL "] ";
-    else
-        std::cout << " " NORMAL "[" BOLD WHITE_NORMAL_COLOR << sender << NORMAL "] ";
-
-    // IS GROUP MESSAGE
-    if (igm.isgroup && msettings.securemsg) // && != group
-    {
-        std::cout << PURPLE_NORMAL_COLOR << "(" << BOLD << igm.groupname << NORMAL PURPLE_NORMAL_COLOR ") " NORMAL;
+    bool isCertified = false;
+    bool adminRank = false;
+    bool modRank = false;
+    bool botRank = false;
+    if (rank >= 15) {
+        isCertified = true;
+        adminRank = true;
     }
+    else if (rank >= 12)
+    {
+        isCertified = true;
+        modRank = true;
+    }
+    else if (rank >= 11)
+    {
+        isCertified = true;
+        botRank = true;
+    }
+    else if (rank >= 1)
+        isCertified = true;
 
     // MESSAGE CONTENT
     std::string mention("@" + msettings.pseudo);
     std::string coloredMention(CYAN_DESAT_BACKGROUND BOLD BLACK_NORMAL_COLOR "@" + msettings.pseudo + NORMAL BLACK_NORMAL_COLOR);
     if (status == ONLINE)
         coloredMention += YELLOW_DESAT_BACKGROUND;
-    if ((regexWishBoundaries(text, mention, coloredMention) || (repliedTo.getID() != -1 && repliedTo.getAuthor() == msettings.pseudo)) && status == ONLINE)
-    {
-        std::cout << BLACK_NORMAL_COLOR YELLOW_DESAT_BACKGROUND;
-    }
-    if (status == ONLINE)
-        std::cout << messageDisplayImprove(text) << NORMAL << std::endl
-                  << std::endl;
-    else if (status == OFFLINE && msettings.offlinemsg)
-        std::cout << BOLD BLACK_DESAT_COLOR << "(offline) " << NORMAL BLACK_DESAT_COLOR THIN << messageDisplayImprove(text) << NORMAL << std::endl
-                  << std::endl;
-    else if (status == DELETED && msettings.deletedmsg)
-        std::cout << BOLD RED_DESAT_COLOR << "(deleted) " << NORMAL RED_DESAT_COLOR THIN << messageDisplayImprove(text) << NORMAL << std::endl
-                  << std::endl;
-    else if (status != OFFLINE && status != DELETED)
-        std::cout << BLACK_DESAT_COLOR << "(unknown status) " << THIN << messageDisplayImprove(text) << NORMAL << std::endl
-                  << std::endl;
+
+    bool isMention = (regexWishBoundaries(text, mention) || (repliedTo.getID() != -1 && repliedTo.getAuthor() == msettings.pseudo));
+
+    std::string msgcontent = messageDisplayImprove(text);
+    
 }
 
-void Message::printReply(json &theme, messageSettings const &msettings, isgroupmessage const &igm)
+std::string Message::getReplyContent(json &theme, messageSettings const &msettings, isgroupmessage const &igm)
 {
     std::string text;
     std::string copyContent = content;
@@ -281,7 +285,7 @@ void Message::printReply(json &theme, messageSettings const &msettings, isgroupm
     else
         text = content;
 
-    std::cout << "> " << BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "[" << BOLD << sender << NORMAL BLACK_NORMAL_BACKGROUND BLACK_DESAT_COLOR << "] " << messageDisplayImprove(text) << NORMAL << std::endl;
+    return messageDisplayImprove(text, true);
 }
 
 void Message::setStatus(messageStatus const &newStatus)

@@ -15,42 +15,10 @@ int showReplying(json &lang, json &theme, json config, MessageMemory &mem, int i
  *          > 3 errors messages from internals functions
 */
 int getArguments(json &lang, json &theme, MessageMemory &mem, Message::messageSettings &msgsettings, std::string const &serverurl, json &config, std::string &username, std::string &token, std::string &input, bool const &moderatormode, int &exitUpdateCode, int &exitSendCode);
-std::string printStyle(json &style);
 void title(std::string t);
-void userError(json &theme, std::string err);
 void clearScreen();
 
-struct themeVariables
-{
-    bool isSendReply;
-    bool isInGroup;
-    bool isSendGroup;
-    bool isDeleted;
-    bool isOffline;
-    bool isUnkonwnStatus;
-    bool isReply;
-    bool askingReply;
-    bool isEncrypted;
-    bool isVerified;
-    bool certifiedRank;
-    bool botRank;
-    bool moderatorRank;
-    bool adminRank;
-    bool isGroupMessage;
-    bool isMention;
 
-    std::string username;
-    std::string mention;
-    std::string rAuthor;
-    std::string reply;
-    std::string inGroup;
-    std::string toGroup;
-    std::string msgID;
-    std::string datetime;
-    std::string mAuthor;
-    std::string groupMsg;
-    std::string messageContent;
-};
 
 
 #endif // DISPLAY_H_INCLUDED

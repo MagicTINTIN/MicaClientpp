@@ -17,6 +17,7 @@ set(SOURCES
     internal/arguments.cpp
     internal/colors.cpp
     internal/importer.cpp
+    internal/themes.cpp
 )
 
 # Binary

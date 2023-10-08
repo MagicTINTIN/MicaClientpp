@@ -86,11 +86,11 @@ public:
     /**
      * To print a message in terminal
      */
-    void print(json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm = isgroupmessage(), int idReplied = -1, Message repliedTo = Message(), bool const &isReply = false, std::string replyContent = "");
+    void print(json &lang, json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm = isgroupmessage(), int idReplied = -1, Message repliedTo = Message(), bool const &isReply = false, std::string replyContent = "");
     /**
      * Replied message
      */
-    void printReply(json &theme, messageSettings const &msettings, isgroupmessage const &igm = isgroupmessage());
+    std::string getReplyContent(json &theme, messageSettings const &msettings, isgroupmessage const &igm = isgroupmessage());
     /**
      * Set a message author
      */

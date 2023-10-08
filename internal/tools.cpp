@@ -21,7 +21,7 @@ using json = nlohmann::json;
 
 /* ESCAPE SEQUENCES */
 
-bool regexWishBoundaries(std::string &text, const std::string &word, const std::string &replacement)
+bool replaceRegexWishBoundaries(std::string &text, const std::string &word, const std::string &replacement)
 {
     std::string::size_type pos = text.find(word);
     bool found = false;
@@ -39,6 +39,23 @@ bool regexWishBoundaries(std::string &text, const std::string &word, const std::
 
         // Search for the next occurrence
         pos = text.find(word, pos + replacement.length() - 1);
+    }
+
+    return found;
+}
+
+bool regexWishBoundaries(std::string &text, const std::string &word)
+{
+    std::string::size_type pos = text.find(word);
+    bool found = false;
+
+    while (pos != std::string::npos && !found)
+    {
+        // Check if the match ends with a word boundary
+        if ((pos + word.length() == text.length() || !isalnum(text[pos + word.length()])) &&
+            (pos == 0 || (!isalnum(text[pos - 1] && text[pos - 1] != '@'))))
+            found = true;
+        pos = text.find(word, pos + word.length() - 1);
     }
 
     return found;

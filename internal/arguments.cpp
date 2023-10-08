@@ -9,6 +9,7 @@
 #include "requests.h"
 #include "aes.h"
 #include "arguments.h"
+#include "themes.h"
 
 using json = nlohmann::json;
 
@@ -58,7 +59,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
         if (input.rfind("/ru", 0) == 0)
             safemode = false;
         clearScreen();
-        mem.print(theme, config, msgsettings, true);
+        mem.print(lang, theme, config, msgsettings, true);
         std::cout << lang["commands"]["reply"]["enterid"].get<std::string>();
         std::cout << printStyle(theme["replyInput"]["style"]);
         std::getline(std::cin, input);
@@ -73,7 +74,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
     }
 
     clearScreen();
-    mem.print(theme, config, msgsettings);
+    mem.print(lang, theme, config, msgsettings);
 
     int intidtoreply;
     if (idtoreply.size() == 0)
@@ -194,7 +195,7 @@ int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::str
     }
 
     clearScreen();
-    mem.print(theme, config, msgsettings);
+    mem.print(lang, theme, config, msgsettings);
     std::cout << username << THIN " -> " NORMAL PURPLE_NORMAL_COLOR "(" << privategroupname << ")" NORMAL " > ";
     std::cout << printStyle(theme["messageInput"]["style"]);
     std::getline(std::cin, input);

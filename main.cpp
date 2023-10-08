@@ -13,11 +13,12 @@
 #include "internal/display.h"
 #include "internal/colors.h"
 #include "internal/importer.h"
+#include "internal/themes.h"
 
 using json = nlohmann::json;
 
 const int MCPP_VERSION(0);
-const int CONFIG_VERSION(9);
+const int CONFIG_VERSION(10);
 const int PROGRAM_VERSION(1);
 
 const int THEME_VERSION(1);
@@ -71,7 +72,7 @@ int main(int argc, char const *argv[])
         if (exitUpdateCode == 0)
         {
             clearScreen();
-            mem.print(themeData, data, msgsettings);
+            mem.print(lang, themeData, data, msgsettings);
         }
         else
         {

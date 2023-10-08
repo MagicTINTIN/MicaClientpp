@@ -10,6 +10,9 @@
         "and":" et "
     },
     "fromTheme":{
+        "offlinemsg":"hors ligne",
+        "deletedmsg":"supprimé",
+        "unknownstatusmsg":"status inconnu",
         "replyingto":"Réponse à"
     },
     "errors":{
@@ -21,7 +24,8 @@
         "groupnotfound":"Impossible de trouver ce groupe",
         "usehr": "Utilisez /help pour apprendre à utiliser les réponses",
         "userhpg": "Utilisez /help pour apprendre  à utiliser les groupes privés",
-        "unknownmsg":"Message inconnu"
+        "unknownauthor":"INCONNU",
+        "unknownmsg":"Message inconnu  n°"
     },
     "commands":{
         "group":{
