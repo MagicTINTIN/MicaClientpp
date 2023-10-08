@@ -55,7 +55,7 @@ void showHelp(json &lang, json &theme, bool moderator)
               << hl["rp5"].get<std::string>() << std::endl
               << THIN << hl["rp6"].get<std::string>() << BLACK_NORMAL_BACKGROUND "/ru x" NORMAL THIN " or " BLACK_NORMAL_BACKGROUND "/ru" NORMAL THIN << hl["rp7"].get<std::string>() << NORMAL << std::endl
               << std::endl
-              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/p" << hl["groupname"].get<std::string>() << hl["message"].get<std::string>() <<  NORMAL " - " << hl["privatecmd"].get<std::string>() << std::endl
+              << WHITE_NORMAL_COLOR BLACK_NORMAL_BACKGROUND "/p" << hl["groupname"].get<std::string>() << hl["message"].get<std::string>() << NORMAL " - " << hl["privatecmd"].get<std::string>() << std::endl
               << std::endl
               << hl["gp1"].get<std::string>() << BLACK_NORMAL_BACKGROUND "/g" << hl["groupname"].get<std::string>() << NORMAL << hl["gp2"].get<std::string>() << BLACK_NORMAL_BACKGROUND "/g" NORMAL "." << std::endl
               << hl["gp3"].get<std::string>() << std::endl
@@ -135,11 +135,84 @@ int getArguments(json &lang, json &theme, MessageMemory &mem,
     return 0;
 }
 
-void themeProcess(json theme, std::string location, themeVariables tv)
+std::string themeProcessStringVar(std::string s, themeVariables &tv)
 {
+    ReplaceStringInPlace(s, "$USERNAME", tv.username);
+    ReplaceStringInPlace(s, "$MENTION", tv.mention);
+    ReplaceStringInPlace(s, "$RAUTHOR", tv.rAuthor);
+    ReplaceStringInPlace(s, "$REPLY", tv.reply);
+    ReplaceStringInPlace(s, "$INGROUP", tv.inGroup);
+    ReplaceStringInPlace(s, "$TOGROUP", tv.toGroup);
+    ReplaceStringInPlace(s, "$MSGID", tv.msgID);
+    ReplaceStringInPlace(s, "$DATETIME", tv.datetime);
+    ReplaceStringInPlace(s, "$MAUTHOR", tv.mAuthor);
+    ReplaceStringInPlace(s, "$GROUPMESSAGE", tv.groupMsg);
+    ReplaceStringInPlace(s, "$MESSAGECONTENT", tv.messageContent);
+    return s;
 }
 
-std::string printStyle(json style)
+bool themeProcessBoolVer(std::string &s, themeVariables &tv, json &themesettings)
+{
+    if (s.rfind("?", 0) == 0)
+    {
+        ReplaceStringInPlace(s, "?", "");
+        if (s == "isSendReply")
+            return tv.isSendReply;
+        if (s == "isInGroup")
+            return tv.isInGroup;
+        if (s == "isSendGroup")
+            return tv.isSendGroup;
+        if (s == "isDeleted")
+            return tv.isDeleted;
+        if (s == "isOffline")
+            return tv.isOffline;
+        if (s == "isUnkonwnStatus")
+            return tv.isUnkonwnStatus;
+        if (s == "isReply")
+            return tv.isReply;
+        if (s == "askingReply")
+            return tv.askingReply;
+        if (s == "isEncrypted")
+            return tv.isEncrypted;
+        if (s == "isVerified")
+            return tv.isVerified;
+        if (s == "certifiedRank")
+            return tv.certifiedRank;
+        if (s == "botRank")
+            return tv.botRank;
+        if (s == "moderatorRank")
+            return tv.moderatorRank;
+        if (s == "adminRank")
+            return tv.adminRank;
+        if (s == "isGroupMessage")
+            return tv.isGroupMessage;
+        if (s == "isMention")
+            return tv.isMention;
+    }
+    else if (s.rfind("settings:", 0) == 0)
+    {
+        ReplaceStringInPlace(s, "settings:", "");
+        if (themesettings.contains(s))
+            return themesettings[s];
+    }
+    
+    return false;
+}
+
+void themeProcessSequence(json &themeseq, themeVariables &tv, json &themesettings)
+{
+    for (auto &os : themeseq.items())
+    {
+    }
+}
+
+void themeProcessLocation(json &theme, std::string &location, themeVariables &tv)
+{
+    if (location == "prompt" || location == "mention" || location == "message")
+        themeProcessSequence(theme[location], tv, theme["settings"]);
+}
+
+std::string printStyle(json &style)
 {
     std::string finalstyle("");
     for (auto &s : style.items())

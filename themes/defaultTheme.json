@@ -13,6 +13,7 @@
     "maxMessages":100,
 
     "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
+    
     "prompt": [
         {
             "type":"if",
@@ -212,7 +213,7 @@
                 {
                     "type":"print",
                     "style":[ "THIN" ],
-                    "print":"$DATE "
+                    "print":"$DATETIME "
                 }
             ],
             "false":[]
@@ -378,7 +379,7 @@
                 {
                     "type":"print",
                     "style":[ "PURPLE_NORMAL_COLOR", "BOLD" ],
-                    "print":"$GROUP"
+                    "print":"$GROUPMESSAGE"
                 },
                 {
                     "type":"print",

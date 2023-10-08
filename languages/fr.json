@@ -20,7 +20,8 @@
         "msgnotfound":"Impossible de trouver ce message",
         "groupnotfound":"Impossible de trouver ce groupe",
         "usehr": "Utilisez /help pour apprendre à utiliser les réponses",
-        "userhpg": "Utilisez /help pour apprendre  à utiliser les groupes privés"
+        "userhpg": "Utilisez /help pour apprendre  à utiliser les groupes privés",
+        "unknownmsg":"Message inconnu"
     },
     "commands":{
         "group":{

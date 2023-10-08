@@ -9,7 +9,13 @@
 
     "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
     "prompt": [],
-    "mention": [],
+    "mention": [
+        {
+            "type":"print",
+            "style":[],
+            "print":"$MENTION"
+        }
+    ],
     "message": [
         {
             "type":"if",
