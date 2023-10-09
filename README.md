@@ -152,7 +152,6 @@ If you are using Default theme (or a theme that supports it), you can modify som
 - add /lg || /listgroups pour voir la liste des groupes dans lequels on est
 - fix prevent sending message with only spaces
 - add a command to delete message from memory (maybe /delmsg on offline/deleted message → /forget)
-- set text values in settings for themes
 - add basic formatting text (**bold**/*italic*/__underlined__/~~strokethrough~~/`inversedColors`)
 - Enable token protection by default (password that encrypt token)
 - ajouter une signature (normal/usecure) ?

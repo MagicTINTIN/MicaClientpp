@@ -46,11 +46,12 @@ themeVariables::themeVariables(std::string u, std::string ra, std::string r,
 {
 }
 
-std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle)
+std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle,  json &themesettings)
 {
     std::string mention = printStyle(mentionstyle) + tv.mention + NORMAL + printStyle(postmentionstyle);
     
     replacePrefixes(lang["fromTheme"], "$lang:", s);
+    replacePrefixes(themesettings, "$settings:", s);
     
     replaceStringInPlace(s, "$USERNAME", tv.username);
     replaceStringInPlace(s, "$MENTION", mention);
@@ -137,7 +138,7 @@ int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &t
                 rtn = themeProcessSequence(lang, ofs.value()["false"], tv, themesettings, mentionstyle, str);
         }
         else if (ofs.value()["type"].get<std::string>() == "print")
-            str += printStyle(ofs.value()["style"]) + themeProcessStringVar(lang, ofs.value()["print"], tv, mentionstyle, ofs.value()["style"]) + NORMAL;
+            str += printStyle(ofs.value()["style"]) + themeProcessStringVar(lang, ofs.value()["print"], tv, mentionstyle, ofs.value()["style"], themesettings) + NORMAL;
         else if (ofs.value()["type"].get<std::string>() == "NEWLINE")
             str += '\n';
         else if (ofs.value()["type"].get<std::string>() == "BREAKDISPLAY")

@@ -1,14 +1,16 @@
 {
     "themeName": "Default MicaClient++ theme",
     "author": "MagicTINTIN",
-    "themeVersion": 2,
+    "themeVersion": 3,
     "compatibilityVersion": 1,
 
     "settings": {
         "showMessageID":true,
         "showDate":false,
         "showDeletedMessages":true,
-        "showOfflineMessages":true
+        "showOfflineMessages":true,
+        "oneLinePerMessage":true,
+        "promptdelim":">"
     },
     "maxMessages":100,
 
@@ -98,7 +100,7 @@
         {
             "type":"print",
             "style":[],
-            "print":" > "
+            "print":" $settings:promptdelim "
         }
     ],
     "message": [
@@ -403,6 +405,16 @@
                     "type":"print",
                     "style":[],
                     "print":"] "
+                }
+            ]
+        },
+        {
+            "type":"if",
+            "condition":"settings:oneLinePerMessage",
+            "true": [],
+            "false":[
+                {
+                "type":"NEWLINE"
                 }
             ]
         },

@@ -54,7 +54,7 @@ struct themeVariables
                    );
 };
 
-std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle);
+std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle, json &themesettings);
 
 bool themeProcessBoolVar(std::string s, themeVariables &tv, json &themesettings);
 
