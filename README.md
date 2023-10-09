@@ -68,7 +68,7 @@ As you might not have the same key, you will see encrypted message from users th
 Then, just communicate the name and the key of the group you created to your members, and ask them to complete the "users" section too.<br>
 <br>
 To filter message by group type `/g groupname`, and to go back to general `/g`.<br>
-Be careful, if you are in a group channel and you send a message, it will only be sent to the group.
+Be careful, if you are in a group channel, and you send a message, it will only be sent to the group.
 <br>
 ![Group filter in MC++](./images/groups.jpg)<br>
 
@@ -90,8 +90,22 @@ You can start MicaClient++ with arguments !
 - `-m, --moderator` enables **moderator view** to get messages ID (no you won't have rights to delete messages :p)
 - `--cfg path/to/a/config/file.json` to load other config (usefull when you have several accounts)
 
-## config.json and Settings
+## Settings in config.json 
 There are many more settings available in config.json
+
+### Theme and language
+You can change MicaClient++ theme and language !
+```json
+// configure a special path for your configuration,
+"mcppConfigPath":"./",
+// themes/defaultTheme.json by default
+"themeFile":"themes/oldMicasendTheme.json",
+// languages/en.json by default
+"languageFile":"languages/fr.json",
+```
+> You can contribute by adding translations and/or creating new themes ! It's only json files !
+
+### Block users
 ```json
 // to only see messages sent by verified users
 "blockUnVerifiedUsers":false,
@@ -107,28 +121,39 @@ You can also block users in discussion groups (for instance in public groups whe
 }
 ```
 
+### Keep messages offline !
 In config.json you have a section named "settings" :
 ```json
 "settings": {
     // to memorise old messages that are not available on the server anymore
-    "backupMessages":true, 
-    // to show date and hour (french time zone) at which the message has been posted
-    "showMessageDateTime":true,
-    // to show messages that have been deleted by moderator (from cache/backup)
-    "displayDeletedMessages":true,
-    // to show messages that are not available on the server anymore (from cache/backup)
-    "displayOfflineMessages":true
+    "backupMessages":true,
 }
 ```
+
+## Settings in your themes !
+If you are using Default theme (or a theme that supports it), you can modify some simple settings in your theme. For instance in Default theme, here are the settings :
+```json
+"settings": {
+    "showMessageID":true,
+    "showDate":false,
+    "showDeletedMessages":true,
+    "showOfflineMessages":true
+},
+// To print only a max quantity of messages, if you doesn't want to, put it to -1
+"maxMessages":100,
+```
+
 ---
 # Futures features : 
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)
-- fix last message deleted -> the message before appears twice
+- fix last message deleted → the message before appears twice
 - argument -all pour voir la totalité des messages
 - add /lg || /listgroups pour voir la liste des groupes dans lequels on est
-- fix prevent sending message with space
-- add a command to delete message from memory (maybe /delmsg on offline/deleted message)
-- add number message displayed limit from theme
+- fix prevent sending message with only spaces
+- add a command to delete message from memory (maybe /delmsg on offline/deleted message → /forget)
 - set text values in settings for themes
-- add basic formatting text ( **bold**/*italic*/__underlined__/~~strokethrough~~/`inversedColors`)
+- add basic formatting text (**bold**/*italic*/__underlined__/~~strokethrough~~/`inversedColors`)
+- fix @mention theme
+- Enable token protection by default (password that encrypt token)
+- ajouter une signature (normal/usecure) ?

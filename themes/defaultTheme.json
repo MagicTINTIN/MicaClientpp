@@ -10,7 +10,7 @@
         "showDeletedMessages":true,
         "showOfflineMessages":true
     },
-    "maxMessages":100,
+    "maxMessages":10,
 
     "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
     

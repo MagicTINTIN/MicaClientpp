@@ -126,19 +126,52 @@ void MessageMemory::updateMemory(json const &messages, memorySettings memsetting
 
 void MessageMemory::print(json &lang, json &theme, json config, Message::messageSettings const &msettings, bool const &showids)
 {
-    for (Message &msg : memory)
-    {
-        Message::isgroupmessage igm = msg.isGroupContent(config);
-        Message::isreplymessage irm;
-        if (igm.isgroup)
-            irm = msg.isRelpyContent(true, igm.messagecontent);
-        else
-            irm = msg.isRelpyContent();
+    int maxthememsg = theme["maxMessages"].get<int>();
+    if (maxthememsg < 0)
+        for (Message &msg : memory)
+        {
+            Message::isgroupmessage igm = msg.isGroupContent(config);
+            Message::isreplymessage irm;
+            if (igm.isgroup)
+                irm = msg.isRelpyContent(true, igm.messagecontent);
+            else
+                irm = msg.isRelpyContent();
 
-        if (irm.isreply)
-            msg.print(lang, theme, msettings, showids, igm, irm.idreply, getMessageByID(irm.idreply), true, irm.messagecontent);
-        else
-            msg.print(lang, theme, msettings, showids, igm);
+            if (irm.isreply)
+                msg.print(lang, theme, msettings, showids, igm, irm.idreply, getMessageByID(irm.idreply), true, irm.messagecontent);
+            else
+                msg.print(lang, theme, msettings, showids, igm);
+        }
+    else
+    {
+        std::vector<std::string> stringmsglist;
+        int msgnb(0), msgfrommem(nbMessages);
+        while (msgnb < maxthememsg && msgfrommem >= 0)
+        {
+            Message msg = memory[msgfrommem];
+            Message::isgroupmessage igm = msg.isGroupContent(config);
+            Message::isreplymessage irm;
+            if (igm.isgroup)
+                irm = msg.isRelpyContent(true, igm.messagecontent);
+            else
+                irm = msg.isRelpyContent();
+
+            std::string msgstr;
+            if (irm.isreply)
+                msgstr = msg.toString(lang, theme, msettings, showids, igm, irm.idreply, getMessageByID(irm.idreply), true, irm.messagecontent);
+            else
+                msgstr = msg.toString(lang, theme, msettings, showids, igm);
+            
+            if (msgstr != "") {
+                msgnb++;
+                stringmsglist.emplace_back(msgstr);
+            }
+            msgfrommem--;
+        }
+        for (size_t i=msgnb - 1; i > 0; i--)
+        {
+            std::cout << stringmsglist[i];
+        }
     }
 }
 

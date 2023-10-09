@@ -116,14 +116,13 @@ Message::Message(std::string i, std::string author, std::string message, std::st
 {
 }
 
-void Message::print(json &lang, json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm, int idReplied, Message repliedTo, bool const &isReply, std::string newMessageContent)
+std::string Message::toString(json &lang, json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm, int idReplied, Message repliedTo, bool const &isReply, std::string newMessageContent)
 {
-
     if ((igm.isgroup && !igm.visible) ||
         (msettings.blockUnverified && rank < 1) ||
         (std::find(msettings.blockedUsers.begin(), msettings.blockedUsers.end(), sender) != msettings.blockedUsers.end()) ||
         (msettings.channel != "" && (!igm.visible || igm.groupname != msettings.channel)))
-        return;
+        return "";
     std::string text;
     std::string copyContent = content;
 
@@ -238,9 +237,17 @@ void Message::print(json &lang, json &theme, messageSettings const &msettings, b
 
     std::string msgcontent = messageDisplayImprove(text);
     
+    std::string str("");
     themeVariables tv = themeVariables(msettings.pseudo, rauthor, replyContent, rid, std::to_string(id), std::to_string(certifiedUser), dateTime, sender, igm.groupname, msgcontent,
     status == DELETED, status == OFFLINE, (status != OFFLINE && status != ONLINE && status != DELETED), isReply, showids, isSecured, isVerified, certifiedRank, botRank, modRank, adminRank, igm.isgroup, isMention, sender == msettings.pseudo, msettings.modmsg);
-    themeProcessLocation(lang, theme, "message", tv);
+    if (themeProcessLocation(lang, theme, "message", tv, str))
+        return "";
+    return str;
+}
+
+void Message::print(json &lang, json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm, int idReplied, Message repliedTo, bool const &isReply, std::string newMessageContent)
+{
+    std::cout << toString(lang, theme, msettings, showids, igm, idReplied, repliedTo, isReply, newMessageContent);
 }
 
 std::string Message::getReplyContent(messageSettings const &msettings, isgroupmessage const &igm)

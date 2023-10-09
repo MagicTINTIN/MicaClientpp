@@ -81,6 +81,11 @@ public:
     Message(std::string i, std::string author, std::string message, std::string date, std::string certified, std::string rnk, Message::messageStatus msgstatus = Message::messageStatus::ONLINE);
 
     /**
+     * To get string to print a message in terminal
+     */
+    std::string toString(json &lang, json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm = isgroupmessage(), int idReplied = -1, Message repliedTo = Message(), bool const &isReply = false, std::string newMessageContent = "");
+
+    /**
      * To print a message in terminal
      */
     void print(json &lang, json &theme, messageSettings const &msettings, bool const &showids, isgroupmessage const &igm = isgroupmessage(), int idReplied = -1, Message repliedTo = Message(), bool const &isReply = false, std::string newMessageContent = "");

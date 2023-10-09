@@ -121,7 +121,7 @@ bool themeProcessBoolVar(std::string s, themeVariables &tv, json &themesettings)
     return false;
 }
 
-int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle)
+int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle, std::string &str)
 {
     int rtn(0);
     for (auto &ofs : themeseq.items())
@@ -129,14 +129,14 @@ int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &t
         if (ofs.value()["type"].get<std::string>() == "if")
         {
             if (themeProcessBoolVar(ofs.value()["condition"].get<std::string>(), tv, themesettings))
-                rtn = themeProcessSequence(lang, ofs.value()["true"], tv, themesettings, mentionstyle);
+                rtn = themeProcessSequence(lang, ofs.value()["true"], tv, themesettings, mentionstyle, str);
             else
-                rtn = themeProcessSequence(lang, ofs.value()["false"], tv, themesettings, mentionstyle);
+                rtn = themeProcessSequence(lang, ofs.value()["false"], tv, themesettings, mentionstyle, str);
         }
         else if (ofs.value()["type"].get<std::string>() == "print")
-            std::cout << printStyle(ofs.value()["style"]) << themeProcessStringVar(lang, ofs.value()["print"], tv, mentionstyle, ofs.value()["style"]) << NORMAL;
+            str += printStyle(ofs.value()["style"]) + themeProcessStringVar(lang, ofs.value()["print"], tv, mentionstyle, ofs.value()["style"]) + NORMAL;
         else if (ofs.value()["type"].get<std::string>() == "NEWLINE")
-            std::cout << std::endl;
+            str += '\n';
         else if (ofs.value()["type"].get<std::string>() == "BREAKDISPLAY")
             return 1;
         if (rtn != 0)
@@ -145,10 +145,21 @@ int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &t
     return 0;
 }
 
-void themeProcessLocation(json &lang, json &theme, std::string const &location, themeVariables &tv)
+int themeProcessLocation(json &lang, json &theme, std::string const &location, themeVariables &tv, std::string &str)
 {
+    str = "";
+    int rtn(0);
     if (location == "prompt" || location == "message")
-        themeProcessSequence(lang, theme[location], tv, theme["settings"], theme["mention"]["style"]);
+        rtn = themeProcessSequence(lang, theme[location], tv, theme["settings"], theme["mention"]["style"], str);
+    
+    return rtn;
+}
+
+void themeProcessPrint(json &lang, json &theme, std::string const &location, themeVariables &tv)
+{
+    std::string str("");
+    themeProcessLocation(lang, theme, location, tv, str);
+    std::cout << str;
 }
 
 std::string printStyle(json &style)

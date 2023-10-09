@@ -58,9 +58,11 @@ std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv,
 
 bool themeProcessBoolVar(std::string s, themeVariables &tv, json &themesettings);
 
-int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle);
+int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle, std::string &str);
 
-void themeProcessLocation(json &lang, json &theme, std::string const &location, themeVariables &tv);
+int themeProcessLocation(json &lang, json &theme, std::string const &location, themeVariables &tv, std::string &str);
+
+void themeProcessPrint(json &lang, json &theme, std::string const &location, themeVariables &tv);
 
 std::string printStyle(json &style);
 

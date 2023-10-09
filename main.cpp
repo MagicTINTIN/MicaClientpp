@@ -81,7 +81,7 @@ int main(int argc, char const *argv[])
         }
 
         themeVariables tv = themeVariables(false, msgsettings.channel != "", false, msgsettings.modmsg, msgsettings.pseudo, "", "", msgsettings.channel, "", "X");
-        themeProcessLocation(languageData, themeData, "prompt", tv);
+        themeProcessPrint(languageData, themeData, "prompt", tv);
         std::cout << printStyle(themeData["messageInput"]["style"]);
         std::cin.clear();
         std::getline(std::cin, input);
