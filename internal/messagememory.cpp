@@ -145,7 +145,7 @@ void MessageMemory::print(json &lang, json &theme, json config, Message::message
     else
     {
         std::vector<std::string> stringmsglist;
-        int msgnb(0), msgfrommem(nbMessages);
+        int msgnb(0), msgfrommem(nbMessages - 1);
         while (msgnb < maxthememsg && msgfrommem >= 0)
         {
             Message msg = memory[msgfrommem];
@@ -168,7 +168,7 @@ void MessageMemory::print(json &lang, json &theme, json config, Message::message
             }
             msgfrommem--;
         }
-        for (size_t i=msgnb - 1; i > 0; i--)
+        for (int i=msgnb - 1; i >= 0; i--)
         {
             std::cout << stringmsglist[i];
         }

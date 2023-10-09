@@ -48,7 +48,10 @@ themeVariables::themeVariables(std::string u, std::string ra, std::string r,
 
 std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle)
 {
-    std::string mention = printStyle(mentionstyle) + tv.mention + printStyle(postmentionstyle);
+    std::string mention = printStyle(mentionstyle) + tv.mention + NORMAL + printStyle(postmentionstyle);
+    
+    replacePrefixes(lang["fromTheme"], "$lang:", s);
+    
     replaceStringInPlace(s, "$USERNAME", tv.username);
     replaceStringInPlace(s, "$MENTION", mention);
     replaceStringInPlace(s, "$RAUTHOR", tv.rAuthor);
@@ -65,7 +68,7 @@ std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv,
 
     replaceRegexWishBoundaries(s, tv.mention, mention);
 
-    replacePrefixes(lang["fromTheme"], "$lang:", s);
+    // maybe add local variable that users can enter
     return s;
 }
 

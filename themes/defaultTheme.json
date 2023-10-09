@@ -1,7 +1,7 @@
 {
     "themeName": "Default MicaClient++ theme",
     "author": "MagicTINTIN",
-    "themeVersion": 0,
+    "themeVersion": 2,
     "compatibilityVersion": 1,
 
     "settings": {
@@ -10,7 +10,7 @@
         "showDeletedMessages":true,
         "showOfflineMessages":true
     },
-    "maxMessages":10,
+    "maxMessages":100,
 
     "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
     

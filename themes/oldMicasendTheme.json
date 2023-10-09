@@ -1,7 +1,7 @@
 {
     "themeName": "Old Micasend theme",
     "author": "MagicTINTIN",
-    "themeVersion": 0,
+    "themeVersion": 1,
     "compatibilityVersion": 1,
 
     "settings": {},
@@ -32,6 +32,11 @@
         },
         {
             "type":"NEWLINE"
+        },
+        {
+            "type":"print",
+            "style":[],
+            "print":" "
         },
         {
             "type":"if",
@@ -132,7 +137,7 @@
                 {
                     "type":"print",
                     "style":[ "RED_NORMAL_COLOR" ],
-                    "print":"$MAUTHOR "
+                    "print":"$MAUTHOR"
                 }
             ]
         },
@@ -159,7 +164,7 @@
         {
             "type":"print",
             "style":[ "BLUE_NORMAL_COLOR" ],
-            "print":"$MESSAGECONTENT"
+            "print":" $MESSAGECONTENT"
         },
         {
             "type":"NEWLINE"
