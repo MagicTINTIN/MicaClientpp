@@ -107,7 +107,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
     std::cout << printStyle(theme["messageInput"]["style"]);
     std::getline(std::cin, input);
     std::cout << NORMAL;
-    if (input.length() > 0)
+    if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
     {
         if (safemode || igmreply.visible)
         {
@@ -146,13 +146,17 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
 int uSendArg(std::string &input, std::string const &serverurl, std::string &username, std::string &token, int &exitSendCode)
 {
     replaceStringInPlace(input, "/u ", "");
-    exitSendCode = sendMessage(serverurl, input, username, token);
-    if (exitSendCode != 0)
+    if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
     {
-        std::cout << "SEND UNSAFE ERROR " << exitSendCode << std::endl;
-        return -exitSendCode;
+        exitSendCode = sendMessage(serverurl, input, username, token);
+        if (exitSendCode != 0)
+        {
+            std::cout << "SEND UNSAFE ERROR " << exitSendCode << std::endl;
+            return -exitSendCode;
+        }
+        return 3;
     }
-    return 3;
+    return 0;
 }
 
 /* PRIVATE GROUP MESSAGE SEND */
@@ -201,7 +205,7 @@ int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::str
     std::cout << printStyle(theme["messageInput"]["style"]);
     std::getline(std::cin, input);
     std::cout << NORMAL;
-    if (input.length() > 0)
+    if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
     {
         unsigned char decryptedText[msgsettings.msgmaxsize] = "";
         unsigned char key[40] = "";
@@ -309,7 +313,7 @@ int pChannelSendArg(json &lang, json &theme, MessageMemory &mem, json &config, s
         return 2;
     }
 
-    if (input.length() > 0)
+    if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
     {
         unsigned char decryptedText[msgsettings.msgmaxsize] = "";
         unsigned char key[40] = "";

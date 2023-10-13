@@ -82,7 +82,7 @@ int showReplying(json &lang, json &theme, json config, MessageMemory &mem, int i
     if (msg.getID() < 0)
         return 1;
     igm = msg.isGroupContent(config);
-    
+
     themeVariables tv = themeVariables(true, msgs.channel != "", igm.isgroup, msgs.modmsg, msgs.pseudo, msg.getAuthor(), msg.getReplyContent(msgs, igm), msgs.channel, igm.groupname, std::to_string(msg.getID()));
     themeProcessPrint(lang, theme, "prompt", tv);
     return 0;
@@ -126,14 +126,17 @@ int getArguments(json &lang, json &theme, MessageMemory &mem,
     }
     else
     {
-        if (msgsettings.channel != "")
-            return pChannelSendArg(lang, theme, mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
-        else
-            return sendArg(msgsettings, input, serverurl, username, token, exitSendCode);
+        if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
+        {
+            if (msgsettings.channel != "")
+                return pChannelSendArg(lang, theme, mem, config, input, serverurl, msgsettings, username, token, exitSendCode);
+            else
+                return sendArg(msgsettings, input, serverurl, username, token, exitSendCode);
+        }
+        return 0;
     }
     return 0;
 }
-
 
 void title(std::string t)
 {

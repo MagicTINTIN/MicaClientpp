@@ -150,7 +150,6 @@ If you are using Default theme (or a theme that supports it), you can modify som
 - fix last message deleted → the message before appears twice
 - argument -all pour voir la totalité des messages
 - add /lg || /listgroups pour voir la liste des groupes dans lequels on est
-- fix prevent sending message with only spaces
 - add a command to delete message from memory (maybe /delmsg on offline/deleted message → /forget)
 - add basic formatting text (**bold**/*italic*/__underlined__/~~strokethrough~~/`inversedColors`)
 - Enable token protection by default (password that encrypt token)
