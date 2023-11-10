@@ -2,11 +2,12 @@
     "themeName": "Old Micasend theme",
     "author": "MagicTINTIN",
     "themeVersion": 2,
-    "compatibilityVersion": 2,
+    "compatibilityVersion": 3,
 
     "settings": {},
     "maxMessages":20,
     "formatText":false,
+    "displayLogoDuration":1,
 
     "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
     "prompt": [],

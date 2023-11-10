@@ -145,7 +145,6 @@ If you are using Default theme (or a theme that supports it), you can modify som
 
 ---
 # Futures features : 
-- add starting logo
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)
 - fix last message deleted → the message before appears twice
@@ -154,6 +153,5 @@ If you are using Default theme (or a theme that supports it), you can modify som
 - add /lg || /listgroups see the list of the groups we have
 - add /leavegroup to remove group from your configuration
 - add a command to delete message from memory (maybe /delmsg on offline/deleted message → /forget)
-- add basic formatting text (**bold**/*italic*/__underlined__/~~strokethrough~~/`inversedColors`)
 - Enable token protection by default (password that encrypt token)
 - add signature (normal/usecure) ?

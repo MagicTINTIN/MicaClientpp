@@ -14,6 +14,8 @@
 #include "internal/colors.h"
 #include "internal/importer.h"
 #include "internal/themes.h"
+#include <chrono>
+#include <thread>
 
 using json = nlohmann::json;
 
@@ -21,7 +23,7 @@ const int MCPP_VERSION(0);
 const int CONFIG_VERSION(11);
 const int PROGRAM_VERSION(2);
 
-const int THEME_VERSION(2);
+const int THEME_VERSION(3);
 const int LANGUAGE_VERSION(1);
 
 const std::string VERSION(std::to_string(MCPP_VERSION) + "." + std::to_string(CONFIG_VERSION) + "." + std::to_string(PROGRAM_VERSION));
@@ -32,6 +34,7 @@ int main(int argc, char const *argv[])
 {
     std::cout << "Starting MicaClient++..." << std::endl;
     title("MicaClient++ - Starting...");
+    displayLogo();
     int exitUpdateCode(0), exitSendCode(0);
     std::vector<std::string> args(argv, argv + argc);
 
@@ -64,6 +67,9 @@ int main(int argc, char const *argv[])
     icfg = backupImporter(memsettings, mem, cfgPath);
     if (icfg > 0)
         return icfg;
+
+    //make the logo appears for x seconds
+    std::this_thread::sleep_for(std::chrono::seconds(themeData["displayLogoDuration"].get<int>()));
 
     int resarg(0);
     while (true)

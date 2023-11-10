@@ -2,7 +2,7 @@
     "themeName": "Default MicaClient++ theme",
     "author": "MagicTINTIN",
     "themeVersion": 4,
-    "compatibilityVersion": 2,
+    "compatibilityVersion": 3,
 
     "settings": {
         "showMessageID":true,
@@ -14,6 +14,7 @@
     },
     "maxMessages":100,
     "formatText":true,
+    "displayLogoDuration":1,
 
     "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
     

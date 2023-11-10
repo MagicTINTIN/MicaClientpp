@@ -26,7 +26,7 @@ void clearScreen()
     system("cls");
 #elif __linux__
     // Linux
-    //system("clear");
+    system("clear");
 #else
     // Other or unknown OS
     printf("____________________________________\n");
@@ -43,6 +43,7 @@ void createLine()
 void showHelp(json &lang, json &theme, bool moderator)
 {
     clearScreen();
+    displayLogo();
     json hl = lang["commands"]["help"];
     std::cout << theme["themeName"].get<std::string>() << " v" << theme["themeVersion"].get<int>() << std::endl;
     createLine();
@@ -141,4 +142,19 @@ int getArguments(json &lang, json &theme, MessageMemory &mem,
 void title(std::string t)
 {
     std::cout << "\033]0;" << t << "\007";
+}
+
+/**
+ * Prints the logo in ascii
+*/
+void displayLogo(int size) {
+    if (size == 0) {
+        std::cout << SMALL_LOGO;
+    }
+    else if (size == 1) {
+        std::cout << NORMAL_LOGO;
+    }
+    else if (size == 2) {
+        std::cout << LARGE_LOGO;
+    }
 }
