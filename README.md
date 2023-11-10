@@ -148,9 +148,11 @@ If you are using Default theme (or a theme that supports it), you can modify som
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)
 - fix last message deleted → the message before appears twice
-- argument -all pour voir la totalité des messages
-- add /lg || /listgroups pour voir la liste des groupes dans lequels on est
+- argument -all to see all messages
+- add /jg || /joingroup to add group in your configuration
+- add /lg || /listgroups see the list of the groups we have
+- add /leavegroup to remove group from your configuration
 - add a command to delete message from memory (maybe /delmsg on offline/deleted message → /forget)
 - add basic formatting text (**bold**/*italic*/__underlined__/~~strokethrough~~/`inversedColors`)
 - Enable token protection by default (password that encrypt token)
-- ajouter une signature (normal/usecure) ?
+- add signature (normal/usecure) ?

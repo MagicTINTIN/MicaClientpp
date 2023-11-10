@@ -6,7 +6,7 @@
 
     "settings": {
         "showMessageID":true,
-        "showDate":false,
+        "showDate":true,
         "showDeletedMessages":true,
         "showOfflineMessages":true,
         "oneLinePerMessage":true,

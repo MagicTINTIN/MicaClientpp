@@ -3,7 +3,7 @@
     "subversion":11,
 
     "server":"https://micasend.baptiste-reb.fr/",
-    "username":"aSpecialUser",
+    "username":"MCPPuser",
     "token":"",
 
     "enableEncryption":true,
@@ -19,15 +19,10 @@
     "languageFile":"languages/fr.json",
 
     "discussionGroupKeys": {
-        "a":{
-            "users": [ "MagicTest", "Michel", "MagicTINTIN"],
-            "blocked": [],
-            "key":"notthesamegroup"
-        },
-        "public":{
+        "mcppServer":{
             "users": [ "*" ],
             "blocked": [],
-            "key":"thisIsaPublicGroup"
+            "key":"MCPPpublicServerKey"
         }
     },
     "privateEncryptionKeys": {
