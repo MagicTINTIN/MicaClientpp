@@ -112,7 +112,7 @@ You can change MicaClient++ theme and language !
 // to block specific users
 "blockedUsers": [ "blockedPseudo", "blockedPseudo2" ],
 ```
-You can also block users in discussion groups (for instance in public groups where someone try to chat in your group with a wrong key)
+You can also block users in discussion groups (for instance in public groups where someone tries to chat in your group with a wrong key)
 ```json
 "public":{
     "users": [ "*" ],
@@ -145,6 +145,7 @@ If you are using Default theme (or a theme that supports it), you can modify som
 
 ---
 # Futures features : 
+- add starting logo
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)
 - fix last message deleted → the message before appears twice

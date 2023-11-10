@@ -46,4 +46,6 @@ void charsCleaner(unsigned char *data, int const &sizeofdata, unsigned char *mod
 
 std::string charsToStringCleaner(unsigned char *data, int const &sizeofdata);
 
+std::string replaceDelimiters(std::string str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::string const &lowerReplacement, std::string const &upperReplacement) noexcept;
+
 #endif //TOOLS_H_INCLUDED

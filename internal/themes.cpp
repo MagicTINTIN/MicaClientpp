@@ -33,9 +33,9 @@ themeVariables::themeVariables(bool isr, bool iig, bool isg, bool imm,
 themeVariables::themeVariables(std::string u, std::string ra, std::string r,
                                std::string idr, std::string mid, std::string idma,
                                std::string dt, std::string ma, std::string gm, std::string mc,
-                   bool idel, bool ioff, bool ius, bool ir,
-                   bool askr, bool iencr, bool iv, bool cr, bool br,
-                   bool mr, bool ar, bool igm, bool im, bool iym, bool imm)
+                               bool idel, bool ioff, bool ius, bool ir,
+                               bool askr, bool iencr, bool iv, bool cr, bool br,
+                               bool mr, bool ar, bool igm, bool im, bool iym, bool imm)
     : isSendReply(false), isInGroup(false), isSendGroup(false), isYourMessage(iym), isModeratorMode(imm),
       isDeleted(idel), isOffline(ioff), isUnkonwnStatus(ius), isReply(ir),
       askingReply(askr), isEncrypted(iencr), isVerified(iv), certifiedRank(cr),
@@ -46,13 +46,13 @@ themeVariables::themeVariables(std::string u, std::string ra, std::string r,
 {
 }
 
-std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle,  json &themesettings)
+std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle, json &themesettings, json &theme)
 {
     std::string mention = printStyle(mentionstyle) + tv.mention + NORMAL + printStyle(postmentionstyle);
-    
+
     replacePrefixes(lang["fromTheme"], "$lang:", s);
     replacePrefixes(themesettings, "$settings:", s);
-    
+
     replaceStringInPlace(s, "$USERNAME", tv.username);
     replaceStringInPlace(s, "$MENTION", mention);
     replaceStringInPlace(s, "$RAUTHOR", tv.rAuthor);
@@ -65,7 +65,26 @@ std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv,
     replaceStringInPlace(s, "$DATETIME", tv.datetime);
     replaceStringInPlace(s, "$MAUTHOR", tv.mAuthor);
     replaceStringInPlace(s, "$GROUPMESSAGE", tv.groupMsg);
-    replaceStringInPlace(s, "$MESSAGECONTENT", tv.messageContent);
+
+    std::string displayContent = tv.messageContent;
+    if (theme["formatText"].get<bool>())
+    {
+        displayContent = replaceDelimiters(displayContent, "**", "**", getColor("BOLD"), getColor("NORMAL"));
+        displayContent = replaceDelimiters(displayContent, "__", "__", getColor("UNDERLINED"), getColor("NORMAL"));
+        displayContent = replaceDelimiters(displayContent, "*", "*", getColor("ITALIC"), getColor("NORMAL"));
+        displayContent = replaceDelimiters(displayContent, "_", "_", getColor("ITALIC"), getColor("NORMAL"));
+        displayContent = replaceDelimiters(displayContent, "~~", "~~", getColor("STRIKED"), getColor("NORMAL"));
+        displayContent = replaceDelimiters(displayContent, "```", "```", getColor("REVERSED"), getColor("NORMAL"));
+        displayContent = replaceDelimiters(displayContent, "`", "`", getColor("REVERSED"), getColor("NORMAL"));
+
+        replaceStringInPlace(displayContent, "\\\\", "\\");
+        replaceStringInPlace(displayContent, "\\_", "_");
+        replaceStringInPlace(displayContent, "\\*", "*");
+        replaceStringInPlace(displayContent, "\\~", "~");
+        replaceStringInPlace(displayContent, "\\`", "`");
+        
+    }
+    replaceStringInPlace(s, "$MESSAGECONTENT", displayContent);
 
     replaceRegexWishBoundaries(s, tv.mention, mention);
 
@@ -125,7 +144,7 @@ bool themeProcessBoolVar(std::string s, themeVariables &tv, json &themesettings)
     return false;
 }
 
-int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle, std::string &str)
+int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle, std::string &str, json &theme)
 {
     int rtn(0);
     for (auto &ofs : themeseq.items())
@@ -133,12 +152,12 @@ int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &t
         if (ofs.value()["type"].get<std::string>() == "if")
         {
             if (themeProcessBoolVar(ofs.value()["condition"].get<std::string>(), tv, themesettings))
-                rtn = themeProcessSequence(lang, ofs.value()["true"], tv, themesettings, mentionstyle, str);
+                rtn = themeProcessSequence(lang, ofs.value()["true"], tv, themesettings, mentionstyle, str, theme);
             else
-                rtn = themeProcessSequence(lang, ofs.value()["false"], tv, themesettings, mentionstyle, str);
+                rtn = themeProcessSequence(lang, ofs.value()["false"], tv, themesettings, mentionstyle, str, theme);
         }
         else if (ofs.value()["type"].get<std::string>() == "print")
-            str += printStyle(ofs.value()["style"]) + themeProcessStringVar(lang, ofs.value()["print"], tv, mentionstyle, ofs.value()["style"], themesettings) + NORMAL;
+            str += printStyle(ofs.value()["style"]) + themeProcessStringVar(lang, ofs.value()["print"], tv, mentionstyle, ofs.value()["style"], themesettings, theme) + NORMAL;
         else if (ofs.value()["type"].get<std::string>() == "NEWLINE")
             str += '\n';
         else if (ofs.value()["type"].get<std::string>() == "BREAKDISPLAY")
@@ -154,8 +173,8 @@ int themeProcessLocation(json &lang, json &theme, std::string const &location, t
     str = "";
     int rtn(0);
     if (location == "prompt" || location == "message")
-        rtn = themeProcessSequence(lang, theme[location], tv, theme["settings"], theme["mention"]["style"], str);
-    
+        rtn = themeProcessSequence(lang, theme[location], tv, theme["settings"], theme["mention"]["style"], str, theme);
+
     return rtn;
 }
 
@@ -163,6 +182,7 @@ void themeProcessPrint(json &lang, json &theme, std::string const &location, the
 {
     std::string str("");
     themeProcessLocation(lang, theme, location, tv, str);
+
     std::cout << str;
 }
 

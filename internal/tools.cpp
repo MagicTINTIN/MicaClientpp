@@ -100,8 +100,8 @@ int arguments(std::vector<std::string> &args, std::string &cfgPath, bool &modera
         else if (args[i] == "--help" || args[i] == "-h")
         {
             std::cout << "MicaClient++ is an alternative client for Micasend" << std::endl
-            << " -m, --moderator to start it in moderator mode" << std::endl
-            << " --cfg path/to/a/config/file.json to load a specific config" << std::endl;
+                      << " -m, --moderator to start it in moderator mode" << std::endl
+                      << " --cfg path/to/a/config/file.json to load a specific config" << std::endl;
             return 1;
         }
     }
@@ -192,14 +192,16 @@ std::string getValFromJSONSource(json &valuesource, std::string k)
 void replacePrefixes(json &valuesource, std::string const prefix, std::string &s)
 {
     size_t startPos = 0;
-    while ((startPos = s.find(prefix, startPos)) != std::string::npos) {
+    while ((startPos = s.find(prefix, startPos)) != std::string::npos)
+    {
         size_t endPos = startPos + prefix.length();
         while (isalnum(s[endPos]) && endPos < s.length())
             endPos++;
 
         // if last word in string
-        if (endPos == std::string::npos || endPos == s.length()) {
-            endPos = s.length(); 
+        if (endPos == std::string::npos || endPos == s.length())
+        {
+            endPos = s.length();
         }
 
         std::string keyToFind = s.substr(startPos + prefix.length(), endPos - (startPos + prefix.length()));
@@ -421,7 +423,7 @@ int decodeUTF8Character(unsigned char *data, unsigned char *out, size_t *index, 
                 }
             }
             if (*value >= 0x80 && *value <= 0xD7FF && *value != 0xFFFE && *value != 0xFFFF)
-            //if (*value >= 0x80 && *value <= 0xFF && *value != 0xFFFE && *value != 0xFFFF)
+            // if (*value >= 0x80 && *value <= 0xFF && *value != 0xFFFE && *value != 0xFFFF)
             {
                 for (size_t i = 0; i < leadingOnes; i++)
                 {
@@ -496,4 +498,33 @@ std::string charsToStringCleaner(unsigned char *data, int const &sizeofdata)
     modifiedData[dataIndex] = '\0';
 
     return reinterpret_cast<char *>(modifiedData);
+}
+
+std::string replaceDelimiters(std::string str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::string const &lowerReplacement, std::string const &upperReplacement) noexcept
+{
+    size_t firstDelPos = 0, secondDelPos = 0;
+
+    while ((firstDelPos = str.find(lowerDelimiter, firstDelPos)) != std::string::npos)
+    {
+        secondDelPos = firstDelPos + 1;
+        while ((secondDelPos = str.find(upperDelimiter, secondDelPos)) != std::string::npos && (secondDelPos != 0 && str[secondDelPos - 1] == '\\'))
+        {
+            secondDelPos += upperDelimiter.length();
+            if (secondDelPos >= str.length())
+                secondDelPos = std::string::npos - 1;
+        }
+
+        if (secondDelPos != std::string::npos && (secondDelPos == 0 || str[secondDelPos - 1] != '\\'))
+        {
+            std::string strBetweenTwoDels = str.substr(firstDelPos + lowerDelimiter.length(), secondDelPos - firstDelPos - lowerDelimiter.length());
+            std::string newBetweenTwoDels = lowerReplacement + strBetweenTwoDels + upperReplacement;
+
+            str.replace(firstDelPos, lowerDelimiter.length() + strBetweenTwoDels.length() + upperDelimiter.length(), newBetweenTwoDels);
+            firstDelPos += newBetweenTwoDels.length();
+        }
+        firstDelPos = secondDelPos - 1;
+        if (firstDelPos >= str.length())
+            firstDelPos = std::string::npos;
+    }
+    return str;
 }

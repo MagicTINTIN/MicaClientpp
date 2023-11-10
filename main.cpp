@@ -21,7 +21,7 @@ const int MCPP_VERSION(0);
 const int CONFIG_VERSION(11);
 const int PROGRAM_VERSION(2);
 
-const int THEME_VERSION(1);
+const int THEME_VERSION(2);
 const int LANGUAGE_VERSION(1);
 
 const std::string VERSION(std::to_string(MCPP_VERSION) + "." + std::to_string(CONFIG_VERSION) + "." + std::to_string(PROGRAM_VERSION));

@@ -1,8 +1,8 @@
 {
     "themeName": "Default MicaClient++ theme",
     "author": "MagicTINTIN",
-    "themeVersion": 3,
-    "compatibilityVersion": 1,
+    "themeVersion": 4,
+    "compatibilityVersion": 2,
 
     "settings": {
         "showMessageID":true,
@@ -13,6 +13,7 @@
         "promptdelim":">"
     },
     "maxMessages":100,
+    "formatText":true,
 
     "Advanced settings": "Do not modify lines below unlesss you know what you are doing !",
     

@@ -54,11 +54,11 @@ struct themeVariables
                    );
 };
 
-std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle, json &themesettings);
+std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv, json &mentionstyle, json &postmentionstyle, json &themesettings, json &theme);
 
 bool themeProcessBoolVar(std::string s, themeVariables &tv, json &themesettings);
 
-int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle, std::string &str);
+int themeProcessSequence(json &lang, json &themeseq, themeVariables &tv, json &themesettings, json &mentionstyle, std::string &str, json &theme);
 
 int themeProcessLocation(json &lang, json &theme, std::string const &location, themeVariables &tv, std::string &str);
 
