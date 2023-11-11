@@ -488,7 +488,8 @@ std::string charsToStringCleaner(unsigned char *data, int const &sizeofdata)
     size_t index = 0;
     uint32_t characterValue;
     size_t dataIndex = 0; // Index for the modified data
-    unsigned char modifiedData[sizeofdata] = "";
+    unsigned char modifiedData[sizeofdata];
+    modifiedData[0] = 0;
     while (index < sizeofdata && data[index] != (unsigned)'\0')
     {
         decodeUTF8Character(data, modifiedData, &index, &dataIndex, &characterValue);

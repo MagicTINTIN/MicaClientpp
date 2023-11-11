@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <sstream>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -163,9 +164,12 @@ std::string Message::toString(json &lang, json &theme, messageSettings const &ms
             replaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
-                unsigned char tdecryptedText[msettings.encryptedmaxsize] = "";
-                unsigned char tkey[40] = "";
-                unsigned char tencryptedText[msettings.encryptedmaxsize] = "";
+                unsigned char tdecryptedText[msettings.encryptedmaxsize];
+                tdecryptedText[0] = 0;
+                unsigned char tkey[40];
+                tkey[0] = 0;
+                unsigned char tencryptedText[msettings.encryptedmaxsize];
+                tencryptedText[0] = 0;
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
                 if (igm.isgroup)
                     std::copy(igm.key.cbegin(), igm.key.cend(), tkey);
@@ -271,9 +275,12 @@ std::string Message::getReplyContent(messageSettings const &msettings, isgroupme
             replaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
-                unsigned char tdecryptedText[msettings.encryptedmaxsize] = "";
-                unsigned char tkey[40] = "";
-                unsigned char tencryptedText[msettings.encryptedmaxsize] = "";
+                unsigned char tdecryptedText[msettings.encryptedmaxsize];
+                tdecryptedText[0] = 0;
+                unsigned char tkey[40];
+                tkey[0] = 0;
+                unsigned char tencryptedText[msettings.encryptedmaxsize];
+                tencryptedText[0] = 0;
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
                 if (igm.isgroup)
                     std::copy(igm.key.cbegin(), igm.key.cend(), tkey);
