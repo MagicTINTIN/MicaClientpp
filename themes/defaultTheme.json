@@ -12,7 +12,7 @@
         "oneLinePerMessage":true,
         "promptdelim":">"
     },
-    "maxMessages":1,
+    "maxMessages":100,
     "formatText":true,
     "displayLogoDuration":1,
 

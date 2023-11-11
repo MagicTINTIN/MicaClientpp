@@ -26,7 +26,7 @@ void clearScreen()
     system("cls");
 #elif __linux__
     // Linux
-    //system("clear");
+    system("clear");
 #else
     // Other or unknown OS
     printf("____________________________________\n");

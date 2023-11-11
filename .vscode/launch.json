@@ -2,25 +2,49 @@
   "version": "0.2.0",
   "configurations": [
     {
-          "name": "CMake Debug MicaClient",
-          "type": "cppdbg",
-          "request": "launch",
-          "program": "${workspaceFolder}/debug/MicaClient",
-          "args": [],
-          "stopAtEntry": false,
-          "cwd": "${workspaceFolder}",
-          "environment": [],
-          "externalConsole": false,
-          "MIMode": "gdb",
-          "setupCommands": [
-            {
-              "description": "Enable pretty-printing for gdb",
-              "text": "-enable-pretty-printing",
-              "ignoreFailures": true
-            }
-          ],
-          "miDebuggerPath": "/usr/bin/gdb"
-        },
+      "name": "CMake Debug MicaClient",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/debug/MicaClient",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
+    {
+      "name": "CMake Debug MagicTINTIN MicaClient",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/debug/MicaClient",
+      "args": [
+        "--cfg",
+        "../mcppcfg/mcppmagictintin.json",
+        "-m"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
     {
       "name": "[MAIN] C/C++: g++ build and debug main file",
       "type": "cppdbg",

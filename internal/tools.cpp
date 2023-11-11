@@ -12,6 +12,7 @@
 #elif defined(__linux__)
 #include <unistd.h>
 #include <sys/ioctl.h>
+#include <codecvt>
 #endif
 #include "colors.h"
 #include "tools.h"
@@ -545,7 +546,7 @@ void delimitersOuterRanges(std::string &str, std::string const &lowerDelimiter, 
 
         if (secondDelPos != std::string::npos && (secondDelPos == 0 || str[secondDelPos - 1] != '\\'))
         {
-            std::cout << "Found ! " << upperDelimiter << std::endl;
+            //std::cout << "Found ! " << upperDelimiter << std::endl;
             std::string strBetweenTwoDels = str.substr(firstDelPos + lowerDelimiter.length(), secondDelPos - firstDelPos - lowerDelimiter.length());
 
             ranges.push_back({firstDelPos, lowerDelimiter.length() + strBetweenTwoDels.length() + upperDelimiter.length()});
@@ -569,7 +570,7 @@ void delimitersRanges(std::string &str, std::string const &lowerDelimiter, std::
         {
             secondDelPos += upperDelimiter.length();
             if (secondDelPos >= str.length())
-                secondDelPos = std::string::npos - 1;
+                secondDelPos = std::string::npos;
         }
 
         if (secondDelPos != std::string::npos && (secondDelPos == 0 || str[secondDelPos - 1] != '\\'))
@@ -579,17 +580,23 @@ void delimitersRanges(std::string &str, std::string const &lowerDelimiter, std::
             //std::cout << firstDelPos << " finding : " << strBetweenTwoDels << std::endl;
             ranges.push_back({firstDelPos, secondDelPos}); // lowerDelimiter.length() + strBetweenTwoDels.length()
         }
-        firstDelPos = secondDelPos + upperDelimiter.length();
-        if (firstDelPos + 1 >= str.length()) {
+
+        if (firstDelPos + upperDelimiter.length() >= str.length()) {
             firstDelPos = std::string::npos;
             secondDelPos = std::string::npos;
+        }
+        else if (secondDelPos == std::string::npos) {
+            firstDelPos = std::string::npos;
+        }
+        else {
+            firstDelPos = secondDelPos + upperDelimiter.length();
         }
     }
 }
 
 std::string textFormatter(std::string str) noexcept
 {
-    std::cout << "Old string : " << str << std::endl;
+    //std::cout << "Old string : " << str << std::endl;
     std::string newstr;
 
     std::string boldDelimiter = "**";
@@ -644,7 +651,7 @@ std::string textFormatter(std::string str) noexcept
             if (!isBold)
                 elementBoldNb++;
             actualiseStyle = true;
-            delimiterLengthLeft = std::max(delimiterLengthLeft, boldDelimiter.length() - 1);
+            delimiterLengthLeft = std::max(delimiterLengthLeft, boldDelimiter.length());
         }
         if (elementItalicNb < rangesItalic.size() && charnb == rangesItalic[elementItalicNb][isItalic ? 1 : 0])
         {
@@ -652,7 +659,7 @@ std::string textFormatter(std::string str) noexcept
             if (!isItalic)
                 elementItalicNb++;
             actualiseStyle = true;
-            delimiterLengthLeft = std::max(delimiterLengthLeft, firstItalicDelimiter.length() - 1);
+            delimiterLengthLeft = std::max(delimiterLengthLeft, firstItalicDelimiter.length());
         }
         if (elementUnderlinedNb < rangesUnderlined.size() && charnb == rangesUnderlined[elementUnderlinedNb][isUnderlined ? 1 : 0])
         {
@@ -660,7 +667,7 @@ std::string textFormatter(std::string str) noexcept
             if (!isUnderlined)
                 elementUnderlinedNb++;
             actualiseStyle = true;
-            delimiterLengthLeft = std::max(delimiterLengthLeft, underlinedDelimiter.length() - 1);
+            delimiterLengthLeft = std::max(delimiterLengthLeft, underlinedDelimiter.length());
         }
         if (elementReversedNb < rangesReversed.size() && charnb == rangesReversed[elementReversedNb][isReversed ? 1 : 0])
         {
@@ -668,7 +675,7 @@ std::string textFormatter(std::string str) noexcept
             if (!isReversed)
                 elementReversedNb++;
             actualiseStyle = true;
-            delimiterLengthLeft = std::max(delimiterLengthLeft, reversedDelimiter.length() - 1);
+            delimiterLengthLeft = std::max(delimiterLengthLeft, reversedDelimiter.length());
         }
         if (elementStrikedNb < rangesStriked.size() && charnb == rangesStriked[elementStrikedNb][isStriked ? 1 : 0])
         {
@@ -676,9 +683,9 @@ std::string textFormatter(std::string str) noexcept
             if (!isStriked)
                 elementStrikedNb++;
             actualiseStyle = true;
-            delimiterLengthLeft = std::max(delimiterLengthLeft, strikedDelimiter.length() - 1);
+            delimiterLengthLeft = std::max(delimiterLengthLeft, strikedDelimiter.length());
         }
-        std::cout << "DelimLength " << delimiterLengthLeft << std::endl;
+        //std::cout << "DelimLength " << delimiterLengthLeft << " : " << str.at(charnb) << std::endl;
         if (actualiseStyle)
         {
             actualiseStyle = false;
@@ -694,7 +701,7 @@ std::string textFormatter(std::string str) noexcept
             if (isStriked)
                 newstr += getColor("STRIKED");
         }
-        else if (delimiterLengthLeft > 0)
+        if (delimiterLengthLeft > 0)
         {
             delimiterLengthLeft--;
         }
@@ -703,6 +710,6 @@ std::string textFormatter(std::string str) noexcept
         charnb++;
     }
 
-    std::cout << "New string : " << newstr << std::endl;
+    //std::cout << "New string : " << newstr << std::endl;
     return newstr;
 }
