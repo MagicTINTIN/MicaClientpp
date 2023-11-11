@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(MicaClient)
 
+#set(CMAKE_BUILD_TYPE Debug)
+
 # Curl library
 find_package(CURL REQUIRED)
 include_directories(${CURL_INCLUDE_DIR})
