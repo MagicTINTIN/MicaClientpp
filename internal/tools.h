@@ -50,7 +50,7 @@ std::string replaceDelimiters(std::string str, std::string const &lowerDelimiter
 
 void delimitersOuterRanges(std::string &str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::vector<size_t[2]> ranges) noexcept;
 
-void delimitersRanges(std::string &str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::vector<std::vector<size_t>> ranges) noexcept;
+void delimitersRanges(std::string &str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::vector<std::vector<size_t>> &ranges) noexcept;
 
 std::string textFormatter(std::string str) noexcept;
 
