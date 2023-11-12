@@ -1,12 +1,13 @@
 {
     "version":1,
-    "subversion":0,
+    "subversion":1,
 
     "server":"https://micasend.baptiste-reb.fr/",
     "username":"MCPPuser",
     "token":"",
 
     "enableEncryption":true,
+    "encryptionVersion":-1,
 
     "defaultEncryptionSuffix":"DefaultPseudoEncryption",
     "generalKey":"generalEncryptionKey",

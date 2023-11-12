@@ -52,11 +52,11 @@ std::string messageDisplayImprove(std::string s, bool r = false)
 }
 
 /* MESSAGE SETTINGS */
-Message::messageSettings::messageSettings() : generalkey(KEYNOTFOUND), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel(""), msgmaxsize(0), encryptedmaxsize(0)
+Message::messageSettings::messageSettings() : generalkey(KEYNOTFOUND), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel(""), msgmaxsize(0), encryptedmaxsize(0), encryptionversion(-1)
 {
 }
 
-Message::messageSettings::messageSettings(std::string gkey, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg) : generalkey(gkey), pseudo(psd), modmsg(mod), securemsg(sec), blockUnverified(buu), channel(ch), msgmaxsize(maxsmsg), encryptedmaxsize(maxsmsg * 2)
+Message::messageSettings::messageSettings(std::string gkey, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg, int evers) : generalkey(gkey), pseudo(psd), modmsg(mod), securemsg(sec), blockUnverified(buu), channel(ch), msgmaxsize(maxsmsg), encryptedmaxsize(maxsmsg * 2), encryptionversion(evers)
 {
     for (auto &u : blu.items())
     {
@@ -172,7 +172,7 @@ std::string Message::toString(json &lang, json &theme, messageSettings const &ms
                 else
                     std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
                 std::string decryptedContent;
-                if (inv_AES(tencryptedText, tkey, tdecryptedText))
+                if (inv_AES(tencryptedText, tkey, tdecryptedText, msettings.encryptionversion))
                 {
                     isSecured = false;
                     decryptedContent = copyContent;
@@ -280,7 +280,7 @@ std::string Message::getReplyContent(messageSettings const &msettings, isgroupme
                 else
                     std::copy(msettings.generalkey.cbegin(), msettings.generalkey.cend(), tkey);
                 std::string decryptedContent;
-                if (inv_AES(tencryptedText, tkey, tdecryptedText))
+                if (inv_AES(tencryptedText, tkey, tdecryptedText, msettings.encryptionversion))
                     decryptedContent = copyContent;
                 else
                     decryptedContent = charsToStringCleaner(tdecryptedText, msettings.encryptedmaxsize);

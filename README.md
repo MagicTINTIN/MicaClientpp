@@ -13,23 +13,27 @@ To compile it you will need to first install the dependencies:<br>
 - Ubuntu: `sudo apt install cmake`
 - Arch Linux: `sudo pacman -S cmake`
 Then you just need to run `./cmakecompile` in your local folder.
->- You can add --release argument to optimize the program (it will be a little bit slower)<br>
+>- You can add --release argument to optimize the program (it will be a bit slower)<br>
 >- You can also add --fastcompile to compile on multiple cores<br>
 >- Finally, you can also add --reset to reset compilation data from previous compilations
 
-## Compilation via g++
-- Ubuntu: `sudo apt install g++`
-- Arch Linux: `sudo pacman -S g++`
-Then you just need to run `./gppcompile` in your local folder.
->- You can add --quickprog argument to optimize the program (but it will compile slower)
 # How to use it
 ## Setup
 First, set settings like username, token... in `config.json`.<br>
 ## Basic usage
-Then, you can run `build/MicaClient` *(or `./MicaClient.out` if you compiled via g++)*, and now you should see the chat.<br>
+Then, you can run `build/MicaClient`, and now you should see the chat.<br>
 <br>
 To send a message: just type it, and press Enter !<br>
 ![MicaClient++ theme](./images/mcpp.jpg)<br>
+
+## Command list
+- `/help, /h` to print a message containing all the commands available.<br>
+- `/exit, /q` to exit MicaClient++
+- [`/r, /ru`](#reply-to-a-message) to reply to a message (ru for unsafe mode)
+- [`/u`](#secure-unsecure-mode) to send a message in unsafe mode.
+- [`/p`](#send-a-message-in-private-group) to send a message in a group
+- [`/g`](#filter-messages-from-group) to change group vision (channel)
+<br>
 
 ## Reply to a message
 To reply to a message type `/r x` *(with x the message ID to reply)*.<br>
@@ -65,6 +69,7 @@ As you might not have the same key, you will see encrypted message from users th
 > - To receive messages from everyone in this group, add "*" in "users"<br>
 <br>
 
+### Filter messages from group
 Then, just communicate the name and the key of the group you created to your members, and ask them to complete the "users" section too.<br>
 <br>
 To filter message by group type `/g groupname`, and to go back to general `/g`.<br>
@@ -77,15 +82,7 @@ To send a message in a private group, just type `/p groupname` or `/p` and then 
 Then just type your message and press [ENTER].
 If you reply to a message of a group, it will automatically reply in the group.
 
-## Command list
-- `/help, /h` to print a message containing all the commands available.<br>
-- `/exit, /q` to exit MicaClient++
-- `/u` to send a message in unsafe mode.
-- `/r, /ru` to reply to a message (ru for unsafe mode)
-- `/p` to send a message in a group
-- `/g` to change group vision (channel)
-<br>
-## Arguments
+## Launch MicaClient with options
 You can start MicaClient++ with arguments !
 - `-m, --moderator` enables **moderator view** to get messages ID (no you won't have rights to delete messages :p)
 - `--cfg path/to/a/config/file.json` to load other config (usefull when you have several accounts)

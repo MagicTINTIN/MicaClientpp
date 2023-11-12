@@ -124,7 +124,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
             }
             else
                 std::copy(msgsettings.generalkey.cbegin(), msgsettings.generalkey.cend(), key);
-            AES(decryptedText, key, encryptedText);
+            AES(decryptedText, key, encryptedText, msgsettings.encryptionversion);
 
             std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
             exitSendCode = sendMessage(serverurl, privatereplyprefix + "答" + idtoreply + "护" + encryptedInput, username, token);
@@ -213,7 +213,7 @@ int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::str
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
         std::copy(privateg.key.cbegin(), privateg.key.cend(), key);
-        AES(decryptedText, key, encryptedText);
+        AES(decryptedText, key, encryptedText, msgsettings.encryptionversion);
 
         std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
         exitSendCode = sendMessage(serverurl, "团" + privategroupname + "护" + encryptedInput, username, token);
@@ -239,7 +239,7 @@ int sendArg(Message::messageSettings &msgsettings, std::string &input, std::stri
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
         std::copy(msgsettings.generalkey.cbegin(), msgsettings.generalkey.cend(), key);
-        AES(decryptedText, key, encryptedText);
+        AES(decryptedText, key, encryptedText, msgsettings.encryptionversion);
 
         std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
         exitSendCode = sendMessage(serverurl, "护" + encryptedInput, username, token);
@@ -321,7 +321,7 @@ int pChannelSendArg(json &lang, json &theme, MessageMemory &mem, json &config, s
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
         std::copy(privateg.key.cbegin(), privateg.key.cend(), key);
-        AES(decryptedText, key, encryptedText);
+        AES(decryptedText, key, encryptedText, msgsettings.encryptionversion);
 
         std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
         exitSendCode = sendMessage(serverurl, "团" + privategroupname + "护" + encryptedInput, username, token);

@@ -42,7 +42,9 @@ int configImporter(int const &MCPP_VERSION, int const &CONFIG_VERSION, int const
                                                data["blockUnVerifiedUsers"].get<bool>(),
                                                data["blockedUsers"],
                                                "",
-                                               MSG_MAX_SIZE);
+                                               MSG_MAX_SIZE,
+                                               data["encryptionVersion"].get<int>()
+                                               );
         memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>(), cfgPath);
     }
     catch (std::out_of_range &e)
