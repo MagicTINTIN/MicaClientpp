@@ -50,8 +50,9 @@ public:
         int msgmaxsize;
         int encryptedmaxsize;
         int encryptionversion;
+        bool showallmsg;
         messageSettings();
-        messageSettings(std::string gkey, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg, int evers);
+        messageSettings(std::string gkey, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg, int evers, bool showall);
     };
 
     struct jsonMessage

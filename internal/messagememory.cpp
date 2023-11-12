@@ -127,7 +127,7 @@ void MessageMemory::updateMemory(json const &messages, memorySettings memsetting
 void MessageMemory::print(json &lang, json &theme, json config, Message::messageSettings const &msettings, bool const &showids)
 {
     int maxthememsg = theme["maxMessages"].get<int>();
-    if (maxthememsg < 0)
+    if (maxthememsg < 0 || msettings.showallmsg)
         for (Message &msg : memory)
         {
             Message::isgroupmessage igm = msg.isGroupContent(config);

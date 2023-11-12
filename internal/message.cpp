@@ -53,11 +53,11 @@ std::string messageDisplayImprove(std::string s, bool r = false)
 }
 
 /* MESSAGE SETTINGS */
-Message::messageSettings::messageSettings() : generalkey(KEYNOTFOUND), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel(""), msgmaxsize(0), encryptedmaxsize(0), encryptionversion(-1)
+Message::messageSettings::messageSettings() : generalkey(KEYNOTFOUND), pseudo("NOBODY"), modmsg(false), securemsg(true), blockUnverified(false), channel(""), msgmaxsize(0), encryptedmaxsize(0), encryptionversion(-1), showallmsg(false)
 {
 }
 
-Message::messageSettings::messageSettings(std::string gkey, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg, int evers) : generalkey(gkey), pseudo(psd), modmsg(mod), securemsg(sec), blockUnverified(buu), channel(ch), msgmaxsize(maxsmsg), encryptedmaxsize(maxsmsg * 2), encryptionversion(evers)
+Message::messageSettings::messageSettings(std::string gkey, std::string psd, bool mod, bool sec, bool buu, json blu, std::string ch, int maxsmsg, int evers, bool showall) : generalkey(gkey), pseudo(psd), modmsg(mod), securemsg(sec), blockUnverified(buu), channel(ch), msgmaxsize(maxsmsg), encryptedmaxsize(maxsmsg * 2), encryptionversion(evers), showallmsg(showall)
 {
     for (auto &u : blu.items())
     {

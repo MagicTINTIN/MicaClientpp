@@ -13,7 +13,7 @@ struct MsgSettings {
 
 bool replaceRegexWishBoundaries(std::string &text, const std::string &word, const std::string &replacement);
 bool regexWishBoundaries(std::string &text, const std::string &word);
-int arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator, std::string const &v);
+int arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator, std::string const &v, bool &showAll);
 bool isEncryptedMessage(const std::string &str);
 std::string urlEncode(const std::string &input);
 int getWidth();

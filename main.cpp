@@ -21,7 +21,7 @@ using json = nlohmann::json;
 
 const int MCPP_VERSION(1);
 const int CONFIG_VERSION(2);
-const int PROGRAM_VERSION(5);
+const int PROGRAM_VERSION(6);
 
 const int THEME_VERSION(3);
 const int LANGUAGE_VERSION(2);
@@ -40,8 +40,9 @@ int main(int argc, char const *argv[])
 
     std::string cfgFilePath("config.json");
     bool moderatormode(false);
+    bool showAll(false);
 
-    int processArgs = arguments(args, cfgFilePath, moderatormode, VERSION);
+    int processArgs = arguments(args, cfgFilePath, moderatormode, VERSION, showAll);
     if (processArgs < 0)
         return 100;
     else if (processArgs == 1)
@@ -55,7 +56,7 @@ int main(int argc, char const *argv[])
     MessageMemory mem;
 
     // import data contained in json files
-    int icfg = configImporter(MCPP_VERSION, CONFIG_VERSION, MSG_MAX_SIZE, cfgFilePath, data, encryptenabled, moderatormode, genkey, serverurl, username, token, cfgPath, msgsettings, memsettings);
+    int icfg = configImporter(MCPP_VERSION, CONFIG_VERSION, MSG_MAX_SIZE, cfgFilePath, data, encryptenabled, moderatormode, genkey, serverurl, username, token, cfgPath, msgsettings, memsettings, showAll);
     if (icfg > 0)
         return icfg;
     icfg = themeImporter(THEME_VERSION, themeData, data);

@@ -124,8 +124,13 @@ static void getKeysV1(uint32 *key, uint32 *output)
     {
         if (i < 4)
             output[i] = key[i];
+        /*
+         * due to an error in the first version of AES,
+         * it has never been executed, and won't ever T-T
+         * but at least it is still somewhere in the code :p
         else if (i & 0b11 == 0)
             output[i] = output[i - 4] ^ SWord(rotate(output[i - 1])) ^ rcon(i >> 2);
+            */
         else
             output[i] = output[i - 4] ^ output[i - 1];
     }

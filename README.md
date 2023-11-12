@@ -41,7 +41,7 @@ If you don't know it, only type `/r`, then choose the ID of the message you want
 Then, press [ENTER], and you will be able to write and send your answer !
 
 ## Secure/Unsecure mode
-By defalut, encryption message is active (you can see that messages are encrypted when there is a **S** on green background), but if you want to send a message in unsecure mode (message will be sent without encryption), you can type `/u Unsecure message`.
+By defalut, encryption message is active (you can see that messages are encrypted when there is an **S** on green background), but if you want to send a message in unsecure mode (message will be sent without encryption), you can type `/u Unsecure message`.
 <br>
 To reply in unsafe mode, type `/ru x` or `/ru`<br>
 <br>
@@ -86,6 +86,7 @@ If you reply to a message of a group, it will automatically reply in the group.
 You can start MicaClient++ with arguments !
 - `-m, --moderator` enables **moderator view** to get messages ID (no you won't have rights to delete messages :p)
 - `--cfg path/to/a/config/file.json` to load other config (usefull when you have several accounts)
+- `--all` to print all the message history contained in backup.json (overwrites the theme "maxMessages" setting)
 
 ## Settings in config.json 
 There are many more settings available in config.json
@@ -146,9 +147,7 @@ If you are using Default theme (or a theme that supports it), you can modify som
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)
 - fix last message deleted → the message before appears twice
-- argument -all to see all messages
 - add /jg || /joingroup to add group in your configuration
-- add /lg || /listgroups see the list of the groups we have
 - add /leavegroup to remove group from your configuration
 - add a command to delete message from memory (maybe /delmsg on offline/deleted message → /forget)
 - Enable token protection by default (password that encrypt token)

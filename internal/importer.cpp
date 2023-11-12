@@ -16,7 +16,7 @@ int configImporter(int const &MCPP_VERSION, int const &CONFIG_VERSION, int const
                    std::string &cfgFilePath, json &data,
                    bool &encryptenabled, bool &moderatormode,
                    std::string &genkey, std::string &serverurl, std::string &username, std::string &token, std::string &cfgPath,
-                   Message::messageSettings &msgsettings, MessageMemory::memorySettings &memsettings)
+                   Message::messageSettings &msgsettings, MessageMemory::memorySettings &memsettings, bool &showAll)
 {
     std::ifstream f(cfgFilePath);
     data = json::parse(f);
@@ -43,8 +43,8 @@ int configImporter(int const &MCPP_VERSION, int const &CONFIG_VERSION, int const
                                                data["blockedUsers"],
                                                "",
                                                MSG_MAX_SIZE,
-                                               data["encryptionVersion"].get<int>()
-                                               );
+                                               data["encryptionVersion"].get<int>(),
+                                               showAll);
         memsettings = MessageMemory::memorySettings(data["settings"]["backupMessages"].get<bool>(), cfgPath);
     }
     catch (std::out_of_range &e)

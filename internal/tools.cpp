@@ -74,7 +74,7 @@ std::map<std::string, char> const escapeSequenceMap = {
     // Add more escape sequences as needed
 };
 
-int arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator, std::string const &v)
+int arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator, std::string const &v, bool &showAll)
 {
     for (size_t i = 0; i < args.size(); ++i)
     {
@@ -97,6 +97,10 @@ int arguments(std::vector<std::string> &args, std::string &cfgPath, bool &modera
         {
             std::cout << "MicaClient++ Version " << v << std::endl;
             return 1;
+        }
+        else if (args[i] == "--all")
+        {
+            showAll = true;
         }
         else if (args[i] == "--help" || args[i] == "-h")
         {
