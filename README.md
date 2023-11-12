@@ -145,6 +145,7 @@ If you are using Default theme (or a theme that supports it), you can modify som
 
 ---
 # Futures features : 
+- add config importer (upgrade compatibility version)
 - add /game with megamorpion implementation (submenus with /showgame /play /addgame /delgame)
 - add /adduser for admins (with /showuser /upuser)
 - fix last message deleted → the message before appears twice
