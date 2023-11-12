@@ -121,7 +121,7 @@ static void getKeys(uint32* key, uint32* output)
     {
         if(i<4)
             output[i]=key[i];
-        else if((i&0b11)==0)
+        else if(i&0b11==0)
             output[i]=output[i-4]^SWord(rotate(output[i-1]))^rcon(i>>2);
         else
             output[i]=output[i-4]^output[i-1];

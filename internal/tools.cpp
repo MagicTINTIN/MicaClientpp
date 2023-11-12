@@ -488,7 +488,7 @@ std::string charsToStringCleaner(unsigned char *data, int const &sizeofdata)
     size_t index = 0;
     uint32_t characterValue;
     size_t dataIndex = 0; // Index for the modified data
-    unsigned char modifiedData[sizeofdata];
+    unsigned char* modifiedData = new unsigned char[sizeofdata];
     modifiedData[0] = 0;
     while (index < sizeofdata && data[index] != (unsigned)'\0')
     {
@@ -498,7 +498,9 @@ std::string charsToStringCleaner(unsigned char *data, int const &sizeofdata)
     // Null-terminate the modifiedData to make it a valid C string
     modifiedData[dataIndex] = '\0';
 
-    return reinterpret_cast<char *>(modifiedData);
+    std::string returnedString = reinterpret_cast<char *>(modifiedData);
+    delete[] modifiedData;
+    return returnedString;
 }
 
 std::string replaceDelimiters(std::string str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::string const &lowerReplacement, std::string const &upperReplacement) noexcept

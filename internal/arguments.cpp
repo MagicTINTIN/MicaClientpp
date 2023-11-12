@@ -112,11 +112,11 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
         if (safemode || igmreply.visible)
         {
             std::string privatereplyprefix("");
-            unsigned char decryptedText[msgsettings.msgmaxsize];
+            unsigned char* decryptedText = new unsigned char[msgsettings.msgmaxsize];
             decryptedText[0] = 0;
-            unsigned char key[40];
+            unsigned char* key = new unsigned char[40];
             key[0] = 0;
-            unsigned char encryptedText[msgsettings.encryptedmaxsize];
+            unsigned char* encryptedText = new unsigned char[msgsettings.encryptedmaxsize];
             encryptedText[0] = 0;
 
             std::copy(input.cbegin(), input.cend(), decryptedText);
@@ -210,11 +210,11 @@ int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::str
     std::cout << NORMAL;
     if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
     {
-        unsigned char decryptedText[msgsettings.msgmaxsize];
+        unsigned char* decryptedText = new unsigned char[msgsettings.msgmaxsize];
         decryptedText[0] = 0;
-        unsigned char key[40];
+        unsigned char* key = new unsigned char[40];
         key[0] = 0;
-        unsigned char encryptedText[msgsettings.encryptedmaxsize];
+        unsigned char* encryptedText = new unsigned char[msgsettings.encryptedmaxsize];
         encryptedText[0] = 0;
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
@@ -223,6 +223,11 @@ int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::str
 
         std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
         exitSendCode = sendMessage(serverurl, "团" + privategroupname + "护" + encryptedInput, username, token);
+        
+        delete[] decryptedText;
+        delete[] key;
+        delete[] encryptedText;
+
         if (exitSendCode != 0)
         {
             std::cout << "SEND PRIVATE GROUP ERROR " << exitSendCode << std::endl;
@@ -239,11 +244,11 @@ int sendArg(Message::messageSettings &msgsettings, std::string &input, std::stri
 {
     if (msgsettings.securemsg)
     {
-        unsigned char decryptedText[msgsettings.msgmaxsize];
+        unsigned char* decryptedText = new unsigned char[msgsettings.msgmaxsize];
         decryptedText[0] = 0;
-        unsigned char key[40];
+        unsigned char* key = new unsigned char[40];
         key[0] = 0;
-        unsigned char encryptedText[msgsettings.encryptedmaxsize];
+        unsigned char* encryptedText = new unsigned char[msgsettings.encryptedmaxsize];
         encryptedText[0] = 0;
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
@@ -252,6 +257,10 @@ int sendArg(Message::messageSettings &msgsettings, std::string &input, std::stri
 
         std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
         exitSendCode = sendMessage(serverurl, "护" + encryptedInput, username, token);
+
+        delete[] decryptedText;
+        delete[] key;
+        delete[] encryptedText;
     }
     else
         exitSendCode = sendMessage(serverurl, input, username, token);
@@ -324,11 +333,11 @@ int pChannelSendArg(json &lang, json &theme, MessageMemory &mem, json &config, s
 
     if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
     {
-        unsigned char decryptedText[msgsettings.msgmaxsize];
+        unsigned char* decryptedText = new unsigned char[msgsettings.msgmaxsize];
         decryptedText[0] = 0;
-        unsigned char key[40];
+        unsigned char* key = new unsigned char[40];
         key[0] = 0;
-        unsigned char encryptedText[msgsettings.encryptedmaxsize];
+        unsigned char* encryptedText = new unsigned char[msgsettings.encryptedmaxsize];
         encryptedText[0] = 0;
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
@@ -337,6 +346,10 @@ int pChannelSendArg(json &lang, json &theme, MessageMemory &mem, json &config, s
 
         std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
         exitSendCode = sendMessage(serverurl, "团" + privategroupname + "护" + encryptedInput, username, token);
+
+        delete[] decryptedText;
+        delete[] key;
+        delete[] encryptedText;
         if (exitSendCode != 0)
         {
             std::cout << "SEND PRIVATE GROUP ERROR " << exitSendCode << std::endl;

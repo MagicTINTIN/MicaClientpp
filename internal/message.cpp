@@ -164,11 +164,11 @@ std::string Message::toString(json &lang, json &theme, messageSettings const &ms
             replaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
-                unsigned char tdecryptedText[msettings.encryptedmaxsize];
+                unsigned char* tdecryptedText = new unsigned char[msettings.encryptedmaxsize];
                 tdecryptedText[0] = 0;
-                unsigned char tkey[40];
+                unsigned char* tkey = new unsigned char[40];
                 tkey[0] = 0;
-                unsigned char tencryptedText[msettings.encryptedmaxsize];
+                unsigned char* tencryptedText = new unsigned char[msettings.encryptedmaxsize];
                 tencryptedText[0] = 0;
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
                 if (igm.isgroup)
@@ -189,6 +189,9 @@ std::string Message::toString(json &lang, json &theme, messageSettings const &ms
                 decrypted = stringCleaner(decryptedContent);
                 cleanMessageList(decrypted);
                 text = decrypted;
+                delete[] tdecryptedText;
+                delete[] tkey;
+                delete[] tencryptedText;
             }
             else
             {
@@ -275,11 +278,11 @@ std::string Message::getReplyContent(messageSettings const &msettings, isgroupme
             replaceStringInPlace(copyContent, "护", "");
             if (isEncryptedMessage(copyContent))
             {
-                unsigned char tdecryptedText[msettings.encryptedmaxsize];
+                unsigned char* tdecryptedText = new unsigned char[msettings.encryptedmaxsize];
                 tdecryptedText[0] = 0;
-                unsigned char tkey[40];
+                unsigned char* tkey = new unsigned char[40];
                 tkey[0] = 0;
-                unsigned char tencryptedText[msettings.encryptedmaxsize];
+                unsigned char* tencryptedText = new unsigned char[msettings.encryptedmaxsize];
                 tencryptedText[0] = 0;
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
                 if (igm.isgroup)
@@ -294,6 +297,10 @@ std::string Message::getReplyContent(messageSettings const &msettings, isgroupme
                 decrypted = stringCleaner(decryptedContent);
                 cleanMessageList(decryptedContent);
                 text = decrypted;
+
+                delete[] tdecryptedText;
+                delete[] tkey;
+                delete[] tencryptedText;
             }
             else
                 text = copyContent;
