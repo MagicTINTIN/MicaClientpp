@@ -28,7 +28,7 @@ const int LANGUAGE_VERSION(1);
 
 const std::string VERSION(std::to_string(MCPP_VERSION) + "." + std::to_string(CONFIG_VERSION) + "." + std::to_string(PROGRAM_VERSION));
 
-const int MSG_MAX_SIZE(490);
+const int MSG_MAX_SIZE(MsgSettings::msgmaxsize);
 
 int main(int argc, char const *argv[])
 {
