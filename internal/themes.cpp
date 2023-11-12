@@ -69,6 +69,7 @@ std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv,
     std::string displayContent = tv.messageContent;
     if (theme["formatText"].get<bool>())
     {
+        if (false) {
         displayContent = replaceDelimiters(displayContent, "**", "**", getColor("BOLD"), getColor("NORMAL"));
         displayContent = replaceDelimiters(displayContent, "__", "__", getColor("UNDERLINED"), getColor("NORMAL"));
         displayContent = replaceDelimiters(displayContent, "*", "*", getColor("ITALIC"), getColor("NORMAL"));
@@ -76,6 +77,10 @@ std::string themeProcessStringVar(json &lang, std::string s, themeVariables &tv,
         displayContent = replaceDelimiters(displayContent, "~~", "~~", getColor("STRIKED"), getColor("NORMAL"));
         displayContent = replaceDelimiters(displayContent, "```", "```", getColor("REVERSED"), getColor("NORMAL"));
         displayContent = replaceDelimiters(displayContent, "`", "`", getColor("REVERSED"), getColor("NORMAL"));
+        }
+        else {
+            displayContent = textFormatter(displayContent);
+        }
 
         replaceStringInPlace(displayContent, "\\\\", "\\");
         replaceStringInPlace(displayContent, "\\_", "_");

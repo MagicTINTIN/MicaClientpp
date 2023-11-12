@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <sstream>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -166,6 +167,7 @@ std::string Message::toString(json &lang, json &theme, messageSettings const &ms
                 unsigned char tdecryptedText[MsgSettings::encryptedmaxsize] = {};
                 unsigned char tkey[40] = {};
                 unsigned char tencryptedText[MsgSettings::encryptedmaxsize] = {};
+
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
                 if (igm.isgroup)
                     std::copy(igm.key.cbegin(), igm.key.cend(), tkey);
@@ -274,6 +276,7 @@ std::string Message::getReplyContent(messageSettings const &msettings, isgroupme
                 unsigned char tdecryptedText[MsgSettings::encryptedmaxsize] = {};
                 unsigned char tkey[40] = {};
                 unsigned char tencryptedText[MsgSettings::encryptedmaxsize] = {};
+
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
                 if (igm.isgroup)
                     std::copy(igm.key.cbegin(), igm.key.cend(), tkey);

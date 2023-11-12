@@ -1,126 +1,168 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "[MAIN] C/C++: g++ build and debug main file",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/debug.out",
-        "args": [
-            "-lcurl",
-            "${workspaceFolder}/internal/message.cpp",
-            "${workspaceFolder}/internal/messagememory.cpp",
-            "${workspaceFolder}/internal/display.cpp",
-            "${workspaceFolder}/internal/aes.cpp",
-            "${workspaceFolder}/internal/requests.cpp",
-            "${workspaceFolder}/internal/tools.cpp",
-            "${workspaceFolder}/internal/arguments.cpp",
-            "${workspaceFolder}/internal/colors.cpp",
-            "${workspaceFolder}/internal/importer.cpp",
-            "${workspaceFolder}/internal/themes.cpp",
-        ],
-        "stopAtEntry": false,
-        "cwd": "${workspaceFolder}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "gdb",
-        "miDebuggerPath": "/usr/bin/gdb",
-        "setupCommands": [
-          {
-            "description": "Enable pretty-printing for gdb",
-            "text": "-enable-pretty-printing",
-            "ignoreFailures": true
-          }
-        ],
-        "preLaunchTask": "[MAIN] C/C++: g++ build main file",
-      },
-      {
-        "name": "[MAIN] C/C++: g++ Debug ONLY main file",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/debug.out",
-        "args": [
-            "-lcurl",
-            "${workspaceFolder}/internal/message.cpp",
-            "${workspaceFolder}/internal/messagememory.cpp",
-            "${workspaceFolder}/internal/display.cpp",
-            "${workspaceFolder}/internal/aes.cpp",
-            "${workspaceFolder}/internal/requests.cpp",
-            "${workspaceFolder}/internal/tools.cpp",
-            "${workspaceFolder}/internal/arguments.cpp",
-            "${workspaceFolder}/internal/colors.cpp",
-            "${workspaceFolder}/internal/importer.cpp",
-            "${workspaceFolder}/internal/themes.cpp",
-        ],
-        "stopAtEntry": false,
-        "cwd": "${workspaceFolder}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "gdb",
-        "miDebuggerPath": "/usr/bin/gdb",
-        "setupCommands": [
-          {
-            "description": "Enable pretty-printing for gdb",
-            "text": "-enable-pretty-printing",
-            "ignoreFailures": true
-          }
-        ]
-      },
-      {
-        "name": "[ACTIVE] C/C++: g++ build and debug active file",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/${fileBasenameNoExtension}Debug.out",
-        "args": [
-            "-lcurl",
-            "${workspaceFolder}/internal/message.cpp",
-            "${workspaceFolder}/internal/messagememory.cpp",
-            "${workspaceFolder}/internal/display.cpp",
-            "${workspaceFolder}/internal/aes.cpp",
-            "${workspaceFolder}/internal/requests.cpp",
-            "${workspaceFolder}/internal/tools.cpp",
-            "${workspaceFolder}/internal/arguments.cpp",
-            "${workspaceFolder}/internal/colors.cpp",
-            "${workspaceFolder}/internal/importer.cpp",
-            "${workspaceFolder}/internal/themes.cpp",
-        ],
-        "stopAtEntry": false,
-        "cwd": "${workspaceFolder}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "gdb",
-        "miDebuggerPath": "/usr/bin/gdb",
-        "setupCommands": [
-          {
-            "description": "Enable pretty-printing for gdb",
-            "text": "-enable-pretty-printing",
-            "ignoreFailures": true
-          }
-        ],
-        "preLaunchTask": "[ACTIVE] C/C++: g++ build acitve file",
-      },
-      {
-        "name": "[ACTIVE/NO IMPORT] C/C++: g++ build and debug",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/${fileBasenameNoExtension}Debug.out",
-        "args": [
-        ],
-        "stopAtEntry": false,
-        "cwd": "${workspaceFolder}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "gdb",
-        "miDebuggerPath": "/usr/bin/gdb",
-        "setupCommands": [
-          {
-            "description": "Enable pretty-printing for gdb",
-            "text": "-enable-pretty-printing",
-            "ignoreFailures": true
-          }
-        ],
-        "preLaunchTask": "[ACTIVE/NO IMPORT] C/C++: g++ build acitve file",
-      }
-  
-    ]
-  }
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "CMake Debug MicaClient",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/debug/MicaClient",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
+    {
+      "name": "CMake Debug MagicTINTIN MicaClient",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/debug/MicaClient",
+      "args": [
+        "--cfg",
+        "../mcppcfg/mcppmagictintin.json",
+        "-m"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
+    {
+      "name": "[MAIN] C/C++: g++ build and debug main file",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/debug.out",
+      "args": [
+        "-lcurl",
+        "${workspaceFolder}/internal/message.cpp",
+        "${workspaceFolder}/internal/messagememory.cpp",
+        "${workspaceFolder}/internal/display.cpp",
+        "${workspaceFolder}/internal/aes.cpp",
+        "${workspaceFolder}/internal/requests.cpp",
+        "${workspaceFolder}/internal/tools.cpp",
+        "${workspaceFolder}/internal/arguments.cpp",
+        "${workspaceFolder}/internal/colors.cpp",
+        "${workspaceFolder}/internal/importer.cpp",
+        "${workspaceFolder}/internal/themes.cpp",
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "[MAIN] C/C++: g++ build main file",
+    },
+    {
+      "name": "[MAIN] C/C++: g++ Debug ONLY main file",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/debug.out",
+      "args": [
+        "-lcurl",
+        "${workspaceFolder}/internal/message.cpp",
+        "${workspaceFolder}/internal/messagememory.cpp",
+        "${workspaceFolder}/internal/display.cpp",
+        "${workspaceFolder}/internal/aes.cpp",
+        "${workspaceFolder}/internal/requests.cpp",
+        "${workspaceFolder}/internal/tools.cpp",
+        "${workspaceFolder}/internal/arguments.cpp",
+        "${workspaceFolder}/internal/colors.cpp",
+        "${workspaceFolder}/internal/importer.cpp",
+        "${workspaceFolder}/internal/themes.cpp",
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
+      "name": "[ACTIVE] C/C++: g++ build and debug active file",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/${fileBasenameNoExtension}Debug.out",
+      "args": [
+        "-lcurl",
+        "${workspaceFolder}/internal/message.cpp",
+        "${workspaceFolder}/internal/messagememory.cpp",
+        "${workspaceFolder}/internal/display.cpp",
+        "${workspaceFolder}/internal/aes.cpp",
+        "${workspaceFolder}/internal/requests.cpp",
+        "${workspaceFolder}/internal/tools.cpp",
+        "${workspaceFolder}/internal/arguments.cpp",
+        "${workspaceFolder}/internal/colors.cpp",
+        "${workspaceFolder}/internal/importer.cpp",
+        "${workspaceFolder}/internal/themes.cpp",
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "[ACTIVE] C/C++: g++ build acitve file",
+    },
+    {
+      "name": "[ACTIVE/NO IMPORT] C/C++: g++ build and debug",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/${fileBasenameNoExtension}Debug.out",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "[ACTIVE/NO IMPORT] C/C++: g++ build acitve file",
+    }
+  ]
+}

@@ -217,6 +217,7 @@ int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::str
 
         std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
         exitSendCode = sendMessage(serverurl, "团" + privategroupname + "护" + encryptedInput, username, token);
+
         if (exitSendCode != 0)
         {
             std::cout << "SEND PRIVATE GROUP ERROR " << exitSendCode << std::endl;
@@ -325,6 +326,7 @@ int pChannelSendArg(json &lang, json &theme, MessageMemory &mem, json &config, s
 
         std::string encryptedInput(reinterpret_cast<char *>(encryptedText));
         exitSendCode = sendMessage(serverurl, "团" + privategroupname + "护" + encryptedInput, username, token);
+
         if (exitSendCode != 0)
         {
             std::cout << "SEND PRIVATE GROUP ERROR " << exitSendCode << std::endl;

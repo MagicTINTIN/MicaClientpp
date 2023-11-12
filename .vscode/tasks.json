@@ -1,6 +1,23 @@
 {
     "tasks": [
         {
+            "label": "cmake build MicaClient",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                ".",
+                "--target",
+                "MicaClient",
+                "--config",
+                "Debug"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "type": "cppbuild",
             "label": "[MAIN] C/C++: g++ build main file",
             "command": "/usr/bin/g++",
