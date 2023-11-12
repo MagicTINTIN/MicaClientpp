@@ -166,6 +166,7 @@ void MessageMemory::print(json &lang, json &theme, json config, Message::message
                 msgnb++;
                 stringmsglist.emplace_back(msgstr);
             }
+            memory[msgfrommem] = msg;
             msgfrommem--;
         }
         for (int i=msgnb - 1; i >= 0; i--)
