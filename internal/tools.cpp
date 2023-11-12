@@ -489,8 +489,9 @@ std::string charsToStringCleaner(unsigned char *data, int const &sizeofdata)
     size_t index = 0;
     uint32_t characterValue;
     size_t dataIndex = 0; // Index for the modified data
-    unsigned char* modifiedData = new unsigned char[sizeofdata];
-    modifiedData[0] = 0;
+  
+    unsigned char modifiedData[MsgSettings::encryptedmaxsize] = {};
+
     while (index < sizeofdata && data[index] != (unsigned)'\0')
     {
         decodeUTF8Character(data, modifiedData, &index, &dataIndex, &characterValue);
@@ -500,7 +501,6 @@ std::string charsToStringCleaner(unsigned char *data, int const &sizeofdata)
     modifiedData[dataIndex] = '\0';
 
     std::string returnedString = reinterpret_cast<char *>(modifiedData);
-    delete[] modifiedData;
     return returnedString;
 }
 
