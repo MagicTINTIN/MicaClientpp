@@ -48,4 +48,10 @@ std::string charsToStringCleaner(unsigned char *data, int const &sizeofdata);
 
 std::string replaceDelimiters(std::string str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::string const &lowerReplacement, std::string const &upperReplacement) noexcept;
 
+void delimitersOuterRanges(std::string &str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::vector<size_t[2]> ranges) noexcept;
+
+void delimitersRanges(std::string &str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::vector<std::vector<size_t>> &ranges) noexcept;
+
+std::string textFormatter(std::string str) noexcept;
+
 #endif //TOOLS_H_INCLUDED

@@ -12,6 +12,7 @@
 #elif defined(__linux__)
 #include <unistd.h>
 #include <sys/ioctl.h>
+#include <codecvt>
 #endif
 #include "colors.h"
 #include "tools.h"
@@ -525,9 +526,193 @@ std::string replaceDelimiters(std::string str, std::string const &lowerDelimiter
             str.replace(firstDelPos, lowerDelimiter.length() + strBetweenTwoDels.length() + upperDelimiter.length(), newBetweenTwoDels);
             firstDelPos += newBetweenTwoDels.length();
         }
-        firstDelPos = secondDelPos - 1;
+        firstDelPos = secondDelPos;
         if (firstDelPos >= str.length())
             firstDelPos = std::string::npos;
     }
     return str;
+}
+
+void delimitersOuterRanges(std::string &str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::vector<std::vector<size_t>> ranges) noexcept
+{
+    size_t firstDelPos = 0, secondDelPos = 0;
+
+    while ((firstDelPos = str.find(lowerDelimiter, firstDelPos)) != std::string::npos)
+    {
+        secondDelPos = firstDelPos + 1;
+        while ((secondDelPos = str.find(upperDelimiter, secondDelPos)) != std::string::npos && (secondDelPos != 0 && str[secondDelPos - 1] == '\\'))
+        {
+            secondDelPos += upperDelimiter.length();
+            if (secondDelPos >= str.length())
+                secondDelPos = std::string::npos - 1;
+        }
+
+        if (secondDelPos != std::string::npos && (secondDelPos == 0 || str[secondDelPos - 1] != '\\'))
+        {
+            //std::cout << "Found ! " << upperDelimiter << std::endl;
+            std::string strBetweenTwoDels = str.substr(firstDelPos + lowerDelimiter.length(), secondDelPos - firstDelPos - lowerDelimiter.length());
+
+            ranges.push_back({firstDelPos, lowerDelimiter.length() + strBetweenTwoDels.length() + upperDelimiter.length()});
+        }
+        firstDelPos = secondDelPos;
+        if (firstDelPos >= str.length())
+            firstDelPos = std::string::npos;
+    }
+}
+
+void delimitersRanges(std::string &str, std::string const &lowerDelimiter, std::string const &upperDelimiter, std::vector<std::vector<size_t>> &ranges) noexcept
+{
+    size_t firstDelPos = 0, secondDelPos = 0;
+
+    //std::cout << firstDelPos << " n1 " << secondDelPos << std::endl;
+    while ((firstDelPos = str.find(lowerDelimiter, firstDelPos)) != std::string::npos)
+    {
+        //std::cout << firstDelPos << " l1 " << secondDelPos << std::endl;
+        secondDelPos = firstDelPos + lowerDelimiter.length();
+        while ((secondDelPos = str.find(upperDelimiter, secondDelPos)) != std::string::npos && (secondDelPos != 0 && str[secondDelPos - 1] == '\\'))
+        {
+            secondDelPos += upperDelimiter.length();
+            if (secondDelPos >= str.length())
+                secondDelPos = std::string::npos;
+        }
+
+        if (secondDelPos != std::string::npos && (secondDelPos == 0 || str[secondDelPos - 1] != '\\'))
+        {
+            std::string strBetweenTwoDels = str.substr(firstDelPos + lowerDelimiter.length(), secondDelPos - firstDelPos - lowerDelimiter.length());
+
+            //std::cout << firstDelPos << " finding : " << strBetweenTwoDels << std::endl;
+            ranges.push_back({firstDelPos, secondDelPos}); // lowerDelimiter.length() + strBetweenTwoDels.length()
+        }
+
+        if (firstDelPos + upperDelimiter.length() >= str.length()) {
+            firstDelPos = std::string::npos;
+            secondDelPos = std::string::npos;
+        }
+        else if (secondDelPos == std::string::npos) {
+            firstDelPos = std::string::npos;
+        }
+        else {
+            firstDelPos = secondDelPos + upperDelimiter.length();
+        }
+    }
+}
+
+std::string textFormatter(std::string str) noexcept
+{
+    //std::cout << "Old string : " << str << std::endl;
+    std::string newstr;
+
+    std::string boldDelimiter = "**";
+    std::string firstItalicDelimiter = "*";
+    std::string secondItalicDelimiter = "_";
+    std::string underlinedDelimiter = "__";
+    std::string reversedDelimiter = "`";
+    std::string strikedDelimiter = "~~";
+
+    // Bold
+    bool isBold = false;
+    std::vector<std::vector<size_t>> rangesBold;
+    int elementBoldNb = 0;
+    delimitersRanges(str, boldDelimiter, boldDelimiter, rangesBold);
+    //std::cout << "ebnb : " << elementBoldNb << " sizeofrb : " << rangesBold.size() << std::endl;
+
+    // Italic
+    bool isItalic = false;
+    std::vector<std::vector<size_t>> rangesItalic;
+    int elementItalicNb = 0;
+    delimitersRanges(str, firstItalicDelimiter, firstItalicDelimiter, rangesItalic);
+    delimitersRanges(str, secondItalicDelimiter, secondItalicDelimiter, rangesItalic);
+
+    // Underlined
+    bool isUnderlined = false;
+    std::vector<std::vector<size_t>> rangesUnderlined;
+    int elementUnderlinedNb = 0;
+    delimitersRanges(str, underlinedDelimiter, underlinedDelimiter, rangesUnderlined);
+
+    // Reversed
+    bool isReversed = false;
+    std::vector<std::vector<size_t>> rangesReversed;
+    int elementReversedNb = 0;
+    delimitersRanges(str, reversedDelimiter, reversedDelimiter, rangesReversed);
+
+    // Striked
+    bool isStriked = false;
+    std::vector<std::vector<size_t>> rangesStriked;
+    int elementStrikedNb = 0;
+    delimitersRanges(str, strikedDelimiter, strikedDelimiter, rangesStriked);
+
+    size_t charnb = 0;
+    bool actualiseStyle = false;
+    size_t delimiterLengthLeft = 0;
+    while (charnb < str.length())
+    {
+        // std::cout << " l3 " << charnb << std::endl;
+        // std::cout << "ebnb : " << elementBoldNb << " sizeofrb : " << rangesBold.size() << std::endl;
+        if (elementBoldNb < rangesBold.size() && charnb == rangesBold[elementBoldNb][isBold ? 1 : 0])
+        {
+            isBold = isBold ? false : true;
+            if (!isBold)
+                elementBoldNb++;
+            actualiseStyle = true;
+            delimiterLengthLeft = std::max(delimiterLengthLeft, boldDelimiter.length());
+        }
+        if (elementItalicNb < rangesItalic.size() && charnb == rangesItalic[elementItalicNb][isItalic ? 1 : 0])
+        {
+            isItalic = isItalic ? false : true;
+            if (!isItalic)
+                elementItalicNb++;
+            actualiseStyle = true;
+            delimiterLengthLeft = std::max(delimiterLengthLeft, firstItalicDelimiter.length());
+        }
+        if (elementUnderlinedNb < rangesUnderlined.size() && charnb == rangesUnderlined[elementUnderlinedNb][isUnderlined ? 1 : 0])
+        {
+            isUnderlined = isUnderlined ? false : true;
+            if (!isUnderlined)
+                elementUnderlinedNb++;
+            actualiseStyle = true;
+            delimiterLengthLeft = std::max(delimiterLengthLeft, underlinedDelimiter.length());
+        }
+        if (elementReversedNb < rangesReversed.size() && charnb == rangesReversed[elementReversedNb][isReversed ? 1 : 0])
+        {
+            isReversed = isReversed ? false : true;
+            if (!isReversed)
+                elementReversedNb++;
+            actualiseStyle = true;
+            delimiterLengthLeft = std::max(delimiterLengthLeft, reversedDelimiter.length());
+        }
+        if (elementStrikedNb < rangesStriked.size() && charnb == rangesStriked[elementStrikedNb][isStriked ? 1 : 0])
+        {
+            isStriked = isStriked ? false : true;
+            if (!isStriked)
+                elementStrikedNb++;
+            actualiseStyle = true;
+            delimiterLengthLeft = std::max(delimiterLengthLeft, strikedDelimiter.length());
+        }
+        //std::cout << "DelimLength " << delimiterLengthLeft << " : " << str.at(charnb) << std::endl;
+        if (actualiseStyle)
+        {
+            actualiseStyle = false;
+            newstr += getColor("NORMAL");
+            if (isBold)
+                newstr += getColor("BOLD");
+            if (isItalic)
+                newstr += getColor("ITALIC");
+            if (isUnderlined)
+                newstr += getColor("UNDERLINED");
+            if (isReversed)
+                newstr += getColor("REVERSED");
+            if (isStriked)
+                newstr += getColor("STRIKED");
+        }
+        if (delimiterLengthLeft > 0)
+        {
+            delimiterLengthLeft--;
+        }
+        else
+            newstr += str[charnb];
+        charnb++;
+    }
+
+    //std::cout << "New string : " << newstr << std::endl;
+    return newstr;
 }
