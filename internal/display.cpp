@@ -43,7 +43,7 @@ void createLine()
 void showHelp(json &lang, json &theme, bool moderator)
 {
     clearScreen();
-    displayLogo();
+    displayLogo(0);
     json hl = lang["commands"]["help"];
     std::cout << theme["themeName"].get<std::string>() << " v" << theme["themeVersion"].get<int>() << std::endl;
     createLine();
@@ -124,6 +124,10 @@ int getArguments(json &lang, json &theme, MessageMemory &mem,
     else if (input.rfind("/g", 0) == 0)
     {
         return groupArg(lang, theme, input, msgsettings, config);
+    }
+    else if (input.rfind("/lg", 0) == 0 || input.rfind("/listgroups", 0) == 0)
+    {
+        return listGroups(lang, theme, config, msgsettings);
     }
     else
     {

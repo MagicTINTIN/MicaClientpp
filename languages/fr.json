@@ -1,7 +1,7 @@
 {
     "package":"language",
     "type":"fr",
-    "compatibilityVersion": 1,
+    "compatibilityVersion": 2,
     "window":{
         "gentitle":"Général"
     },
@@ -59,6 +59,16 @@
             "endp1":"Appuyez sur ",
             "endp2":"[ENTRÉE]",
             "endp3":" pour revenir au chat"
+        },
+        "listgroups":{
+            "exec":"Voici la liste des groupes disponibles :",
+            "needupdate":"Les paramètres de ce groupes nécessitent une mise à jour",
+            "publicgroup":"Groupe public",
+            "userNb":" utilisateur",
+            "usersNb":" utilisateurs",
+            "key":"     Clé: ",
+            "userList":"     Utilisateur: ",
+            "usersList":"     Utilisateurs: "
         }
     }
 }

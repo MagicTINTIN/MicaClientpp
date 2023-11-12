@@ -30,4 +30,6 @@ int groupArg(json &lang, json &theme, std::string &input, Message::messageSettin
 
 int pChannelSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::string &input, std::string const &serverurl, Message::messageSettings &msgsettings, std::string &username, std::string &token, int &exitSendCode);
 
+int listGroups(json &lang, json &theme, json &config, Message::messageSettings &msgsettings);
+
 #endif // ARGUMENTS_H_INCLUDED

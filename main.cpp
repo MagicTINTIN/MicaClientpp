@@ -21,10 +21,10 @@ using json = nlohmann::json;
 
 const int MCPP_VERSION(1);
 const int CONFIG_VERSION(2);
-const int PROGRAM_VERSION(3);
+const int PROGRAM_VERSION(5);
 
 const int THEME_VERSION(3);
-const int LANGUAGE_VERSION(1);
+const int LANGUAGE_VERSION(2);
 
 const std::string VERSION(std::to_string(MCPP_VERSION) + "." + std::to_string(CONFIG_VERSION) + "." + std::to_string(PROGRAM_VERSION));
 

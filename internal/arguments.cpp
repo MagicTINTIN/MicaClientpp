@@ -1,4 +1,5 @@
 #include <string>
+#include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include "message.h"
@@ -334,5 +335,47 @@ int pChannelSendArg(json &lang, json &theme, MessageMemory &mem, json &config, s
         }
         return 3;
     }
+    return 0;
+}
+
+/* LIST PRIVATE GROUPS */
+int listGroups(json &lang, json &theme, json &config, Message::messageSettings &msgsettings)
+{
+    std::cout << getColor("REVERSED") << lang["commands"]["listgroups"]["exec"].get<std::string>() << getColor("NORMAL") << std::endl;
+    for (auto it = config["discussionGroupKeys"].begin(); it != config["discussionGroupKeys"].end(); ++it)
+    {
+        std::string name = it.key();
+        json value = it.value();
+
+        std::cout << " - " << name << ": ";
+        if (config["discussionGroupKeys"].contains(name) &&
+            config["discussionGroupKeys"][name].contains("key") &&
+            config["discussionGroupKeys"][name].contains("users") &&
+            config["discussionGroupKeys"][name].contains("blocked"))
+        {
+            std::string keyOfGroup = value["key"];
+            std::vector<std::string> users = value["users"];
+
+            if (std::find(users.begin(), users.end(), "*") != users.end())
+            {
+                std::cout << lang["commands"]["listgroups"]["publicgroup"].get<std::string>() << std::endl;
+                std::cout << lang["commands"]["listgroups"]["key"].get<std::string>() << keyOfGroup << std::endl;
+            }
+            else
+            {
+                std::cout << users.size() << ((users.size() > 1) ? lang["commands"]["listgroups"]["usersNb"].get<std::string>() : lang["commands"]["listgroups"]["userNb"].get<std::string>()) << std::endl;
+                std::cout << lang["commands"]["listgroups"]["key"].get<std::string>() << keyOfGroup << std::endl;
+                std::cout << ((users.size() > 1) ? lang["commands"]["listgroups"]["usersList"].get<std::string>() : lang["commands"]["listgroups"]["userList"].get<std::string>());
+                for (const auto &user : users)
+                {
+                    std::cout << user << " ";
+                }
+                std::cout << std::endl;
+            }
+        }
+        else
+            std::cout << lang["commands"]["listgroups"]["needupdate"].get<std::string>() << std::endl;
+    }
+    std::cin.get();
     return 0;
 }
