@@ -112,9 +112,9 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
         if (safemode || igmreply.visible)
         {
             std::string privatereplyprefix("");
-            unsigned char decryptedText[msgsettings.msgmaxsize] = "";
+            unsigned char decryptedText[MsgSettings::msgmaxsize] = {};
             unsigned char key[40] = "";
-            unsigned char encryptedText[msgsettings.encryptedmaxsize] = "";
+            unsigned char encryptedText[MsgSettings::encryptedmaxsize] = {};
 
             std::copy(input.cbegin(), input.cend(), decryptedText);
             if (igmreply.visible)
@@ -207,9 +207,9 @@ int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::str
     std::cout << NORMAL;
     if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
     {
-        unsigned char decryptedText[msgsettings.msgmaxsize] = "";
+        unsigned char decryptedText[MsgSettings::msgmaxsize] = {};
         unsigned char key[40] = "";
-        unsigned char encryptedText[msgsettings.encryptedmaxsize] = "";
+        unsigned char encryptedText[MsgSettings::encryptedmaxsize] = {};
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
         std::copy(privateg.key.cbegin(), privateg.key.cend(), key);
@@ -233,9 +233,9 @@ int sendArg(Message::messageSettings &msgsettings, std::string &input, std::stri
 {
     if (msgsettings.securemsg)
     {
-        unsigned char decryptedText[msgsettings.msgmaxsize] = "";
+        unsigned char decryptedText[MsgSettings::msgmaxsize] = {};
         unsigned char key[40] = "";
-        unsigned char encryptedText[msgsettings.encryptedmaxsize] = "";
+        unsigned char encryptedText[MsgSettings::encryptedmaxsize] = {};
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
         std::copy(msgsettings.generalkey.cbegin(), msgsettings.generalkey.cend(), key);
@@ -315,9 +315,9 @@ int pChannelSendArg(json &lang, json &theme, MessageMemory &mem, json &config, s
 
     if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
     {
-        unsigned char decryptedText[msgsettings.msgmaxsize] = "";
+        unsigned char decryptedText[MsgSettings::msgmaxsize] = {};
         unsigned char key[40] = "";
-        unsigned char encryptedText[msgsettings.encryptedmaxsize] = "";
+        unsigned char encryptedText[MsgSettings::encryptedmaxsize] = {};
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
         std::copy(privateg.key.cbegin(), privateg.key.cend(), key);

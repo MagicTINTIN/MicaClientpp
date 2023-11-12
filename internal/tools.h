@@ -6,6 +6,11 @@
 #include "../includes/nlohmann/json.hpp"
 using json = nlohmann::json;
 
+struct MsgSettings {
+    static const size_t msgmaxsize = 490;
+    static const size_t encryptedmaxsize = 980;
+};
+
 bool replaceRegexWishBoundaries(std::string &text, const std::string &word, const std::string &replacement);
 bool regexWishBoundaries(std::string &text, const std::string &word);
 int arguments(std::vector<std::string> &args, std::string &cfgPath, bool &moderator, std::string const &v);
