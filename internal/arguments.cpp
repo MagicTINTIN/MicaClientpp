@@ -113,7 +113,7 @@ int replyArg(json &lang, json &theme, json config, MessageMemory &mem, std::stri
         {
             std::string privatereplyprefix("");
             unsigned char decryptedText[MsgSettings::msgmaxsize] = {};
-            unsigned char key[40] = "";
+            unsigned char key[40] = {};
             unsigned char encryptedText[MsgSettings::encryptedmaxsize] = {};
 
             std::copy(input.cbegin(), input.cend(), decryptedText);
@@ -208,7 +208,7 @@ int pSendArg(json &lang, json &theme, MessageMemory &mem, json &config, std::str
     if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
     {
         unsigned char decryptedText[MsgSettings::msgmaxsize] = {};
-        unsigned char key[40] = "";
+        unsigned char key[40] = {};
         unsigned char encryptedText[MsgSettings::encryptedmaxsize] = {};
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
@@ -234,7 +234,7 @@ int sendArg(Message::messageSettings &msgsettings, std::string &input, std::stri
     if (msgsettings.securemsg)
     {
         unsigned char decryptedText[MsgSettings::msgmaxsize] = {};
-        unsigned char key[40] = "";
+        unsigned char key[40] = {};
         unsigned char encryptedText[MsgSettings::encryptedmaxsize] = {};
 
         std::copy(input.cbegin(), input.cend(), decryptedText);
@@ -316,7 +316,7 @@ int pChannelSendArg(json &lang, json &theme, MessageMemory &mem, json &config, s
     if (input.length() > 0 && input.find_first_not_of(' ') != std::string::npos)
     {
         unsigned char decryptedText[MsgSettings::msgmaxsize] = {};
-        unsigned char key[40] = "";
+        unsigned char key[40] = {};
         unsigned char encryptedText[MsgSettings::encryptedmaxsize] = {};
 
         std::copy(input.cbegin(), input.cend(), decryptedText);

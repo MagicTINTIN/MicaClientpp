@@ -164,7 +164,7 @@ std::string Message::toString(json &lang, json &theme, messageSettings const &ms
             if (isEncryptedMessage(copyContent))
             {
                 unsigned char tdecryptedText[MsgSettings::encryptedmaxsize] = {};
-                unsigned char tkey[40] = "";
+                unsigned char tkey[40] = {};
                 unsigned char tencryptedText[MsgSettings::encryptedmaxsize] = {};
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
                 if (igm.isgroup)
@@ -272,7 +272,7 @@ std::string Message::getReplyContent(messageSettings const &msettings, isgroupme
             if (isEncryptedMessage(copyContent))
             {
                 unsigned char tdecryptedText[MsgSettings::encryptedmaxsize] = {};
-                unsigned char tkey[40] = "";
+                unsigned char tkey[40] = {};
                 unsigned char tencryptedText[MsgSettings::encryptedmaxsize] = {};
                 std::copy(copyContent.cbegin(), copyContent.cend(), tencryptedText);
                 if (igm.isgroup)
