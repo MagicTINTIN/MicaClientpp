@@ -17,6 +17,7 @@ int showReplying(json &lang, json &theme, json config, MessageMemory &mem, int i
 int getArguments(json &lang, json &theme, MessageMemory &mem, Message::messageSettings &msgsettings, std::string const &serverurl, json &config, std::string &username, std::string &token, std::string &input, bool const &moderatormode, int &exitUpdateCode, int &exitSendCode);
 void title(std::string t);
 void displayLogo(int size = 1);
+void printError(int const &type, int const &errNb);
 void clearScreen();
 
 #endif // DISPLAY_H_INCLUDED

@@ -43,7 +43,7 @@ int getServerUpdate(std::string const &serverurl, MessageMemory &mem, MessageMem
         }
         else
         {
-            std::cout << "An error has occured, may be check the server in config.json" << std::endl;
+            std::cout << "An error has occured, maybe check the server in config.json" << std::endl;
             exitcode = 2;
         }
     }
@@ -73,7 +73,7 @@ int sendMessage(std::string const &serverurl, std::string const &content, std::s
         res = curl_easy_perform(curl);
         if (CURLE_OK != res)
         {
-            std::cout << "An error has occured, may be check the server in config.json" << std::endl;
+            std::cout << "An error has occured, maybe check the server in config.json" << std::endl;
             exitcode = 3;
         }
     }
@@ -104,7 +104,7 @@ int delMessage(std::string const &serverurl, std::string const &msgid, std::stri
         res = curl_easy_perform(curl);
         if (CURLE_OK != res)
         {
-            std::cout << "An error has occured, may be check the server in config.json" << std::endl;
+            std::cout << "An error has occured, maybe check the server in config.json" << std::endl;
             exitcode = 4;
         }
     }

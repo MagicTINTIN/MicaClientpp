@@ -150,15 +150,42 @@ void title(std::string t)
 
 /**
  * Prints the logo in ascii
-*/
-void displayLogo(int size) {
-    if (size == 0) {
+ */
+void displayLogo(int size)
+{
+    if (size == 0)
+    {
         std::cout << SMALL_LOGO;
     }
-    else if (size == 1) {
+    else if (size == 1)
+    {
         std::cout << NORMAL_LOGO;
     }
-    else if (size == 2) {
+    else if (size == 2)
+    {
         std::cout << LARGE_LOGO;
+    }
+}
+
+/**
+ * Print more detailed errror message
+ */
+void printError(int const &type, int const &errNb)
+{
+    if (type == 2)
+    {
+        std::cout << "Curl error: Error while getting information from the server.\n";
+        if (errNb == 2)
+        {
+            std::cout << "Unable to get update from the server, check your internet connection.\n";
+        }
+        else
+        {
+            std::cout << "No more information to display on this error.\n";
+        }
+    }
+    else
+    {
+        std::cout << "No more information to display on this error.\n";
     }
 }

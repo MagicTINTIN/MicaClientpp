@@ -83,7 +83,8 @@ int main(int argc, char const *argv[])
         }
         else
         {
-            std::cout << "UPDATE ERROR " << exitUpdateCode << std::endl;
+            std::cout << "SERVER/CLIENT ERROR " << exitUpdateCode << std::endl;
+            printError(2, exitUpdateCode);
             return exitUpdateCode;
         }
 
