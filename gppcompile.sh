@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 echo -ne "$(tput setaf 9)"
 if [[ $1 == "-quickprog" ]]
 then
